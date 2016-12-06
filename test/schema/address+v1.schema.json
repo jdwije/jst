@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://footown.com/generic/address#",
+  "type": "object",
+  "required": [
+    "addressLines",
+    "country",
+    "postcode",
+    "contact"
+  ],
+  "properties": {
+    "addressLines": {
+      "type": "array",
+      "items": [{
+        "type": "string",
+        "minLength": 1
+      }]
+    },
+    "country": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "suburb": {
+      "type": "string",
+      "minLength": 1
+    },
+    "postcode": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contact": {
+      "$ref":"http://footown.com/generic/person#"
+    }
+  }
+}

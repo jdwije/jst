@@ -1,0 +1,11 @@
+# NPM artifacts
+node_modules
+npm-debug.log
+
+# Misc / OS
+.idea
+.DS_Store
+.*.swp
+
+# Build output
+build
