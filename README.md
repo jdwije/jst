@@ -22,7 +22,7 @@ documentation see: https://doc.esdoc.org/github.com/jdwije/jst/.
 
 Install JST to your project:
 ```
-npm i --save json-schema-toolkit
+npm i --save @jdw/jst
 ```
 
 Import and begin using the functions (ES6):
