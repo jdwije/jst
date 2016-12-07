@@ -1,22 +1,20 @@
 import chai from 'chai';
 import { resolve } from '../src/index';
-import BogusValidator from './schema/BogusValidator';
+import Validator from './schema/BogusValidator';
 
 const expect = chai.expect;
 
-describe('Utility Methods', () => {
-  it('resolves schema correctly', (done) => {
-//    const v = new Validator();
-  //  console.log(v);
+describe('resolve function', () => {
+  it('resolves referenced schema correctly', () => {
+    const validator = new Validator();
+    const schema = validator.getSchema('http://footown.com/generic/address#').schema;
+    const ast = resolve(validator, schema);
 
-    // const ast = resolve(
-    //   'http://footown.com/generic/address#',
-    //   v
-    // );
-
-    // expect(ast.properties).to.have.property('addressLines');
-    // expect(ast.properties).to.have.property('contact');
-    // expect(ast.properties.contact.properties).to.have.property('firstname');
-    done();
+    expect(ast.properties).to.have.property('addressLines');
+    expect(ast.properties).to.have.property('contact');
+    expect(ast.properties.contact).to.have.property('properties');
+    expect(ast.properties.contact.properties).to.have.property('firstname');
+    expect(ast.properties.contact.properties).to.have.property('lastname');
+    expect(ast.properties.contact.properties).to.have.property('title');
   });
 });
