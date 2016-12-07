@@ -1,7 +1,7 @@
 JST - JSON Schema Toolkit
 ===
 
-> A utility belt for working with [JSON schema](http://json-schema.org/).
+> A utility belt for working with [JSON schema](http://json-schema.org/) [![Build Status](https://travis-ci.org/jdwije/jst.svg?branch=master)](https://travis-ci.org/jdwije/jst)
 
 JST is a toolkit to help work with JSON schema. It currently includes the
 following features:
@@ -12,6 +12,9 @@ following features:
   literals.
 - The resolve function, which takes a schema along with any extensions to it and
   _resolves_ these to a single logical schema.
+
+For a full list of available methods and exports, including more detailed
+documentation see: https://doc.esdoc.org/github.com/jdwije/jst/.
 
 ## Quick-start
 
