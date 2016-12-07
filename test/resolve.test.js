@@ -1,14 +1,14 @@
 import chai from 'chai';
-import { resolve } from '../src/index';
+import { resolve, supplier } from '../src/index';
 import Validator from './schema/BogusValidator';
 
 const expect = chai.expect;
 
 describe('resolve function', () => {
   it('resolves referenced schema correctly', () => {
-    const validator = new Validator();
-    const schema = validator.getSchema('http://footown.com/generic/address#').schema;
-    const ast = resolve(validator, schema);
+    const get = supplier(new Validator());
+    const schema = get('http://footown.com/generic/address#');
+    const ast = resolve(get, schema);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('contact');
@@ -19,10 +19,10 @@ describe('resolve function', () => {
   });
 
   it('resolves schema correctly with multiple arguments', () => {
-    const validator = new Validator();
-    const schema = validator.getSchema('http://footown.com/generic/address#').schema;
-    const override = validator.getSchema('http://footown.com/generic/address-override#').schema;
-    const ast = resolve(validator, schema, override);
+    const get = supplier(new Validator());
+    const schema = get('http://footown.com/generic/address#');
+    const override = get('http://footown.com/generic/address-override#');
+    const ast = resolve(get, schema, override);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');

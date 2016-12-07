@@ -6,11 +6,11 @@ import { map, merge, iterate, clone, contains } from './index';
  * resolved in a logical order. The resulting resolved schema can be considered
  * as the base schema with all its extensions applied to it.
  *
- * @param {Object} valiator A JST validator object.
+ * @param {Object} get A schema supplier function, takes an ID and returns a schema.
  * @param {Array} ...schema A list of schema to resolve.
  * @return {Object} The resolved schema as an object litteral.
  */
-const resolve = (validator, ...args) => {
+const resolve = (get, ...args) => {
   if (args.length === 1) {
     // if only one argument is provided and it is not an object or array we can
     // safely resolve its value.
@@ -23,7 +23,7 @@ const resolve = (validator, ...args) => {
         if (contains(args[0], 'definitions') && typeof v === 'object')
           v.definitions = args[0].definitions;
 
-        return resolve(validator, v);
+        return resolve(get, v);
       });
     }
 
@@ -57,14 +57,14 @@ const resolve = (validator, ...args) => {
 
           reference = args[0].definitions[pieces[pieces.length - 1]];
         } else {
-          reference = validator.getSchema(value).schema;
+          reference = get(value);
         }
 
         if (!reference) throw new ReferenceError(`Could not find a reference to ${value}`);
 
         resolution = merge(
           resolution,
-          resolve(validator, reference),
+          resolve(get, reference),
           true
         );
       }
@@ -73,7 +73,7 @@ const resolve = (validator, ...args) => {
         if (contains(args[0], 'definitions') && !Array.isArray(value))
           value.definitions = args[0].definitions;
 
-        resolution[key] = resolve(validator, value);
+        resolution[key] = resolve(get, value);
       }
     });
 
@@ -90,7 +90,7 @@ const resolve = (validator, ...args) => {
     });
 
     // next we must resolve the individual schema
-    const schema = args.map((v) => resolve(validator, v));
+    const schema = args.map((v) => resolve(get, v));
 
     // and then we must merge them. args[0] is the base schema and we merge from
     // left to right - ie: properties in args[2] will override duplicate
