@@ -23,7 +23,7 @@ describe('resolve function', () => {
     const schema = validator.getSchema('http://footown.com/generic/address#').schema;
     const override = validator.getSchema('http://footown.com/generic/address-override#').schema;
     const ast = resolve(validator, schema, override);
-    console.log(ast);
+
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');
     expect(ast.properties.country).to.have.property('enum');

@@ -27,8 +27,9 @@ npm i --save @jdw/jst
 
 Import and begin using the functions (ES6):
 ```
-import { merge, map, iterate, resolve } from 'json-schema-toolkit';
+import { merge, map, iterate, resolve } from '@jdw/jst';
 ```
+
 
 ## Functionality
 
@@ -42,7 +43,7 @@ wrap your interface validation in the one class.
 Usage:
 
 ```
-import { Validator } from 'json-schema-toolkit';
+import { Validator } from '@jdw/jst';
 
 // Initialize with one or more JSON schema object literals
 const schema = require('path/to/schema.json');
@@ -60,7 +61,7 @@ object literals.
 Usage:
 
 ```
-import { clone, merge, map, contains, iterate} from 'json-schema-toolkit';
+import { clone, merge, map, contains, iterate} from '@jdw/jst';
 
 const schema = require('path/to/schema.json');
 
@@ -89,8 +90,8 @@ it's documentation for more information on this functions usage.
 
 ### Schema Resolver
 
-JST includes a function called `resolve` which can resolve (flatten) a schema
-set.
+JST includes a function called `resolve` which can resolve (de-reference) a
+schema set.
 
 ## Contributing
 
