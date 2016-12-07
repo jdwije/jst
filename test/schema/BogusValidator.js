@@ -9,6 +9,7 @@ export default class BogusValidator extends Validator {
     const filepaths = [
       './person+v1.schema.json',
       './address+v1.schema.json',
+      './address-override+v1.schema.json',
     ];
     const schema = filepaths.map((v) => require(v));
     // call base object contructor with loaded JSON schema

@@ -18,12 +18,16 @@ describe('resolve function', () => {
     expect(ast.properties.contact.properties).to.have.property('title');
   });
 
-    it('resolves schema correctly with multiple arguments', () => {
+  it('resolves schema correctly with multiple arguments', () => {
     const validator = new Validator();
     const schema = validator.getSchema('http://footown.com/generic/address#').schema;
-    const ast = resolve(validator, schema);
-
+    const override = validator.getSchema('http://footown.com/generic/address-override#').schema;
+    const ast = resolve(validator, schema, override);
+    console.log(ast);
     expect(ast.properties).to.have.property('addressLines');
+    expect(ast.properties).to.have.property('country');
+    expect(ast.properties.country).to.have.property('enum');
+    expect(ast.properties.country.enum).to.deep.eq(['AU', 'GB', 'VN', 'DE', 'CH']);
     expect(ast.properties).to.have.property('contact');
     expect(ast.properties.contact).to.have.property('properties');
     expect(ast.properties.contact.properties).to.have.property('firstname');

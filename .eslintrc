@@ -9,6 +9,8 @@
     "func-names": 0,
     "no-unused-vars": 0,
     "global-require": 0,
-    "brace-style": 0
+    "brace-style": 0,
+    "curly": 0,
+    "no-param-reassign"
   }
 }

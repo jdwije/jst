@@ -85,18 +85,18 @@ const resolve = (validator, ...args) => {
   else if (args.length > 1) {
     // first validate our arguments assumption!
     args.forEach((v) => {
-      if(Object.prototype.toString.call(v) !== '[object Object]')
-        throw TypeError(`expecting an array of object literals found: ${v}`);
+      if (Object.prototype.toString.call(v) !== '[object Object]')
+        throw new TypeError(`expecting an array of object literals found: ${v}`);
     });
 
     // next we must resolve the individual schema
-    const resolvedSchema = args.map((v) => resolve(validator, v));
+    const schema = args.map((v) => resolve(validator, v));
 
     // and then we must merge them. args[0] is the base schema and we merge from
     // left to right - ie: properties in args[2] will override duplicate
     // properties in args[1] which in turn would override duplicates in args[0]
     // the base schema.
-    return args.reduce((accumulator, value) => merge(accumulator, value, true), {});
+    return schema.reduce((accumulator, value) => merge(accumulator, value, true), {});
   }
   else {
     throw new TypeError('One or more arguments was expected');
