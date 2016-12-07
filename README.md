@@ -30,8 +30,7 @@ Import and begin using the functions (ES6):
 import { merge, map, iterate, resolve } from '@jdw/jst';
 ```
 
-
-## Functionality
+## API
 
 ### Validator
 
@@ -51,7 +50,9 @@ const validator = new Validator(schema);
 ```
 
 Validator extends AJV so it shares the same method set. See AJV's documentation
-for more information.
+for more information. See the `BogusValidator` class in this projects tests. It
+serves as a simple example of how you can extend the base validator to wrap up
+your schema.
 
 ### Object Literal Helpers
 
@@ -88,10 +89,32 @@ the [clone](https://github.com/pvorb/node-clone) npm package for
 convenience. This method can be used to recursively clone an object literal, see
 it's documentation for more information on this functions usage.
 
-### Schema Resolver
+### Schema Resolution
 
-JST includes a function called `resolve` which can resolve (de-reference) a
-schema set.
+JST includes a function called `resolve` which can resolve and de-reference a
+schema set. It takes two arguments, the first is a function to call with a
+schema id - it is expected to return that schema as an object or throw an error.
+The second as a variable argument list of schema to resolve into a single
+de-referenced schema. This variable argument list of schema is resolved from
+right to left.
+
+Usage:
+
+```
+// An example using a validator to supply schema to the resolve function.
+import { resolve, supplier, validator } from '@jdw/jst';
+
+const validator = new Validator(
+    require('./path/to/schema'),
+    require('./path/to/schema')
+);
+
+// The default jst supplier works with ajv but you can easily roll this out yourself.
+const get = supplier(validator);
+
+// Tje resolved schema returned as an object literal.
+const ast = resolve(get, schema);
+```
 
 ## Contributing
 
