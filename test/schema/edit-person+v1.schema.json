@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://footown.com/generic/edit-person+v1#",
+  "type": "object",
+  "required": [
+    "firstname",
+    "lastname"
+  ],
+  "allOf": [{
+    "$ref": "http://footown.com/generic/profile+v1#"
+  }],
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "The persons unique id in the system"
+    },
+    "profile": {
+      "decription": "user profile data"
+    },
+    "credentials": {
+      "description": "The users credentials",
+      "$ref": "http://footown.com/generic/credentials+v1#"
+    },
+    "firstname": {
+      "$ref": "#/definitions/name"
+    },
+    "username": {
+      "type": "object",
+      "properties": {
+        "handle": {
+          "oneOf": [{
+            "$ref": "#/definitions/name"
+          }, {
+            "type": "null"
+          }]
+        }
+      }
+    },
+    "lastname": {
+      "$ref": "#/definitions/name"
+    },
+    "title": {
+      "type": "string",
+      "enum": ["mr", "mrs", "ms", "dr", "prof"]
+    }
+  },
+  "definitions": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

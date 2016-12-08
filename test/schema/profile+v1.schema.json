@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://footown.com/generic/profile+v1#",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "type": "object",
+      "properties": {
+        "avatarUrl": {
+          "description": "The url that the users avatar can be found on",
+          "$ref": "#/definitions/webimage"
+        },
+        "pictures": {
+          "type": "array",
+          "items": [{ "$ref": "#/definitions/webimage" }]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "webimage": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

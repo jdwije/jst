@@ -20,18 +20,19 @@ const resolve = (get, ...args) => {
     // resolve it's individual values
     if (Array.isArray(args[0])) {
       return args[0].map((v) => {
-        if (contains(args[0], 'definitions') && typeof v === 'object')
+        if (contains(args[0], 'definitions') && typeof v === 'object' && v !== null) {
           v.definitions = args[0].definitions;
-
+        }
         return resolve(get, v);
       });
     }
 
     // if we are here, the first argument is not an array or value and we expect
     // it to be a schema.
+    const schema = args[0];
     let resolution = {};
 
-    iterate(args[0], (key, value) => {
+    iterate(schema, (key, value) => {
       // Skip the following properties
       if (key === 'definitions') return;
 
@@ -55,7 +56,10 @@ const resolve = (get, ...args) => {
           // definitions from the current schema being iterated.
           const pieces = value.split('/');
 
-          reference = args[0].definitions[pieces[pieces.length - 1]];
+          reference = schema.definitions[pieces[pieces.length - 1]];
+
+          if (typeof reference === 'object' && reference !== null)
+            reference.definitions = clone(schema.definitions, true);
         } else {
           reference = get(value);
         }
@@ -68,10 +72,10 @@ const resolve = (get, ...args) => {
           true
         );
       }
-      // Otherwise we need to traverse it and resolve it's properties.
+      // Otherwise the value is an array or object and we need to traverse it
+      // and resolve it's properties.
       else {
-        if (contains(args[0], 'definitions') && !Array.isArray(value))
-          value.definitions = args[0].definitions;
+        if (contains(schema, 'definitions')) value.definitions = schema.definitions;
 
         resolution[key] = resolve(get, value);
       }
@@ -92,9 +96,9 @@ const resolve = (get, ...args) => {
     // next we must resolve the individual schema
     const schema = args.map((v) => resolve(get, v));
 
-    // and then we must merge them. args[0] is the base schema and we merge from
+    // and then we must merge them. schema is the base schema and we merge from
     // left to right - ie: properties in args[2] will override duplicate
-    // properties in args[1] which in turn would override duplicates in args[0]
+    // properties in args[1] which in turn would override duplicates in schema
     // the base schema.
     return schema.reduce((accumulator, value) => merge(accumulator, value, true), {});
   }

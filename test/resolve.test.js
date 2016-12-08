@@ -34,4 +34,14 @@ describe('resolve function', () => {
     expect(ast.properties.contact.properties).to.have.property('lastname');
     expect(ast.properties.contact.properties).to.have.property('title');
   });
+
+  it('can resolve nested referenced schema', () => {
+    const get = supplier(new Validator());
+    const schema = get('http://footown.com/generic/edit-person+v1#');
+    const ast = resolve(get, schema);
+
+    expect(ast).to.have.property('allOf');
+    expect(ast.allOf.length).to.eq(1);
+    expect(ast.allOf[0]).to.have.property('properties');
+  });
 });
