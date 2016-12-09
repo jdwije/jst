@@ -21,6 +21,10 @@
     "webimage": {
       "type": "string",
       "format": "uri"
+    },
+    "pictures": {
+      "type": "array",
+      "items": [{ "$ref": "#/definitions/webimage" }]
     }
   }
 }

@@ -14,74 +14,78 @@ const resolve = (get, ...args) => {
   if (args.length === 1) {
     // if only one argument is provided and it is not an object or array we can
     // safely resolve its value.
-    if (typeof args[0] !== 'object') return args[0];
-
-    // if only one argument is provided and it is an array we must recursively
-    // resolve it's individual values
-    if (Array.isArray(args[0])) {
-      return args[0].map((v) => {
-        if (contains(args[0], 'definitions') && typeof v === 'object' && v !== null) {
-          v.definitions = args[0].definitions;
-        }
-        return resolve(get, v);
-      });
-    }
-
-    // if we are here, the first argument is not an array or value and we expect
-    // it to be a schema.
     const schema = args[0];
-    let resolution = {};
+    const definitions = contains(schema, 'definitions') ? schema.definitions : null;
 
-    iterate(schema, (key, value) => {
-      // Skip the following properties
-      if (key === 'definitions') return;
+    // traverse is an internal recursive function that we bind to this lexical
+    // scope in order to easily get to schema definitons whilst traversing an
+    // objects nested properties. This is primarily for efficiency concerns.
+    const traverse = (node) => {
+      let resolution = {};
 
-      // If value is not an array, object, or JSON schema reference we can
-      // resolve it immediately. 'typeof array' equals 'object' in JS.
-      if (typeof value !== 'object' && key !== '$ref') {
-        resolution[key] = value;
+      if (typeof node !== 'object') return node;
+
+      // if only one argument is provided and it is an array we must recursively
+      // resolve it's individual values
+      if (Array.isArray(node)) {
+        return node.map((v) => traverse(v));
       }
-      // If we have a schema reference we must fetch it, resolve it, then merge
-      // it into the base schema object.
-      else if (key === '$ref') {
-        // We have two types of references - definitions which are defined
-        // within the current schema and external schema references which we
-        // have to query AJV for as such we must fetch the schema for the
-        // reference appropriately.
-        let reference = null;
 
-        if (value.indexOf('#/definitions') === 0) {
-          // First check where to get the definitions from. If argument
-          // 'definitions' is false we expect to be able to get to the
-          // definitions from the current schema being iterated.
-          const pieces = value.split('/');
+      // if we are here, the first argument is not an array or value and we expect
+      // it to be a json schema.
+      iterate(node, (key, value) => {
+        // Skip the following properties
+        if (key === 'definitions') return;
 
-          reference = schema.definitions[pieces[pieces.length - 1]];
-
-          if (typeof reference === 'object' && reference !== null)
-            reference.definitions = clone(schema.definitions, true);
-        } else {
-          reference = get(value);
+        // If value is not an array, object, or JSON schema reference we can
+        // resolve it immediately. 'typeof array' equals 'object' in JS.
+        if (typeof value !== 'object' && key !== '$ref') {
+          resolution[key] = value;
         }
+        // If we have a schema reference we must fetch it, resolve it, then merge
+        // it into the base schema object.
+        else if (key === '$ref') {
+          // We have two types of references - definitions which are defined
+          // within the current schema and external schema references which we
+          // have to query AJV for as such we must fetch the schema for the
+          // reference appropriately.
+          let reference = null;
 
-        if (!reference) throw new ReferenceError(`Could not find a reference to ${value}`);
+          if (value.indexOf('#/definitions') === 0) {
+            // First check where to get the definitions from. If argument
+            // 'definitions' is false we expect to be able to get to the
+            // definitions from the current schema being iterated.
+            const pieces = value.split('/');
 
-        resolution = merge(
-          resolution,
-          resolve(get, reference),
-          true
-        );
-      }
-      // Otherwise the value is an array or object and we need to traverse it
-      // and resolve it's properties.
-      else {
-        if (contains(schema, 'definitions')) value.definitions = schema.definitions;
+            reference = definitions[pieces[pieces.length - 1]];
+            resolution = merge(
+              resolution,
+              traverse(reference),
+              true
+            );
+          } else {
+            reference = get(value);
+            resolution = merge(
+              resolution,
+              resolve(get, reference),
+              true
+            );
+          }
 
-        resolution[key] = resolve(get, value);
-      }
-    });
+          if (!reference)
+            throw new ReferenceError(`Could not find a reference to ${value}`);
+        }
+        // Otherwise the value is an array or object and we need to traverse it
+        // and dereference it's properties.
+        else {
+          resolution[key] = traverse(value);
+        }
+      });
 
-    return resolution;
+      return resolution;
+    };
+
+    return traverse(schema);
   }
   // If multiple args are provided we assume a list of schema. We assume the
   // first schema provided is the base and successive arguments are extensions
@@ -97,7 +101,7 @@ const resolve = (get, ...args) => {
     const schema = args.map((v) => resolve(get, v));
 
     // and then we must merge them. schema is the base schema and we merge from
-    // left to right - ie: properties in args[2] will override duplicate
+    // right to left - ie: properties in args[2] will override duplicate
     // properties in args[1] which in turn would override duplicates in schema
     // the base schema.
     return schema.reduce((accumulator, value) => merge(accumulator, value, true), {});

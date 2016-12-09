@@ -7,7 +7,7 @@ import Ajv from 'ajv';
  *
  */
 export default class Validator extends Ajv {
-  constructor(schema, config = null) {
+  constructor(schema = null, config = null) {
     // sane default config
     const cnf = {
       extendRefs: true,
@@ -18,17 +18,29 @@ export default class Validator extends Ajv {
 
     super(cnf);
 
+    this.loadedSchema = [];
+
     // process an array of schema
     if (Array.isArray(schema)) {
-      schema.forEach((v) => this.addSchema(v));
+      schema.forEach((v) => {
+        this.addSchema(v);
+        this.loadedSchema.push(v.id);
+      });
     }
     // process a single schema
     else if (typeof schema === 'object') {
       this.addSchema(schema);
     }
-    // unknown, throw
-    else {
-      throw new ArugmentError(`cannot process schema: ${schema}`);
-    }
+  }
+
+  addSchema(...schema) {
+    schema.forEach((v) => {
+      super.addSchema(v);
+      this.loadedSchema.push(v.id);
+    });
+  }
+
+  getLoadedSchema() {
+    return this.loadedSchema;
   }
 }
