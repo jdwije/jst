@@ -4,8 +4,10 @@
   "description": "A JSON Schema Toolkit",
   "main": "build/index.js",
   "scripts": {
-    "build": "babel src -d build",
-    "test": "mocha --compilers js:babel-core/register"
+    "clean": "rm -rf build",
+    "build": "npm test && npm run clean && babel src -d build",
+    "test": "mocha --compilers js:babel-core/register",
+    "prepublish": "npm run build"
   },
   "author": "Jason Wijegooneratne <admin@jwije.com>",
   "license": "MIT",
