@@ -1,14 +1,14 @@
 import chai from 'chai';
-import { resolve, supplier } from '../src/index';
+import { dereference, supplier } from '../src/index';
 import Validator from './schema/BogusValidator';
 
 const expect = chai.expect;
 
-describe('resolve function', () => {
-  it('resolves referenced schema correctly', () => {
+describe('dereference function', () => {
+  it('dereferences referenced schema correctly', () => {
     const get = supplier(new Validator());
     const schema = get('http://footown.com/generic/address#');
-    const ast = resolve(get, schema);
+    const ast = dereference(get, schema);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('contact');
@@ -18,11 +18,11 @@ describe('resolve function', () => {
     expect(ast.properties.contact.properties).to.have.property('title');
   });
 
-  it('resolves schema correctly with multiple arguments', () => {
+  it('dereferences schema correctly with multiple arguments', () => {
     const get = supplier(new Validator());
     const schema = get('http://footown.com/generic/address#');
     const override = get('http://footown.com/generic/address-override#');
-    const ast = resolve(get, schema, override);
+    const ast = dereference(get, schema, override);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');
@@ -35,10 +35,10 @@ describe('resolve function', () => {
     expect(ast.properties.contact.properties).to.have.property('title');
   });
 
-  it('can resolve nested referenced schema', () => {
+  it('can dereference nested referenced schema', () => {
     const get = supplier(new Validator());
     const schema = get('http://footown.com/generic/edit-person+v1#');
-    const ast = resolve(get, schema);
+    const ast = dereference(get, schema);
 
     expect(ast).to.have.property('allOf');
     expect(ast.allOf.length).to.eq(1);
