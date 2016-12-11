@@ -1,7 +1,7 @@
 {
   "name": "@jdw/jst",
-  "version": "1.0.0-beta.8",
-  "description": "A JSON Schema Toolkit",
+  "version": "1.0.0-beta.9",
+  "description": "A json schema toolkit including functions for manipulating, traversing, and de-referencing json schema",
   "main": "build/index.js",
   "scripts": {
     "clean": "rm -rf build",
