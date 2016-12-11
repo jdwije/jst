@@ -32,62 +32,109 @@ import { merge, map, iterate, resolve } from '@jdw/jst';
 
 ## API
 
-### Schema De-Referencing
+### dereference
 
-JST includes a function called `dereference` which can de-reference a schema set
-in accordance with the
+The `dereference` can de-reference a schema set in accordance with the
 [json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03) and
 [json pointer](https://tools.ietf.org/html/rfc6901) specifications. It is both
 flexible and performant.
 
-Usage:
+#### dereference( schema )
+
+In it's most basic form `dereference` takes a schema without any external
+references as an argument and resolves any of it's internal pointers.
 
 ```
 import { dereference } from '@jdw/jst';
 
-const schema = [
-    {
-        '$schema': '',
-        'id': 'https://schema.example.com/generic/rabbit+v1#',
-        'type': 'object',
-        'properties': {
-          'foo': {
-              'type': 'string'
-          },
-          'bar': {
-              '$ref': '#/definitions/bar'
-          }
-        },
-        'definitions': {
-            'bar': {
-                'type': 'string'
-            }
+const schema = {
+    'car': {
+        '#/def/car'
+    },
+    'def': {
+        'car': {
+            'type': 'string',
+            'enum': ['ferrari', 'mercedes', 'bmw', 'vw']
         }
     }
-];
+};
 
-// a resolve function simple has to lookup a schema by it's id and return it.
-const resolve = (schemaId) => schema;
-
-const jsonTree = dereferences(resolve, schema);
+// a resolver function is not required when de-referencing schema without external
+// uri references
+console.log( dereference(schema) );
 ```
 
-The `dereference` function must be injected with a schema resolver function,
-this is it's first argument. The resolve function is expected to take a schema
-id (uri reference) as it's input and return that schema as an object
-literal. This allows you to flexible in how you provision your schema be it via
-fetching it over the web or storing it in memory. If the resolve function cannot
-find the schema it is expected to throw an error.
+This de-references to:
+
+```
+{
+    'car': {
+        'type': 'string',
+        'enum': ['ferrari', 'mercedes', 'bmw', 'vw']
+    }
+}
+```
+
+#### dereference ( schema, resolve )
+
+The `dereference` function may be injected with a schema resolver function as
+its second argument. The resolve function is expected to take a schema id (uri
+reference) as it's input and return that schema as an object literal. This
+allows you to flexible in how you provision your schema be it over the wire or
+storing it in memory. If the resolve function cannot find the schema it is
+expected to throw an error.
 
 The following is an example of using an AJV instance as supplier for a `resolve`
 function.
 
 ```
-const resolve = (id) => {
+dereference(schema, (id) => {
     return ajv.getSchema(id).schema
-};
+});
+```
 
-const jsonTree = dereference(resolve, schema);
+Here is an example of fetching schema by id from the web using the `node-wget`
+package:
+
+```
+import wget from 'node-wget';
+
+dereferece(schema, (id) => {
+    return wget(id);
+});
+```
+
+#### dereference ( array, resolve )
+
+When an array of schema is provided to the `dereference` function, it
+dereferences each of these before merging them from right to left:
+
+```
+schema = [
+    {
+      'boats': {
+          'type': 'string'
+      }
+    },
+    {
+     'boats': {
+         'enum': ['yacht', 'cruiser', 'dingy']
+     }
+    }
+]
+
+dereference(schema);
+```
+
+The above operations would output a de-referenced schema of:
+```
+{
+    'boats': {
+        'type': 'string',
+        'enum': ['yacht', 'cruiser', 'dingy']
+    }
+},
+
 ```
 
 ### Validator

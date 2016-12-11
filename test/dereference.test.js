@@ -20,7 +20,7 @@ const resolve = (id) => {
 
 describe('dereference schema utility function', () => {
   it('dereferences referenced schema correctly', () => {
-    const ast = dereference(resolve, resolve('http://footown.com/generic/address#'));
+    const ast = dereference(resolve('http://footown.com/generic/address#'), resolve);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('contact');
@@ -31,9 +31,11 @@ describe('dereference schema utility function', () => {
   });
 
   it('dereferences schema correctly with multiple arguments', () => {
-    const schema = resolve('http://footown.com/generic/address#');
-    const extension = resolve('http://footown.com/generic/address-override#');
-    const ast = dereference(resolve, schema, extension);
+    const schema = [
+      resolve('http://footown.com/generic/address#'),
+      resolve('http://footown.com/generic/address-override#'),
+    ];
+    const ast = dereference(schema, resolve);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');
@@ -48,7 +50,7 @@ describe('dereference schema utility function', () => {
 
   it('can dereference circular schema references', () => {
     const schema = resolve('http://footown.com/generic/edit-person+v1#');
-    const ast = dereference(resolve, schema);
+    const ast = dereference(schema, resolve);
 
     expect(ast).to.have.property('allOf');
     expect(ast.allOf.length).to.eq(1);

@@ -1,5 +1,5 @@
 import { map, merge, iterate, clone, contains } from './index';
-import uriValidator from 'valid-url';
+import uri from 'valid-url';
 
 /**
  * This function _dereferences_ a schema set into one logical schema in
@@ -19,21 +19,32 @@ import uriValidator from 'valid-url';
  * It does so internaly rather than through an external resolver in order to
  * remain efficient.
  *
- * @param  {Object} resolve A function to supply referenced schema, takes an
- *                          schema id and returns that schema as an object literal.
- * @param   {Array} ...args Overload with multiple schema to de-reference.
- * @return {Object}         The dereferenced schema as an object literal.
+ * @param {Array|Object} schema A schema or array of schema to dereference.
+ * @param {Object} resolve A function to resolve referenced schema by its id.
+ * @return {Object} The dereferenced schema as an object.
  */
-const dereference = (resolve, ...args) => {
-  if (args.length === 1) {
-    // if only one argument is provided and it is not an object or array we can
-    // safely dereference its value.
-    const schema = args[0];
-    const definitions = contains(schema, 'definitions') ? schema.definitions : null;
+const dereference = (schema, resolve = null) => {
+  // If schema is an array we dereference each schema and then merge them from
+  // right-to-left.
+  if (Array.isArray(schema)) {
+    // first validate our arguments assumption!
+    schema.forEach((s) => {
+      if (typeof s !== 'object' && !Array.isArray(s))
+        throw new TypeError(`expect typeof object got: ${typeof s}`);
+    });
 
+    // then dereference each schema in the array before eventually merging them
+    // from right to left using a reducer function.
+    return schema
+      .map((s) => dereference(s, resolve))
+      .reduce((accumulator, value) => merge(accumulator, value, true), {});
+  }
+  // If schema is not an array of json objects we expect a singlular json schema
+  // be provided
+  else if (typeof schema === 'object' && !Array.isArray(schema)) {
     // traverse is an internal recursive function that we bind to this lexical
-    // scope in order to easily resolve to schema definitons whilst traversing an
-    // objects nested properties. This is primarily for efficiency concerns.
+    // scope in order to easily resolve to schema definitons whilst traversing
+    // an objects nested properties. This is primarily for efficiency concerns.
     const traverse = (node) => {
       let resolution = {};
 
@@ -66,14 +77,18 @@ const dereference = (resolve, ...args) => {
           let reference = null;
 
           // de-reference a json uri
-          if (uriValidator.isUri(value)) {
+          if (uri.isUri(value)) {
+            if (!resolve)
+              throw new TypeError(
+                'resolver function is required to dereference a json uri.')
+;
             reference = resolve(value);
 
             if (!reference) throw new Error(`unable to resolve URI reference: ${value}`);
 
             resolution = merge(
               resolution,
-              dereference(resolve, reference),
+              dereference(reference, resolve),
               true
             );
           }
@@ -124,11 +139,11 @@ const dereference = (resolve, ...args) => {
           }
           else {
             throw new Error(
-              `could not dereference value as a pointer or url: ${value}`);
+              `could not dereference value as a json pointer or uri: ${value}`);
           }
 
           if (!reference)
-            throw new ReferenceError(`Could not find a reference to ${value}`);
+            throw new ReferenceError(`could not find a reference to ${value}`);
         }
         // Otherwise the value is an array or object and we need to traverse it
         // and dereference it's properties.
@@ -142,27 +157,9 @@ const dereference = (resolve, ...args) => {
 
     return traverse(schema);
   }
-  // If multiple args are provided we assume a list of schema. We assume the
-  // first schema provided is the base and successive arguments are extensions
-  // to it in increasing order of priority.
-  else if (args.length > 1) {
-    // first validate our arguments assumption!
-    args.forEach((v) => {
-      if (Object.prototype.toString.call(v) !== '[object Object]')
-        throw new TypeError(`expecting an array of object literals found: ${v}`);
-    });
-
-    // next we must dereference the individual schema
-    const schema = args.map((v) => dereference(resolve, v));
-
-    // and then we must merge them. schema is the base schema and we merge from
-    // right to left - ie: properties in args[2] will override duplicate
-    // properties in args[1] which in turn would override duplicates in schema
-    // the base schema.
-    return schema.reduce((accumulator, value) => merge(accumulator, value, true), {});
-  }
+  // if any other combination of arguments is provided we throw
   else {
-    throw new TypeError('One or more arguments was expected');
+    throw new TypeError(`expected first parameter to be object or array: ${schema}`);
   }
 };
 
