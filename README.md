@@ -12,8 +12,8 @@ following features:
   loading your schema set.
 - Object literal helper functions for deep traversal and manipulation of object
   literals.
-- The resolve function, which takes a schema along with any extensions to it and
-  _resolves_ these to a single logical schema.
+- A performant schema de-referencing function with full json pointer support and
+  a flexible schema resolution mechanism.
 
 For a full list of available methods and exports, including more detailed
 documentation see: https://doc.esdoc.org/github.com/jdwije/jst/.
@@ -31,6 +31,64 @@ import { merge, map, iterate, resolve } from '@jdw/jst';
 ```
 
 ## API
+
+### Schema De-Referencing
+
+JST includes a function called `dereference` which can de-reference a schema set
+in accordance with the json reference and json pointer specifications. It is
+both flexible and performant.
+
+Usage:
+
+```
+import { dereference } from '@jdw/jst';
+
+const schema = [
+    {
+        '$schema': '',
+        'id': 'https://schema.example.com/generic/rabbit+v1#',
+        'type': 'object',
+        'properties': {
+          'foo': {
+              'type': 'string'
+          },
+          'bar': {
+              '$ref': '#/definitions/bar'
+          }
+        },
+        'definitions': {
+            'bar': {
+                'type': 'string'
+            }
+        }
+    }
+];
+
+// a resolve function simple has to lookup a schema by it's id and return it.
+const resolve = (schemaId) => schema;
+
+const jsonTree = dereferences(resolve, schema);
+```
+
+The `dereference` function must be injected with a schema resolver function,
+this is it's first argument. The resolve function is expected to take a schema
+id (uri reference) as it's input and return that schema as an object
+literal. This allows you to flexible in how you provision your schema be it via
+fetching it over the web or storing it in memory. If the resolve function cannot
+find the schema it is expected to throw an error.
+
+The following is an example of using an AJV instance as supplier for a `resolve`
+function.
+
+Usage:
+
+```
+const resolve = (id) => {
+    return ajv.getSchema(id).schema
+};
+
+const jsonTree = dereference(resolve, schema);
+```
 
 ### Validator
 
@@ -88,33 +146,6 @@ JST object methods additionally expose the `clone` function from
 the [clone](https://github.com/pvorb/node-clone) npm package for
 convenience. This method can be used to recursively clone an object literal, see
 it's documentation for more information on this functions usage.
-
-### Schema Resolution
-
-JST includes a function called `resolve` which can resolve and de-reference a
-schema set. It takes two arguments, the first is a function to call with a
-schema id - it is expected to return that schema as an object or throw an error.
-The second as a variable argument list of schema to resolve into a single
-de-referenced schema. This variable argument list of schema is resolved from
-right to left.
-
-Usage:
-
-```
-// An example using a validator to supply schema to the resolve function.
-import { resolve, supplier, validator } from '@jdw/jst';
-
-const validator = new Validator(
-    require('./path/to/schema'),
-    require('./path/to/schema')
-);
-
-// The default jst supplier works with ajv but you can easily roll this out yourself.
-const get = supplier(validator);
-
-// Tje resolved schema returned as an object literal.
-const ast = resolve(get, schema);
-```
 
 ## Contributing
 

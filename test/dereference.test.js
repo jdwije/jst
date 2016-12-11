@@ -1,14 +1,26 @@
 import chai from 'chai';
-import { dereference, supplier } from '../src/index';
-import Validator from './schema/BogusValidator';
+import { dereference, contains } from '../src/index';
+import Validator from './MockValidator';
 
 const expect = chai.expect;
+const validator = new Validator();
 
-describe('dereference function', () => {
+/**
+ * A resolve function must simply take a schema id as an argument and return
+ * that schema as an object literal or throw an error if it can't find it.
+ */
+const resolve = (id) => {
+  const result = validator.getSchema(id);
+
+  if (!contains(result, 'schema'))
+    throw new Error(`could not resolve schema with id: ${id}`);
+
+  return result.schema;
+};
+
+describe('dereference schema utility function', () => {
   it('dereferences referenced schema correctly', () => {
-    const get = supplier(new Validator());
-    const schema = get('http://footown.com/generic/address#');
-    const ast = dereference(get, schema);
+    const ast = dereference(resolve, resolve('http://footown.com/generic/address#'));
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('contact');
@@ -19,10 +31,9 @@ describe('dereference function', () => {
   });
 
   it('dereferences schema correctly with multiple arguments', () => {
-    const get = supplier(new Validator());
-    const schema = get('http://footown.com/generic/address#');
-    const override = get('http://footown.com/generic/address-override#');
-    const ast = dereference(get, schema, override);
+    const schema = resolve('http://footown.com/generic/address#');
+    const extension = resolve('http://footown.com/generic/address-override#');
+    const ast = dereference(resolve, schema, extension);
 
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');
@@ -35,10 +46,9 @@ describe('dereference function', () => {
     expect(ast.properties.contact.properties).to.have.property('title');
   });
 
-  it('can dereference nested referenced schema', () => {
-    const get = supplier(new Validator());
-    const schema = get('http://footown.com/generic/edit-person+v1#');
-    const ast = dereference(get, schema);
+  it('can dereference circular schema references', () => {
+    const schema = resolve('http://footown.com/generic/edit-person+v1#');
+    const ast = dereference(resolve, schema);
 
     expect(ast).to.have.property('allOf');
     expect(ast.allOf.length).to.eq(1);
