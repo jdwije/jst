@@ -35,8 +35,10 @@ import { merge, map, iterate, resolve } from '@jdw/jst';
 ### Schema De-Referencing
 
 JST includes a function called `dereference` which can de-reference a schema set
-in accordance with the json reference and json pointer specifications. It is
-both flexible and performant.
+in accordance with the
+[json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03) and
+[json pointer](https://tools.ietf.org/html/rfc6901) specifications. It is both
+flexible and performant.
 
 Usage:
 
@@ -79,8 +81,6 @@ find the schema it is expected to throw an error.
 
 The following is an example of using an AJV instance as supplier for a `resolve`
 function.
-
-Usage:
 
 ```
 const resolve = (id) => {
