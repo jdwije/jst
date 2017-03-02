@@ -11,7 +11,7 @@ import uri from 'valid-url';
  * it with referenced schema. This allows developers to be flexible in choosing
  * there schema sources such as HTTP or in-memory resolvers.
  *
- * The derefernce function also resolves JSON Pointers according to the IETF
+ * The dereference function also resolves JSON Pointers according to the IETF
  * RFC6901 specification:
  *
  * https://tools.ietf.org/html/rfc6901
