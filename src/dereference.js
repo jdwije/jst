@@ -48,7 +48,7 @@ const dereference = (schema, resolve = null) => {
     const traverse = (node) => {
       let resolution = {};
 
-      if (typeof node !== 'object') return node;
+      if (typeof node !== 'object' || node === null) return node;
 
       // if only one argument is provided and it is an array we must recursively
       // dereference it's individual values

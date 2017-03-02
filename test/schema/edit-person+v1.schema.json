@@ -9,6 +9,7 @@
   "allOf": [{
     "$ref": "http://footown.com/generic/profile+v1#"
   }],
+  "foo": null,
   "properties": {
     "uid": {
       "type": "string",

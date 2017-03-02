@@ -56,4 +56,11 @@ describe('dereference schema utility function', () => {
     expect(ast.allOf.length).to.eq(1);
     expect(ast.allOf[0]).to.have.property('properties');
   });
+
+  it('dereferences null values correctly', () => {
+    const schema = resolve('http://footown.com/generic/edit-person+v1#');
+    const ast = dereference(schema, resolve);
+    
+    expect(ast.foo).to.eq(null);
+  });
 });
