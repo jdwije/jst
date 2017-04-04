@@ -49,7 +49,7 @@ example](http://json-schema.org/example2.html) given on json-schema.org.
 | time [ms] | 3.51 | 20.11             | 17.76                  | 15.94                  |
 
 I hope to add to these in time - however early indications are that this is the
-fastest JavaScript dereferncer implementation on the web.
+fastest JavaScript dereferencer implementation on the web.
 
 #### dereference( schema )
 
