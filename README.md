@@ -44,12 +44,9 @@ extensively at my day job - whilst I can't share all the results here have a
 look at these timings when dereferencing the (advanced schema
 example)[http://json-schema.org/example2.html] given on json-schema.org.
 
-+-------+-----+-----------------+----------------------+----------------------+
-|       | jst |json-schema-deref|json-schema-deref-sync|json-schema-ref-parser|
-+-------+-----+-----------------+----------------------+----------------------+
-|time   | 3.51|20.11            |17.76                 |15.94                 |
-|[ms]   |     |                 |                      |                      |
-+-------+-----+-----------------+----------------------+----------------------+
+|           | jst  | json-schema-deref | json-scehma-deref-sync | json-schema-ref-parser |
+|-----------|------|-------------------|------------------------|------------------------|
+| time [ms] | 3.51 | 20.11             | 17.76                  | 15.94                  |
 
 I hope to add to these in time - however early indications are that this is the
 fastest JavaScript dereferncer implementation on the web.
