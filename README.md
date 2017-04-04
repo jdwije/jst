@@ -41,8 +41,8 @@ and [json pointer](https://tools.ietf.org/html/rfc6901) specifications. It is a
 flexible, performant, and complete dereferencer implementation and is being used
 in production at my current employer Temando. I have bench-marked this
 extensively at my day job - whilst I can't share all the results here have a
-look at these timings when dereferencing the (advanced schema
-example)[http://json-schema.org/example2.html] given on json-schema.org.
+look at these timings when dereferencing the [advanced schema
+example](http://json-schema.org/example2.html) given on json-schema.org.
 
 |           | jst  | json-schema-deref | json-scehma-deref-sync | json-schema-ref-parser |
 |-----------|------|-------------------|------------------------|------------------------|
