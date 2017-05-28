@@ -7,12 +7,12 @@ import clone from 'clone';
  * @param {Object} object An object literal to iterate over.
  * @param {Function} fn A function to execute for each key in the object.
  */
-const iterate = function (object, fn) {
-  for (const prop in object) {
-    if (object.hasOwnProperty(prop)) {
-      fn(prop, object[prop]);
+const iterate = function(object, fn) {
+    for (const prop in object) {
+        if (object.hasOwnProperty(prop)) {
+            fn(prop, object[prop]);
+        }
     }
-  }
 };
 
 /**
@@ -24,14 +24,14 @@ const iterate = function (object, fn) {
  * @param {Function} fn A function to execute for each key in the object.
  * @return {Object} A new object literal.
  */
-const map = function (object, fn) {
-  const result = {};
+const map = function(object, fn) {
+    const result = {};
 
-  iterate(object, (key, value) => {
-    result[key] = fn(key, value);
-  });
+    iterate(object, (key, value) => {
+        result[key] = fn(key, value);
+    });
 
-  return result;
+    return result;
 };
 
 /**
@@ -41,8 +41,8 @@ const map = function (object, fn) {
  * @param {String} key The property to check the object for.
  * @return {Boolean} The boolean result of the check.
  */
-const contains = function (object, key) {
-  return object.hasOwnProperty(key);
+const contains = function(object, key) {
+    return object.hasOwnProperty(key);
 };
 
 /**
@@ -54,30 +54,30 @@ const contains = function (object, key) {
  * @param {Boolean} overide Whether to override properties in base if they exist in both objecys.
  * @return {Object} A new object literal.
  */
-const merge = function (base, extension, overide = false) {
-  const object = clone(base, true);
+const merge = function(base, extension, overide = false) {
+    const object = clone(base, true);
 
-  iterate(extension, (key, value) => {
-    if (contains(base, key) && overide === false) return;
+    iterate(extension, (key, value) => {
+        if (contains(base, key) && overide === false) return;
 
-    // if object recurse
-    if (typeof value === 'object' && contains(base, key)) {
-      // we expect object node to also be an object
-      object[key] = merge(base[key], value, overide);
-    }
-    // otherwise assign property/value, should we be merging arrays?
-    else {
-      object[key] = value;
-    }
-  });
+        // if object recurse
+        if (typeof value === 'object' && contains(base, key)) {
+            // we expect object node to also be an object
+            object[key] = merge(base[key], value, overide);
+        }
+        // otherwise assign property/value, should we be merging arrays?
+        else {
+            object[key] = value;
+        }
+    });
 
-  return object;
+    return object;
 };
 
 export {
-  iterate,
-  map,
-  merge,
-  contains,
-  clone, // we export this here for convenience
+    iterate,
+    map,
+    merge,
+    contains,
+    clone, // we export this here for convenience
 };
