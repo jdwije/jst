@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import * as Ajv from 'ajv';
 
 const person = require('./schema/person+v1.schema.json');
 const address = require('./schema/address+v1.schema.json');

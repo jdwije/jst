@@ -1,4 +1,4 @@
-import clone from 'clone';
+import * as clone from 'clone';
 
 /**
  * A method to safely iterate the properties of an object and execute some

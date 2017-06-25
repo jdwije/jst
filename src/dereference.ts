@@ -1,4 +1,4 @@
-import { map, merge, iterate, clone, contains } from './index';
+import { merge, iterate, contains } from './index';
 import * as uri from 'valid-url';
 
 /**

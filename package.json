@@ -4,12 +4,12 @@
   "description": "A json schema toolkit including functions for manipulating, traversing, and de-referencing json schema",
   "main": "build/index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "benchmark": "node --prof dist/__tests__/index.benchmark.js",
     "build": "./scripts/package",
-    "release": "cd dist && npm publish",
-    "lint": "tslint -p tsconfig.json --type-check",
     "clean": "rm -rf dist",
-    "benchmark": "ts-node benchmark/index.ts"
+    "lint": "tslint -p tsconfig.json --type-check",
+    "release": "cd dist && npm publish",
+    "test": "jest --verbose"
   },
   "author": "Jason Wijegooneratne <admin@jwije.com>",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "@types/chalk": "^0.4.31",
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.21",
+    "ajv": "^4.9.0",
     "benchmark": "^2.1.4",
     "chai": "^3.5.0",
     "jest": "^20.0.4",
@@ -29,7 +30,6 @@
     "typescript": "^2.3.3"
   },
   "dependencies": {
-    "ajv": "^4.9.0",
     "clone": "^2.1.0",
     "valid-url": "^1.0.9"
   }
