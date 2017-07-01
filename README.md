@@ -9,8 +9,7 @@ JST is a toolkit to help work with JSON schema. It currently includes the
 following features:
 
 - A performant schema de-referencing function with full json pointer support and
-  a flexible schema resolution mechanism. It is probably the fastest JS
-  dereferencer implementation on the web.
+  a flexible schema resolution mechanism.
 - A generic validator object that wraps AJV with some convenience methods for
   loading your schema set.
 - Object literal helper functions for deep traversal and manipulation of object
@@ -39,17 +38,14 @@ The `dereference` function can de-reference a schema set in accordance with
 the [json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
 and [json pointer](https://tools.ietf.org/html/rfc6901) specifications. It is a
 flexible, performant, and complete dereferencer implementation and is being used
-in production at my current employer Temando. I have bench-marked this
-extensively at my day job - whilst I can't share all the results here have a
-look at these timings when dereferencing the [advanced schema
-example](http://json-schema.org/example2.html) given on json-schema.org.
+in production at my current employer Temando. Here are some comparative timings
+when dereferencing
+the [advanced schema example](http://json-schema.org/example2.html) given on
+json-schema.org.
 
 |           | jst  | json-schema-deref | json-scehma-deref-sync | json-schema-ref-parser |
 |-----------|------|-------------------|------------------------|------------------------|
 | time [ms] | 3.51 | 20.11             | 17.76                  | 15.94                  |
-
-I hope to add to these in time - however early indications are that this is the
-fastest JavaScript dereferencer implementation on the web.
 
 #### dereference( schema )
 
