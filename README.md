@@ -145,63 +145,6 @@ The above operations would output a de-referenced schema of:
 
 ```
 
-### Validator
-
-The validator class is a generic validator object which extends AJV. Its primary
-purpose is to supply AJV with a given schema set at run-time. This class is
-useful for building API interfaces with JSON schema, it allows you to neatly
-wrap your interface validation in the one class.
-
-Usage:
-
-```
-import { Validator } from '@jdw/jst';
-
-// Initialize with one or more JSON schema object literals
-const schema = require('path/to/schema.json');
-const validator = new Validator(schema);
-```
-
-Validator extends AJV so it shares the same method set. See AJV's documentation
-for more information. See the `BogusValidator` class in this projects tests. It
-serves as a simple example of how you can extend the base validator to wrap up
-your schema.
-
-### Object Literal Helpers
-
-JST includes some utility methods for working with, traversing, and manipulating
-object literals.
-
-Usage:
-
-```
-import { clone, merge, map, contains, iterate} from '@jdw/jst';
-
-const schema = require('path/to/schema.json');
-
-// iterate the properties of a schema without recursion
-iterate(schema, (key, value) => {
-    // key is the property name, value is that keys value
-});
-
-// check if an object contains some property. returns true/false
-contains(schema, 'foo');
-
-// map the properties of an object applying some function to it and return a new object
-const object = map(schema, (k, v) return v); // copy schema properties to a new object
-
-// merge two object together. defaults left-to-right, set override true for right-to-left
-const mergedObject = merge(schema, object, true); // does not override existing properties in 'schema'.
-
-// clone an object
-const object = clone(schema, true); // set boolean true to recurse, false to limit.
-```
-
-JST object methods additionally expose the `clone` function from
-the [clone](https://github.com/pvorb/node-clone) npm package for
-convenience. This method can be used to recursively clone an object literal, see
-it's documentation for more information on this functions usage.
-
 ## Contributing
 
 First fork and clone this project. Then `cd` into your project directory.
