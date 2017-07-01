@@ -1,5 +1,4 @@
-import { merge, iterate, contains } from './index';
-import * as uri from 'valid-url';
+import { merge, forIn, has } from 'lodash';
 
 /**
  * This function _dereferences_ a schema set into one logical schema in
@@ -36,8 +35,8 @@ const dereference = (schema: any, resolve = null): any => {
         // then dereference each schema in the array before eventually merging them
         // from right to left using a reducer function.
         return schema
-            .map((s) => dereference(s, resolve))
-            .reduce((accumulator, value) => merge(accumulator, value, true), {});
+            .map((scm) => dereference(scm, resolve))
+            .reduce((acc, scm) => merge(acc, scm), {});
     }
     // If schema is not an array of json objects we expect a singlular json schema
     // be provided
@@ -58,7 +57,7 @@ const dereference = (schema: any, resolve = null): any => {
 
             // if we are here, the first argument is not an array or value and we expect
             // it to be a json schema.
-            iterate(node, (key, value) => {
+            forIn(node, (value, key) => {
                 // Skip the following properties
                 if (key === 'definitions') return;
 
@@ -77,7 +76,7 @@ const dereference = (schema: any, resolve = null): any => {
                     let reference = null;
 
                     // de-reference a json uri
-                    if (uri.isUri(value)) {
+                    if (value.indexOf('http') === 0) {
                         if (!resolve)
                             throw new TypeError(
                                 'resolver function is required to dereference a json uri.')
@@ -122,7 +121,7 @@ const dereference = (schema: any, resolve = null): any => {
                             }
                             // otherwise we expect an object, validate reference token
                             else {
-                                if (!contains(acc, refToken))
+                                if (!has(acc, refToken))
                                     throw new Error(`could not dereference pointer ${value}`);
 
                                 refValue = acc[refToken];

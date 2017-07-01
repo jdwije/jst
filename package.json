@@ -17,7 +17,8 @@
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",
     "release": "cd dist && npm publish",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "test:watch": "yarn run test -- -o --watch"
   },
   "devDependencies": {
     "@types/benchmark": "^1.0.30",
@@ -25,6 +26,7 @@
     "@types/chalk": "^0.4.31",
     "@types/clone": "^0.1.30",
     "@types/jest": "^19.2.3",
+    "@types/lodash": "^4.14.68",
     "@types/node": "^7.0.21",
     "ajv": "^4.9.0",
     "benchmark": "^2.1.4",
@@ -33,11 +35,11 @@
     "ts-jest": "^20.0.6",
     "ts-lint": "^4.5.1",
     "ts-node": "^3.1.0",
-    "tslint-eslint-rules": "^4.1.1",
+    "tslint": "^5.4.3",
+    "tslint-config-temando": "^1.1.4",
     "typescript": "^2.3.3"
   },
   "dependencies": {
-    "clone": "^2.1.0",
-    "valid-url": "^1.0.9"
+    "lodash": "^4.17.4"
   }
 }
