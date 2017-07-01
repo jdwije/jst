@@ -1,7 +1,15 @@
 {
   "name": "@jdw/jst",
-  "version": "1.0.0",
-  "description": "A json schema toolkit including functions for manipulating, traversing, and de-referencing json schema",
+  "version": "2.0.0-beta.1",
+  "description": "A json schema toolkit.",
+  "keywords": [
+    "json-schema",
+    "schema",
+    "dereference"
+  ],
+  "license": "MIT",
+  "author": "Jason Wijegooneratne <admin@jwije.com>",
+  "contributors": [],
   "main": "build/index.js",
   "scripts": {
     "benchmark": "node --prof dist/__tests__/index.benchmark.js",
@@ -11,23 +19,21 @@
     "release": "cd dist && npm publish",
     "test": "jest --verbose"
   },
-  "author": "Jason Wijegooneratne <admin@jwije.com>",
-  "license": "MIT",
   "devDependencies": {
     "@types/benchmark": "^1.0.30",
     "@types/chai": "^3.5.2",
     "@types/chalk": "^0.4.31",
+    "@types/clone": "^0.1.30",
     "@types/jest": "^19.2.3",
     "@types/node": "^7.0.21",
-    "@types/clone": "^0.1.30",
     "ajv": "^4.9.0",
     "benchmark": "^2.1.4",
     "chai": "^3.5.0",
     "jest": "^20.0.4",
-    "ts-jest": "^20.0.4",
+    "ts-jest": "^20.0.6",
     "ts-lint": "^4.5.1",
-    "ts-node": "^3.0.4",
-    "tslint-eslint-rules": "^4.1.0",
+    "ts-node": "^3.1.0",
+    "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.3.3"
   },
   "dependencies": {

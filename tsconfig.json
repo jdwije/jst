@@ -1,15 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir":"./dist",
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
     "declaration": true,
-    "noUnusedLocals": true
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": false,
+    "noUnusedLocals": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
-  "exclude": [ "dist" ],
-  "include": [ "src/**/*" ]
+  "exclude": [
+    "dist"
+  ],
+  "include": [
+    "src/**/*"
+  ]
 }
