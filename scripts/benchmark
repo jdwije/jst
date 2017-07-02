@@ -1,7 +1,8 @@
-import { Suite } from 'benchmark';
-import { dereference } from './../index';
-import resolve from './mockResolve';
+#!/usr/bin/env node
 
+const Suite = require('benchmark').Suite;
+const dereference = require('./../dist/index').dereference;
+const resolve = require('./../dist/__tests__/mockResolve').default;
 const suite = new Suite();
 
 suite
@@ -16,7 +17,6 @@ suite
     })
     .on('complete', function() {
         const fns = this.filter('fastest').map('name');
-        console.log(`fastest is: ${fns}`);
     })
     .run({
         async: false,

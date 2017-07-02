@@ -3,16 +3,14 @@
   "version": "2.0.0-beta.1",
   "description": "A json schema toolkit.",
   "keywords": [
-    "json-schema",
-    "schema",
-    "dereference"
+    "json-schema"
   ],
   "license": "MIT",
   "author": "Jason Wijegooneratne <admin@jwije.com>",
   "contributors": [],
   "main": "build/index.js",
   "scripts": {
-    "benchmark": "node --prof dist/__tests__/index.benchmark.js",
+    "benchmark": "npm run build && ./scripts/benchmark",
     "build": "./scripts/package",
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",

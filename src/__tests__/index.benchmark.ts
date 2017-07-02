@@ -1,1 +1,0 @@
-require('./dereference.benchmark');
