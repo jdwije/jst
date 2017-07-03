@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { dereference } from './../index';
+import { dereference } from './../src/index';
 import resolve from './mockResolve';
 
 describe('dereference schema utility function', () => {

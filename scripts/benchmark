@@ -1,26 +1,4 @@
-#!/usr/bin/env node
+#!/bin/bash
 
-const Suite = require('benchmark').Suite;
-const dereference = require('./../dist/index').dereference;
-const resolve = require('./../dist/__tests__/mockResolve').default;
-const suite = new Suite();
-
-suite
-    .add('@jdw/jst/dereference::address#', function() {
-        return dereference(resolve('http://footown.com/generic/address#'), resolve);
-    })
-    .add('@jdw/jst/dereference::profile#', function() {
-        return dereference(resolve('http://footown.com/generic/profile+v1#'), resolve);
-    })
-    .on('cycle', function(event) {
-        console.log(String(event.target));
-    })
-    .on('complete', function() {
-        const fns = this.filter('fastest').map('name');
-    })
-    .run({
-        async: false,
-        minSamples: 250,
-    });
-
+node_modules/.bin/ts-node benchmarks/index.benchmark.ts
 
