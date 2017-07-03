@@ -10,7 +10,7 @@
   "contributors": [],
   "main": "build/index.js",
   "scripts": {
-    "benchmark": "npm run build && ./scripts/benchmark",
+    "benchmark": "./scripts/benchmark",
     "build": "./scripts/package",
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",
