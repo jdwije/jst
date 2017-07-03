@@ -1,6 +1,4 @@
 import * as derefSync from 'json-schema-deref-sync';
-import refParser from 'json-schema-ref-parser';
-
 import resolve from './../tests/mockResolve';
 import { dereference } from './../src/index';
 import benchmark from './benchmark';
@@ -13,26 +11,17 @@ const description =
 const tests = [
     {
         id: 'jst/dereference',
+        deferred: false,
         exec: () => {
             dereference(resolve('http://footown.com/generic/address#'), resolve)
         },
     },
     {
         id: 'json-schema-deref-sync',
+        deferred: false,
         exec: () => {
             derefSync(resolve('http://footown.com/generic/address#'));
         }
-    },
-    {
-        id: 'json-schmea-ref-parser',
-        exec: (defer) => {
-            return refParser.dereference(
-                resolve('http://footown.com/generic/address#'),
-                (err, x) => {
-                    defer.resolve(x);
-                }
-            );
-        },
     }
 ];
 
