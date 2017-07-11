@@ -60,7 +60,13 @@ describe('dereference schema utility function', () => {
   it('dereferences null values correctly', () => {
     const schema = resolve('http://footown.com/generic/edit-person+v1#');
     const ast = dereference(schema, resolve);
-    
     expect(ast.foo).to.eq(null);
   });
+
+  it('dereferences circular references correctly', () => {
+    const schema = resolve('http://footown.com/generic/circular#');
+    const ast = dereference(schema, resolve);
+    expect(ast).to.be.an('object');
+  });
+
 });
