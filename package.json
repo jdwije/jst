@@ -1,6 +1,6 @@
 {
   "name": "@jdw/jst",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "A json schema toolkit.",
   "keywords": [
     "json-schema"
@@ -8,7 +8,7 @@
   "license": "MIT",
   "author": "Jason Wijegooneratne <admin@jwije.com>",
   "contributors": [],
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "benchmark": "./scripts/benchmark",
     "build": "./scripts/package",

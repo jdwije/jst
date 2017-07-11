@@ -12,4 +12,4 @@ cp .* dist 2>&1 | grep -v 'omitting directory'
 yarn tsc
 
 # Copy latent files from source, recursively
-cp -rp src/__tests__/schema dist/__tests__/schema
+# cp -rp src/__tests__/schema dist/__tests__/schema
