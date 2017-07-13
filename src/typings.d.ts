@@ -1,5 +1,5 @@
 // ## JST Type Definitions
-//
+
 // JST is a library for working with JSON Schema. It aims to be both simple and
 // performant. We begin by covering JST internal data-structures and interfaces.
 declare module Jst {
