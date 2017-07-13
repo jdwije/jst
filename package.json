@@ -12,6 +12,7 @@
   "scripts": {
     "benchmark": "./scripts/benchmark",
     "build": "./scripts/package",
+    "build:docs": "docco --layout linear src/*.ts",
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",
     "release": "cd dist && npm publish",
@@ -30,6 +31,7 @@
     "benchmark": "^2.1.4",
     "chai": "^3.5.0",
     "chalk": "^2.0.1",
+    "docco": "^0.7.0",
     "install": "^0.10.1",
     "jest": "^20.0.4",
     "json-schema-deref": "^0.3.5",
