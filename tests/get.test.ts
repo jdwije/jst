@@ -16,7 +16,7 @@ describe('@jdw/jst/get', () => {
             arr: [{
                 foo: 100,
             }]
-        }]
+        }, 30]
     };
 
     it('should resolve valid JSON pointers', () => {
@@ -42,7 +42,8 @@ describe('@jdw/jst/get', () => {
 
     it('can resolve JSON pointers that reference array indexes correctly', () => {
         const cases = [
-            ['#/arr[0]/arr[0]/foo', 100],
+            ['#/arr/0/arr/0/foo', 100],
+            ['#/arr/1', 30],
         ];
         cases.forEach((t) => {
             expect(get(fixture, t[0])).to.eq(t[1]);
