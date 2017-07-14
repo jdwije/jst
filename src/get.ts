@@ -53,7 +53,7 @@ const get: Jst.Getter = (schema, pointer) => {
     // specification, replacing the character codes '~1' and '~0' with the
     // symbols '/' and '~' respectively.
     const token = fragment.replace('~1', '/').replace('~0', '~');
-    let ref = null;
+    let reference = null;
 
     // If the 'object' is array assume that `token` indicates an index in
     // this array and try to resolve it appropriately.
@@ -62,24 +62,25 @@ const get: Jst.Getter = (schema, pointer) => {
 
       if (!object.indexOf(index)) {
         throw new Error(
-          `could not dereference JSON pointer: ${pointer}. Array without `
+          `could not dereference JSON pointer: ${pointer}. Array does not have`
           + ` index: ${index}::${JSON.stringify(object)}`);
       }
 
-      ref = object[index];
+      reference = object[index];
     }
     // Otherwise if `object` *is not* an Array we expect `object` to be of
     // type Object and that `token` references a valid path in `object`.
     else {
       if (!has(object, token)) {
         throw new Error(
-          `could not dereference pointer '${pointer}' fragment ${token}`
-          + ` in object: ${JSON.stringify(object)}`);
+          `could not dereference pointer '${pointer}'. The fragment ${token}`
+          + ` is not a valid property of object: ${JSON.stringify(object)}`);
       }
-      ref = object[token];
+      reference = object[token];
     }
 
-    return ref;
+    // Now return `reference`
+    return reference;
   }, schema);
 };
 
