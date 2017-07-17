@@ -1,8 +1,10 @@
-// The `get` function takes a `schema` and a JSON `pointer` as its arguments and
-// then resolves the value in `schema` described by `pointer`. It returns the
-// value if it is found or throws an error if not.
+// The `get` function dereferences [json
+// pointers](https://tools.ietf.org/html/rfc6901) according to the IETF RFC6901
+// specification. It takes a `schema` and a json `pointer` as its arguments and
+// then returns the value in `schema` described by `pointer` throwing an error
+// if the path described by the `pointer` was not found in the `schema`.
 //
-// #### Usage:
+// ## Usage:
 //
 // ```
 // import { get } from '@jdw/jst';
@@ -21,7 +23,7 @@
 // **Throws**
 // - {Error}: If `pointer` cannot be resolved in `schema`.
 //
-// #### Dependencies
+// ## Dependencies
 
 import { has } from 'lodash';
 
