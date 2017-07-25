@@ -15,7 +15,7 @@
     "build:docs": "docco --layout linear src/*.ts",
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",
-    "release": "cd dist && npm publish",
+    "install": "npm run build",
     "test": "jest --verbose",
     "test:watch": "yarn run test -- -o --watch"
   },
