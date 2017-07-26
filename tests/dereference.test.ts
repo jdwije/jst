@@ -46,10 +46,9 @@ describe('dereference schema utility function', () => {
     expect(ast.foo).to.eq(null);
   });
 
-  xit('dereferences circular references correctly', () => {
+  it('dereferences circular references correctly', () => {
     const schema = resolve('http://footown.com/generic/circular#');
     const ast = dereference(schema, resolve);
     expect(ast).to.be.an('object');
   });
-
 });
