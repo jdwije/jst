@@ -29,7 +29,7 @@
 //
 // ## Dependencies
 
-import { forIn, merge, has, isObject, cloneDeep } from 'lodash';
+import { forIn, merge, isObject, cloneDeep } from 'lodash';
 import { getPointer, isPointer, setPointer } from './index';
 
 // ## Implementation
@@ -59,7 +59,7 @@ const dereference: Jst.dereference = (root, resolver) => {
 
   if (!(typeof root).match(/object|string|number|boolean/)) {
     throw new TypeError(
-      `@jst/dereference: argument not a valid json value: ${typeof json} | ${json}`);
+      `@jst/dereference: argument not a valid json value: ${typeof root} | ${root}`);
   }
   const circularRefs = {};
 
