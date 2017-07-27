@@ -30,7 +30,7 @@
 // ## Dependencies
 
 import { forIn, merge, isObject, cloneDeep } from 'lodash';
-import { getPointer, isPointer, setPointer } from './index';
+import { get, isPointer, set } from './index';
 
 // ## Implementation
 
@@ -145,7 +145,7 @@ const dereference: Jst.dereference = (root, resolver) => {
             }
             // de-reference a json pointer
             else if (isPointer(value)) {
-              reference = getPointer(schema, value)
+              reference = get(schema, value)
               resolution = merge(
                 resolution,
                 traverse(reference, `${path}/${key}`),
@@ -174,7 +174,7 @@ const dereference: Jst.dereference = (root, resolver) => {
       const result = traverse(schema, path);
       if (isCircular) {
         forIn(circularRefs, (value, key) => {
-          setPointer(result, key, cloneDeep(result));
+          set(result, key, cloneDeep(result));
         });
       }
       return result;

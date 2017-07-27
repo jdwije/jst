@@ -1,11 +1,11 @@
 import dereference from './dereference';
-import getPointer from './getPointer';
+import get from './get';
 import isPointer from './isPointer';
-import setPointer from './setPointer';
+import set from './set';
 
 export {
   dereference,
-  getPointer,
+  get,
   isPointer,
-  setPointer,
+  set,
 };

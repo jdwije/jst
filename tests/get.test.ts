@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import { getPointer } from './../src/index';
+import { get } from './../src/index';
 
-describe('@jdw/jst/getPointer', () => {
+describe('@jdw/jst/get', () => {
   const fixture = {
     foo: {
       bar: 20,
@@ -26,7 +26,7 @@ describe('@jdw/jst/getPointer', () => {
       ['', fixture],
     ];
     cases.forEach((t) => {
-      expect(getPointer(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0])).to.eq(t[1]);
     });
   });
 
@@ -36,7 +36,7 @@ describe('@jdw/jst/getPointer', () => {
       ['#/~1/bar/~0', 10],
     ];
     cases.forEach((t) => {
-      expect(getPointer(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0])).to.eq(t[1]);
     });
   });
 
@@ -46,7 +46,7 @@ describe('@jdw/jst/getPointer', () => {
       ['#/arr/1', 30],
     ];
     cases.forEach((t) => {
-      expect(getPointer(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0])).to.eq(t[1]);
     });
   });
 
@@ -58,7 +58,7 @@ describe('@jdw/jst/getPointer', () => {
     ];
 
     cases.forEach((t) => {
-      expect(() => getPointer(fixture, t)).to.throw();
+      expect(() => get(fixture, t)).to.throw();
     });
   });
 });
