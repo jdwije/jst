@@ -36,7 +36,7 @@ import { get, isPointer, set } from './index';
 
 // Here begins the implementation of the `dereference` function. This being
 // version 2 there are some specific goals being targeted.
-// 
+//
 // **Design Goals:**
 //
 // * JSON in JSON out. Any valid json value as defined by the spec will do.

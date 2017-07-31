@@ -51,4 +51,27 @@ describe('dereference schema utility function', () => {
     const ast = dereference(schema, resolve);
     expect(ast).to.be.an('object');
   });
+
+  it('dereferences conditional allOf references correctly', () => {
+    const schema = resolve('http://footown.com/generic/conditional#');
+    const ast = dereference(schema, resolve);
+    expect(ast).to.be.an('object');
+    expect(ast.allOf[0]).deep.eq({
+      type: 'object',
+      properties: {
+        foobar: {
+          type: 'string',
+          minLength: 1
+        }
+      }
+    });
+    expect(ast.allOf[1]).deep.eq({
+      type: 'object',
+      properties: {
+        barfoo: {
+          type: 'number',
+        }
+      }
+    });
+  });
 });

@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://footown.com/generic/conditional#",
+  "type": "object",
+  "required": [
+    "foo",
+    "bar"
+  ],
+  "allOf": [{
+    "$ref": "#/definitions/str"
+  }, {
+    "$ref": "#/definitions/num"
+  }],
+  "oneOf": [{
+    "$ref": "#/definitions/str"
+  }, {
+    "$ref": "#/definitions/num"
+  }],
+  "anyOf": [{
+    "$ref": "#/definitions/str"
+  }, {
+    "$ref": "#/definitions/num"
+  }],
+  "properties": {
+    "foo": {
+      "type": "array",
+      "items": [{
+        "type": "string",
+        "minLength": 1
+      }]
+    },
+    "bar": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2
+    }
+  },
+  "definitions": {
+    "str": {
+      "type": "object",
+      "properties": {
+        "foobar": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "num": {
+      "type": "object",
+      "properties": {
+        "barfoo": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
