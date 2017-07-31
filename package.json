@@ -1,6 +1,6 @@
 {
   "name": "@jdw/jst",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "A json schema toolkit.",
   "keywords": [
     "json-schema"
@@ -15,7 +15,6 @@
     "build:docs": "docco --layout linear src/*.ts",
     "clean": "rm -rf dist",
     "lint": "tslint -p tsconfig.json --type-check",
-    "postinstall": "npm run build",
     "test": "jest --verbose",
     "test:watch": "yarn run test -- -o --watch"
   },
