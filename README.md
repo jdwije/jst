@@ -10,7 +10,7 @@ practical utilities for some of the many specifications surrounding this
 standard such as [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03) and [json pointers](https://tools.ietf.org/html/rfc6901).
 
 For exhaustive documentation please see the project
-homepage [homepage](http://www.jwije.com/jst/index.html). For a quick overview of `jst`'s
+homepage [homepage](http://www.jwije.com/jst/typings.d.html). For a quick overview of `jst`'s
 functionality and capabilities see below.
 
 ## Quick-start
