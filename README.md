@@ -12,8 +12,9 @@ standard such as:
 - [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
 - [json pointers](https://tools.ietf.org/html/rfc6901).
 
-For exhaustive documentation please see the project homepage [homepage](). For a
-quick overview of `jst`'s functionality and capabilities see below.
+For exhaustive documentation please see the project
+homepage [homepage](http://www.jwije.com/jst/). For a quick overview of `jst`'s
+functionality and capabilities see below.
 
 ## Quick-start
 
