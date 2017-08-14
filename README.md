@@ -7,10 +7,7 @@ JST - JSON Schema Toolkit
 
 JST is a robust and modular library for working with json schema and provides
 practical utilities for some of the many specifications surrounding this
-standard such as:
-
-- [json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
-- [json pointer](https://tools.ietf.org/html/rfc6901).
+standard such as [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03) and [json pointers](https://tools.ietf.org/html/rfc6901).
 
 For exhaustive documentation please see the project
 homepage [homepage](http://www.jwije.com/jst/). For a quick overview of `jst`'s
