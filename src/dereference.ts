@@ -29,7 +29,7 @@
 //
 // ## Dependencies
 
-import { forIn, merge, isObject, cloneDeep } from 'lodash';
+import { forIn, merge, isObject } from 'lodash';
 import { get, isPointer, set } from './index';
 
 // ## Implementation
