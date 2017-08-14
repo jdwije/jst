@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>dereference.old.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>dereference.old.ts</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="dereference.old.html">
+                    dereference.old.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="dereference.html">
+                    dereference.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="get.html">
+                    get.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="typings.d.html">
+                    typings.d.ts
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre><span class="hljs-keyword">import</span> { merge, forIn, has } <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash'</span>;
+
+<span class="hljs-comment">/**
+ * This function _dereferences_ a schema set into one logical schema in
+ * accordance with the IETF JSON Reference Draft v3 specification:
+ *
+ * https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03
+ *
+ * It allows for one to inject a schema resolution function in order to provide
+ * it with referenced schema. This allows developers to be flexible in choosing
+ * there schema sources such as HTTP or in-memory resolvers.
+ *
+ * The dereference function also resolves JSON Pointers according to the IETF
+ * RFC6901 specification:
+ *
+ * https://tools.ietf.org/html/rfc6901
+ *
+ * It does so internaly rather than through an external resolver in order to
+ * remain efficient.
+ *
+ * @param {Array|Object} schema A schema or array of schema to dereference.
+ * @param {Object} resolve A function to resolve referenced schema by its id.
+ * @return {Object} The dereferenced schema as an object.
+ */</span>
+<span class="hljs-keyword">const</span> dereference = (schema: <span class="hljs-built_in">any</span>, resolve = <span class="hljs-literal">null</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>If schema is an array we dereference each schema and then merge them from
+right-to-left.</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(schema)) {</pre></div>
+        
+      
+        
+        <p>first validate our arguments assumption!</p>
+
+        
+          <div class='highlight'><pre>    schema.forEach(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> s !== <span class="hljs-string">'object'</span> &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(s))
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expect typeof object got: <span class="hljs-subst">${typeof s}</span>`</span>);
+    });</pre></div>
+        
+      
+        
+        <p>then dereference each schema in the array before eventually merging them
+from right to left using a reducer function.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">return</span> schema
+      .map(<span class="hljs-function">(<span class="hljs-params">scm</span>) =&gt;</span> dereference(scm, resolve))
+      .reduce(<span class="hljs-function">(<span class="hljs-params">acc, scm</span>) =&gt;</span> merge(acc, scm), {});
+  }</pre></div>
+        
+      
+        
+        <p>If schema is not an array of json objects we expect a singlular json schema
+be provided</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> schema === <span class="hljs-string">'object'</span> &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(schema)) {</pre></div>
+        
+      
+        
+        <p>traverse is an internal recursive function that we bind to this lexical
+scope in order to easily resolve to schema definitons whilst traversing
+an objects nested properties. This is primarily for efficiency concerns.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">const</span> traverse = <span class="hljs-function">(<span class="hljs-params">node</span>) =&gt;</span> {
+      <span class="hljs-keyword">let</span> resolution = {};
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> node !== <span class="hljs-string">'object'</span> || node === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> node;</pre></div>
+        
+      
+        
+        <p>if only one argument is provided and it is an array we must recursively
+dereference it’s individual values</p>
+
+        
+          <div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(node)) {
+        <span class="hljs-keyword">return</span> node.map(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> traverse(v));
+      }</pre></div>
+        
+      
+        
+        <p>if we are here, the first argument is not an array or value and we expect
+it to be a json schema.</p>
+
+        
+          <div class='highlight'><pre>      forIn(node, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>Skip the following properties</p>
+
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'definitions'</span>) <span class="hljs-keyword">return</span>;</pre></div>
+        
+      
+        
+        <p>If value is not an array, object, or JSON schema reference we can
+dereference it immediately. ‘typeof array’ equals ‘object’ in JS.</p>
+
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'object'</span> &amp;&amp; key !== <span class="hljs-string">'$ref'</span>) {
+          resolution[key] = value;
+        }</pre></div>
+        
+      
+        
+        <p>If we have a schema reference we must fetch it, dereference it, then merge
+it into the base schema object.</p>
+
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'$ref'</span>) {</pre></div>
+        
+      
+        
+        <p>We have two types of references - definitions which are defined
+within the current schema and external schema references which we
+have to query AJV for as such we must fetch the schema for the
+reference appropriately.</p>
+
+        
+          <div class='highlight'><pre>          <span class="hljs-keyword">let</span> reference = <span class="hljs-literal">null</span>;</pre></div>
+        
+      
+        
+        <p>de-reference a json uri</p>
+
+        
+          <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (value.indexOf(<span class="hljs-string">'http'</span>) === <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">if</span> (!resolve)
+              <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(
+                <span class="hljs-string">'resolver function is required to dereference a json uri.'</span>)
+              ;
+            reference = resolve(value);
+
+            <span class="hljs-keyword">if</span> (!reference) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`unable to resolve URI reference: <span class="hljs-subst">${value}</span>`</span>);
+
+            resolution = merge(
+              resolution,
+              dereference(reference, resolve),
+              <span class="hljs-literal">true</span>
+            );
+          }</pre></div>
+        
+      
+        
+        <p>de-reference a json pointer</p>
+
+        
+          <div class='highlight'><pre>          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (
+            value.indexOf(<span class="hljs-string">'#'</span>) === <span class="hljs-number">0</span> ||
+            value.indexOf(<span class="hljs-string">'/'</span>) === <span class="hljs-number">0</span> ||
+            value === <span class="hljs-string">''</span>
+          ) {
+            <span class="hljs-keyword">const</span> fragments = value.split(<span class="hljs-string">'/'</span>);
+
+            reference = fragments.reduce(<span class="hljs-function">(<span class="hljs-params">acc, token</span>) =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>when root document pointer return accumulator</p>
+
+        
+          <div class='highlight'><pre>              <span class="hljs-keyword">if</span> (token === <span class="hljs-string">'#'</span> || token === <span class="hljs-string">'/'</span> || token === <span class="hljs-string">''</span>)
+                <span class="hljs-keyword">return</span> acc;</pre></div>
+        
+      
+        
+        <p>decode token according to spec</p>
+
+        
+          <div class='highlight'><pre>              <span class="hljs-keyword">const</span> refToken = token.replace(<span class="hljs-string">'~1'</span>, <span class="hljs-string">'/'</span>).replace(<span class="hljs-string">'~0'</span>, <span class="hljs-string">'~'</span>);
+
+              <span class="hljs-keyword">let</span> refValue = <span class="hljs-literal">null</span>;</pre></div>
+        
+      
+        
+        <p>if current accumulator is array we must dereference the array
+index</p>
+
+        
+          <div class='highlight'><pre>              <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(acc)) {
+                <span class="hljs-keyword">const</span> index = <span class="hljs-built_in">parseInt</span>(token, <span class="hljs-number">10</span>);
+
+                <span class="hljs-keyword">if</span> (!acc.indexOf(index))
+                  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`could not dereference array index <span class="hljs-subst">${value}</span>`</span>);
+
+                refValue = acc[index];
+              }</pre></div>
+        
+      
+        
+        <p>otherwise we expect an object, validate reference token</p>
+
+        
+          <div class='highlight'><pre>              <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">if</span> (!has(acc, refToken))
+                  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`could not dereference pointer <span class="hljs-subst">${value}</span>`</span>);
+
+                refValue = acc[refToken];
+              }
+
+              <span class="hljs-keyword">return</span> refValue;
+            }, schema);
+
+            resolution = merge(
+              resolution,
+              traverse(reference),
+              <span class="hljs-literal">true</span>
+            );
+          }
+          <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+              <span class="hljs-string">`could not dereference value as a json pointer or uri: <span class="hljs-subst">${value}</span>`</span>);
+          }
+
+          <span class="hljs-keyword">if</span> (!reference)
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">ReferenceError</span>(<span class="hljs-string">`could not find a reference to <span class="hljs-subst">${value}</span>`</span>);
+        }</pre></div>
+        
+      
+        
+        <p>Otherwise the value is an array or object and we need to traverse it
+and dereference it’s properties.</p>
+
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">else</span> {
+          resolution[key] = traverse(value);
+        }
+      });
+
+      <span class="hljs-keyword">return</span> resolution;
+    };
+
+    <span class="hljs-keyword">return</span> traverse(schema);
+  }</pre></div>
+        
+      
+        
+        <p>if any other combination of arguments is provided we throw</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expected first parameter to be object or array: <span class="hljs-subst">${schema}</span>`</span>);
+  }
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> dereference;</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
