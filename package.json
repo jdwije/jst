@@ -11,6 +11,11 @@
   },
   "author": "Jason Wijegooneratne <admin@jwije.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jdwije/jst.git"
+  },
+  "bugs": "https://github.com/jdwije/jst/issues",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
