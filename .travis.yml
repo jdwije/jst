@@ -1,6 +1,27 @@
 language: node_js
-node_js:
-  - "6"
-  - "5"
-  - "4.3.2"
-  - "iojs"
+
+install:
+  - yarn
+  - yarn build:source
+  - yarn build:docs
+
+jobs:
+  include:
+    - stage: validate
+      node_js:
+        - "6"
+        - "7"
+      script:
+        - yarn test
+        - yarn benchmark
+    - stage: release
+      node_js: "6"
+      before_deploy:
+        - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npm publish
+        on:
+          tags: true
