@@ -12,7 +12,6 @@ jobs:
         - "6"
         - "7"
       script:
-        - yarn lint
         - yarn test
     - stage: benchmark
       node_js:
