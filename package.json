@@ -22,6 +22,11 @@
     "test": "jest --verbose",
     "test:watch": "yarn run test -- -o --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jdwije/jst.git"
+  },
+  "bugs": "https://github.com/jdwije/jst/issues",
   "devDependencies": {
     "@types/benchmark": "^1.0.30",
     "@types/chai": "^3.5.2",
