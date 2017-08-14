@@ -10,7 +10,9 @@
   ],
   "license": "MIT",
   "author": "Jason Wijegooneratne <admin@jwije.com>",
-  "contributors": [],
+  "contributors": [
+    "Brendan Abbott <brendan@bloodbone.ws>"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "benchmark": "./scripts/benchmark",
