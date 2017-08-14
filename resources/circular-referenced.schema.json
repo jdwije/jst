@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://footown.com/generic/circular-referenced#",
+  "type": "object",
+  "required": [
+    "circular"
+  ],
+  "properties": {
+    "circular": {
+      "$ref": "http://footown.com/generic/circular#"
+    }
+  }
+}

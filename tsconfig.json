@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "declaration": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": false,
+    "noUnusedLocals": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "dist"
+  ],
+  "include": [
+    "src/**/*"
+  ]
+}

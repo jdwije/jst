@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>set.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>set.ts</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="dereference.html">
+                    dereference.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="get.html">
+                    get.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="isPointer.html">
+                    isPointer.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="set.html">
+                    set.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="typings.d.html">
+                    typings.d.ts
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre><span class="hljs-keyword">import</span> { has } <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span>: Jst.setPointer = <span class="hljs-function">(<span class="hljs-params">obj, pointer, value</span>) =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty
+string ‘’. So as a first step, we check that this assumption is true and
+bail if not.</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!(pointer.indexOf(<span class="hljs-string">'#'</span>) === <span class="hljs-number">0</span> || pointer.indexOf(<span class="hljs-string">'/'</span>) === <span class="hljs-number">0</span> || pointer === <span class="hljs-string">''</span>)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`invalid JSON pointer specified: '<span class="hljs-subst">${pointer}</span>'`</span>);
+  }</pre></div>
+        
+      
+        
+        <p>If this check passes we have a valid <code>pointer</code>. In order to dereference
+its value, we will split the pointer into its orthogonal pieces and then
+iterate <code>schema</code> checking from left to right that each piece of <code>pointer</code>
+references a valid path in <code>schema</code>.</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">const</span> fragments = pointer.split(<span class="hljs-string">'/'</span>);
+  <span class="hljs-keyword">let</span> ref = obj;
+  <span class="hljs-keyword">return</span> fragments.forEach(<span class="hljs-function">(<span class="hljs-params">fragment, index</span>) =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>If <code>fragment</code> points to the root path of <code>object</code> we can just return
+the <code>object</code> itself.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">if</span> (fragment === <span class="hljs-string">'#'</span> || fragment === <span class="hljs-string">'/'</span> || fragment === <span class="hljs-string">''</span>) {
+      <span class="hljs-keyword">return</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Here we decode <code>fragment</code> according to the JSON pointer
+specification, replacing the character codes ‘~1’ and ‘~0’ with the
+symbols ‘/‘ and ‘~’ respectively.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">const</span> token = fragment.replace(<span class="hljs-string">'~1'</span>, <span class="hljs-string">'/'</span>).replace(<span class="hljs-string">'~0'</span>, <span class="hljs-string">'~'</span>);</pre></div>
+        
+      
+        
+        <p>If the ‘object’ is array assume that <code>token</code> indicates an index in
+this array and try to resolve it appropriately.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(ref)) {
+      <span class="hljs-keyword">const</span> i = <span class="hljs-built_in">parseInt</span>(token, <span class="hljs-number">10</span>);
+
+      <span class="hljs-keyword">if</span> (!ref.indexOf(i)) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+          <span class="hljs-string">`could not dereference JSON pointer: <span class="hljs-subst">${pointer}</span>. Array does not have`</span>
+          + <span class="hljs-string">` index: <span class="hljs-subst">${index}</span>::<span class="hljs-subst">${JSON.stringify(obj)}</span>`</span>);
+      }
+
+      <span class="hljs-keyword">if</span> ((index + <span class="hljs-number">1</span>) === fragments.length) {
+        ref[i] = value;
+        <span class="hljs-keyword">return</span>;
+      }
+
+      ref = ref[i];
+    }</pre></div>
+        
+      
+        
+        <p>Otherwise if <code>object</code> <em>is not</em> an Array we expect <code>object</code> to be of
+type Object and that <code>token</code> references a valid path in <code>object</code>.</p>
+
+        
+          <div class='highlight'><pre>    <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">if</span> (!has(ref, token)) {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+          <span class="hljs-string">`could not dereference pointer '<span class="hljs-subst">${pointer}</span>'. The fragment <span class="hljs-subst">${token}</span>`</span>
+          + <span class="hljs-string">` is not a valid property of object: <span class="hljs-subst">${JSON.stringify(obj, null, 2)}</span>`</span>);
+      }
+
+      <span class="hljs-keyword">if</span> ((index + <span class="hljs-number">1</span>) === fragments.length) {
+        ref[token] = value;
+        <span class="hljs-keyword">return</span>;
+      }
+      ref = ref[token];
+    }
+  });
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">set</span>;</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

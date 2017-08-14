@@ -1,31 +1,57 @@
 {
   "name": "@jdw/jst",
-  "version": "1.0.0",
-  "description": "A json schema toolkit including functions for manipulating, traversing, and de-referencing json schema",
-  "main": "build/index.js",
-  "scripts": {
-    "clean": "rm -rf build",
-    "build": "npm test && npm run clean && babel src -d build",
-    "test": "mocha --compilers js:babel-core/register",
-    "prepublish": "npm run build"
+  "version": "2.0.0-beta.6",
+  "engines": {
+    "node": ">=4"
   },
-  "author": "Jason Wijegooneratne <admin@jwije.com>",
+  "description": "A json schema toolkit.",
+  "keywords": [
+    "json-schema"
+  ],
   "license": "MIT",
+  "author": "Jason Wijegooneratne <admin@jwije.com>",
+  "contributors": [],
+  "main": "dist/index.js",
+  "scripts": {
+    "benchmark": "./scripts/benchmark",
+    "build": "npm run build:source && npm run build:docs",
+    "build:source": "./scripts/package",
+    "build:docs": "docco --layout linear src/*.ts",
+    "clean": "rm -rf dist",
+    "lint": "tslint -p tsconfig.json --type-check",
+    "test": "jest --verbose",
+    "test:watch": "yarn run test -- -o --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:jdwije/jst.git"
   },
   "bugs": "https://github.com/jdwije/jst/issues",
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.18.2",
-    "babel-preset-es2015": "^6.18.0",
+    "@types/benchmark": "^1.0.30",
+    "@types/chai": "^3.5.2",
+    "@types/chalk": "^0.4.31",
+    "@types/clone": "^0.1.30",
+    "@types/lodash": "^4.14.68",
+    "@types/jest": "^20.0.6",
+    "@types/node": "^7.0.21",
+    "ajv": "^4.9.0",
+    "benchmark": "^2.1.4",
     "chai": "^3.5.0",
-    "mocha": "^3.1.2"
+    "chalk": "^2.0.1",
+    "docco": "^0.7.0",
+    "jest": "^20.0.4",
+    "json-schema-deref": "^0.3.5",
+    "json-schema-deref-sync": "^0.3.3",
+    "json-schema-ref-parser": "^3.1.2",
+    "ts-jest": "^20.0.6",
+    "ts-lint": "^4.5.1",
+    "ts-node": "^3.1.0",
+    "tslint": "^5.4.3",
+    "tslint-config-temando": "^1.1.4",
+    "typescript": "^2.3.3"
   },
   "dependencies": {
-    "ajv": "^4.9.0",
-    "clone": "^2.1.0",
-    "valid-url": "^1.0.9"
+    "lodash": "^4.17.4"
   }
 }
