@@ -1,22 +1,19 @@
 JST - JSON Schema Toolkit
 ===
 
-> A utility belt for working with [JSON schema](http://json-schema.org/).
+> A utility belt for working with [json schema](http://json-schema.org/).
 
 [![Build Status](https://travis-ci.org/jdwije/jst.svg?branch=master)](https://travis-ci.org/jdwije/jst)
 
-JST is a toolkit to help work with JSON schema. It currently includes the
-following features:
+JST is a robust and modular library for working with json schema and provides
+practical utilities for some of the many specifications surrounding this
+standard such as:
 
-- A performant schema de-referencing function with full json pointer support and
-  a flexible schema resolution mechanism.
-- A generic validator object that wraps AJV with some convenience methods for
-  loading your schema set.
-- Object literal helper functions for deep traversal and manipulation of object
-  literals.
+- [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
+- [json pointers](https://tools.ietf.org/html/rfc6901).
 
-For a full list of available methods and exports, including more detailed
-documentation see: https://doc.esdoc.org/github.com/jdwije/jst/.
+For exhaustive documentation please see the project homepage [homepage](). For a
+quick overview of `jst`'s functionality and capabilities see below.
 
 ## Quick-start
 
@@ -27,25 +24,12 @@ npm i --save @jdw/jst
 
 Import and begin using the functions (ES6):
 ```
-import { merge, map, iterate, resolve } from '@jdw/jst';
+import { dereference, get, set, isPointer } from '@jdw/jst';
 ```
 
 ## API
 
 ### dereference
-
-The `dereference` function can de-reference a schema set in accordance with
-the [json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
-and [json pointer](https://tools.ietf.org/html/rfc6901) specifications. It is a
-flexible, performant, and complete dereferencer implementation and is being used
-in production at my current employer Temando. Here are some comparative timings
-when dereferencing
-the [advanced schema example](http://json-schema.org/example2.html) given on
-json-schema.org.
-
-|           | jst  | json-schema-deref | json-scehma-deref-sync | json-schema-ref-parser |
-|-----------|------|-------------------|------------------------|------------------------|
-| time [ms] | 3.51 | 20.11             | 17.76                  | 15.94                  |
 
 #### dereference( schema )
 
