@@ -9,8 +9,8 @@ JST is a robust and modular library for working with json schema and provides
 practical utilities for some of the many specifications surrounding this
 standard such as:
 
-- [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
-- [json pointers](https://tools.ietf.org/html/rfc6901).
+- [json reference](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
+- [json pointer](https://tools.ietf.org/html/rfc6901).
 
 For exhaustive documentation please see the project
 homepage [homepage](http://www.jwije.com/jst/). For a quick overview of `jst`'s
@@ -30,14 +30,73 @@ import { dereference, get, set, isPointer } from '@jdw/jst';
 
 ## API
 
+### get
+
+Retrieve a value from an object as referenced by a json pointer.
+
+* `get(object: Object, pointer: String) => any`
+
+#### Usage
+
+```javascript
+import { get } from '@jdw/jst';
+
+const data = {
+    foo: 99
+};
+
+get(data, '#/foo'); // 99
+```
+
+### set
+
+Sets a value on an object as referenced by a json pointer;
+
+* `set(object: Object, pointer: String, value: any) => void`
+
+#### Usage
+
+```javascript
+import { set } from '@jdw/jst';
+
+const data = {
+    foo: 99
+};
+
+set(data, '#/foo', 77); 
+
+console.log(data); // { foo: 77 }
+```
+
+#### isPointer
+
+Performs a logical test on a string to determine if it is a json pointer.
+
+* `isPointer(subject: string) => boolean`
+
+#### Usage
+
+```javascript
+import { isPointer } from '@jdw/jst';
+
+console.log(isPointer('#/foo/0/blah')); // true
+console.log(isPointer('#'));            // true
+console.log(isPointer('some string'));  // false
+```
+
 ### dereference
 
-#### dereference( schema )
+Dereferences a schema according to the [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03) specification.
+
+* `dereference(schema: Object)`
+* `dereference(schema: Object, resolve: (id) => Object)`
+
+#### Usage
 
 In it's most basic form `dereference` takes a schema without any external
 references as an argument and resolves any of it's internal pointers.
 
-```
+```javascript
 import { dereference } from '@jdw/jst';
 
 const schema = {
@@ -57,7 +116,7 @@ const schema = {
 console.log( dereference(schema) );
 ```
 
-This de-references to:
+This dereferences to:
 
 ```
 {
@@ -67,8 +126,6 @@ This de-references to:
     }
 }
 ```
-
-#### dereference ( schema, resolve )
 
 The `dereference` function may be injected with a schema resolver function as
 its second argument. The resolve function is expected to take a schema id (uri
@@ -86,63 +143,24 @@ dereference(schema, (id) => {
 });
 ```
 
-Here is an example of fetching schema by id from the web using the `node-wget`
-package:
-
-```
-import wget from 'node-wget';
-
-dereferece(schema, (id) => {
-    return wget(id);
-});
-```
-
-#### dereference ( array, resolve )
-
-When an array of schema is provided to the `dereference` function, it
-dereferences each of these before merging them from right to left:
-
-```
-schema = [
-    {
-      'boats': {
-          'type': 'string'
-      }
-    },
-    {
-     'boats': {
-         'enum': ['yacht', 'cruiser', 'dingy']
-     }
-    }
-]
-
-dereference(schema);
-```
-
-The above operations would output a de-referenced schema of:
-```
-{
-    'boats': {
-        'type': 'string',
-        'enum': ['yacht', 'cruiser', 'dingy']
-    }
-},
-
-```
-
 ## Contributing
 
-First fork and clone this project. Then `cd` into your project directory.
+Contributions to JST are most welcome. To get started with development:
 
-Install dependencies:
-```
-yarn
-```
+### Requirements
 
-Run tests:
-```
-npm test
-```
+- nodeJS >= 6
+
+### Setup
+
+Fork and clone this project then navigate to the project directory. Open up a
+terminal and run the following commands and execute `npm i` to install the
+projects development dependencies, try the following scripts out to get started -
+you can find more in `package.json`.
+
+- `npm build`: build all source code and documentation
+- `npm test`: run all unit test.
+- `npm benchmark`: run the benchmark suite.
 
 Make your changes and commit your code. When you are ready, send a pull request
 to this repository.
