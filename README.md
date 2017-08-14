@@ -142,7 +142,8 @@ dereference(schema, (id) => {
 
 ## Contributing
 
-Contributions to JST are most welcome. To get started with development:
+Contributions to JST are most welcome, here we outline how to get setup for
+development.
 
 ### Requirements
 
