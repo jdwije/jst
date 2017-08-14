@@ -74,4 +74,13 @@ describe('dereference schema utility function', () => {
       }
     });
   });
+
+  it('can dereference referenced circular schema correctly', () => {
+    const schema = require('./../resources/circular-referenced.schema.json');
+
+    const ast = dereference(schema, resolve);
+
+    expect(ast).to.be.an('object');
+    expect(ast.properties.circular.properties.circle.id).to.eq('http://footown.com/generic/circular#');
+  });
 });

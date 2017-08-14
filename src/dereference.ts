@@ -139,7 +139,7 @@ const dereference: Jst.dereference = (root, resolver) => {
                 );
               } else {
                 reference = resolution;
-                circularRefs[path] = value;
+                circularRefs[path] = schema;
                 isCircular = true;
               }
             }
@@ -172,11 +172,7 @@ const dereference: Jst.dereference = (root, resolver) => {
       };
 
       const result = traverse(schema, path);
-      if (isCircular) {
-        forIn(circularRefs, (value, key) => {
-          set(result, key, cloneDeep(result));
-        });
-      }
+
       return result;
     }
     // if any other combination of arguments is provided we throw
@@ -185,7 +181,20 @@ const dereference: Jst.dereference = (root, resolver) => {
     }
   };
 
-  return walk(root, resolver);
+  const result = walk(root, resolver);
+
+  // We can now handle any circular references in the schema by iterating our
+  // store of circular references encountered whilst processing the schema. We will
+  // only dereference a circular schema once, I could write a monologue about
+  // this topic but let it suffice to say JST does not make the decision what is
+  // the correct amount of _circular depth_ to dereference, we only do so
+  // once. Users can simply call `dereference` again with the resultant schema
+  // to get another level of nesting.
+  forIn(circularRefs, (value, key) => {
+    set(result, key.split('$ref/').join(''), value);
+  });
+
+  return result;
 };
 
 export default dereference;
