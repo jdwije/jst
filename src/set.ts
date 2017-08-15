@@ -1,4 +1,4 @@
-import { has } from 'lodash';
+import has from 'lodash.has';
 
 export const set: Jst.setPointer = (obj, pointer, value) => {
 

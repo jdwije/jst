@@ -1,4 +1,4 @@
-import { forIn } from 'lodash';
+import forIn from 'lodash.forin';
 import benchmark from './benchmark';
 
 const schema = require('./../resources/temando.swagger.json');

@@ -29,7 +29,9 @@
 //
 // ## Dependencies
 
-import { forIn, isObject, merge } from 'lodash';
+import forIn from 'lodash.forin';
+import isObject from 'lodash.isobject';
+import merge from 'lodash.merge';
 import { get, isPointer, set } from './index';
 
 // ## Implementation
@@ -45,6 +47,9 @@ import { get, isPointer, set } from './index';
 // * Caching of schema lookups.
 // * Cleaner and more modular design of codebase. It is ok to sacrifice
 //   performance for this.
+
+const isHttp: RegExp = /^http/;
+const isRemoteRef = (ref: string): boolean => isHttp.test(ref);
 
 export const dereference: Jst.dereference = (root, resolver) => {
   // ### JSON In, JSON Out
@@ -126,7 +131,7 @@ export const dereference: Jst.dereference = (root, resolver) => {
             // Here we resolve a JSON reference (uri). In order to do so
             // correctly we must make a distinction between external
             // references and internal (circular) references.
-            if (value.indexOf('http') === 0) {
+            if (isRemoteRef(value)) {
               if (!resolve) {
                 throw new TypeError(
                   'argument: resolver is required to dereference a json uri.');

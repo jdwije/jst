@@ -25,7 +25,7 @@
 //
 // ## Dependencies
 
-import { has } from 'lodash';
+import has from 'lodash.has';
 
 // #### Implementation
 
