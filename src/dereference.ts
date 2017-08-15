@@ -29,9 +29,9 @@
 //
 // ## Dependencies
 
-import forIn from 'lodash.forin';
-import isObject from 'lodash.isobject';
-import merge from 'lodash.merge';
+import * as forIn from 'lodash.forin';
+import * as isObject from 'lodash.isobject';
+import * as merge from 'lodash.merge';
 import { get, isPointer, set } from './index';
 
 // ## Implementation
