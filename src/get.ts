@@ -31,7 +31,7 @@ import { has } from 'lodash';
 
 // The `get` function implements the `Jst.Getter` signature as described in
 // [typings.d.ts](typings.d.html).
-const get: Jst.getPointer = (schema, pointer) => {
+export const get: Jst.getPointer = (schema, pointer) => {
   // A JSON `pointer` must begin with the symbols '#', '/' or be an empty
   // string ''. So as a first step, we check that this assumption is true and
   // bail if not.
@@ -69,10 +69,9 @@ const get: Jst.getPointer = (schema, pointer) => {
       }
 
       reference = object[index];
-    }
     // Otherwise if `object` *is not* an Array we expect `object` to be of
     // type Object and that `token` references a valid path in `object`.
-    else {
+    } else {
       if (!has(object, token)) {
         throw new Error(
           `could not dereference pointer '${pointer}'. The fragment ${token}`
@@ -85,5 +84,3 @@ const get: Jst.getPointer = (schema, pointer) => {
     return reference;
   }, schema);
 };
-
-export default get;

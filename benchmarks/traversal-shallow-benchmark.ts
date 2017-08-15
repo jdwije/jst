@@ -25,16 +25,14 @@ const tests = [
       for (const key of Object.keys(schema)) {
         return key;
       }
-    }
+    },
   },
   {
     id: 'lodash/object/forIn',
     deferred: false,
     exec: () => {
-      forIn(schema, function(value) {
-        return value;
-      });
-    }
+      forIn(schema, (value) => value);
+    },
   },
   {
     id: 'ES5/while-loop',
@@ -48,10 +46,10 @@ const tests = [
       while (i < len) {
         prop = keys[i];
         i += 1;
-        return prop;;
+        return prop;
       }
-    }
-  }
+    },
+  },
 ];
 
 benchmark(title, description, tests);

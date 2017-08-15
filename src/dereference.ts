@@ -29,7 +29,7 @@
 //
 // ## Dependencies
 
-import { forIn, merge, isObject } from 'lodash';
+import { forIn, isObject, merge } from 'lodash';
 import { get, isPointer, set } from './index';
 
 // ## Implementation
@@ -46,7 +46,7 @@ import { get, isPointer, set } from './index';
 // * Cleaner and more modular design of codebase. It is ok to sacrifice
 //   performance for this.
 
-const dereference: Jst.dereference = (root, resolver) => {
+export const dereference: Jst.dereference = (root, resolver) => {
   // ### JSON In, JSON Out
   //
   // The [json specification](http://www.ietf.org/rfc/rfc4627.txt) section 2.1
@@ -69,8 +69,9 @@ const dereference: Jst.dereference = (root, resolver) => {
     if (Array.isArray(schema)) {
       // first validate our arguments assumption!
       schema.forEach((s) => {
-        if (typeof s !== 'object' && !Array.isArray(s))
+        if (typeof s !== 'object' && !Array.isArray(s)) {
           throw new TypeError(`expect typeof object got: ${typeof s}`);
+        }
       });
 
       // then dereference each schema in the array before eventually merging them
@@ -78,40 +79,44 @@ const dereference: Jst.dereference = (root, resolver) => {
       return schema
         .map((scm, index) => walk(scm, resolve, `${path}/${index}`))
         .reduce((acc, scm) => merge(acc, scm), {});
-    }
+
     // If schema is not an array of json objects we expect a singlular json schema
     // be provided
-    else if (isObject(schema)) {
+    } else if (isObject(schema)) {
       const schemaId = schema.id || undefined;
       let isCircular = false;
       // traverse is an internal recursive function that we bind to this lexical
-      // scope in order to easily resolve to schema definitons whilst traversing
+      // scope in order to easily resolve to schema definitions whilst traversing
       // an objects nested properties. This is primarily for efficiency concerns.
-      const traverse = (node, path: string = '#') => {
+      const traverse = (node, nodePath: string = '#') => {
         let resolution = {};
 
-        if (typeof node !== 'object' || node === null) return node;
+        if (typeof node !== 'object' || node === null) {
+          return node;
+        }
 
         // if only one argument is provided and it is an array we must recursively
         // dereference it's individual values
         if (Array.isArray(node)) {
-          return node.map((v, index) => traverse(v, `${path}/${index}`));
+          return node.map((v, index) => traverse(v, `${nodePath}/${index}`));
         }
 
         // if we are here, the first argument is not an array or value and we expect
         // it to be a json schema.
         forIn(node, (value, key) => {
           // Skip the following properties
-          if (key === 'definitions') return;
+          if (key === 'definitions') {
+            return;
+          }
 
           // If value is not an array, object, or JSON schema reference we can
           // dereference it immediately. 'typeof array' equals 'object' in JS.
           if (typeof value !== 'object' && key !== '$ref') {
             resolution[key] = value;
-          }
+
           // If we have a schema reference we must fetch it, dereference it, then merge
           // it into the base schema object.
-          else if (key === '$ref') {
+          } else if (key === '$ref') {
             // We have two types of references - definitions which are defined
             // within the current schema and external schema references which we
             // have to query AJV for as such we must fetch the schema for the
@@ -130,29 +135,30 @@ const dereference: Jst.dereference = (root, resolver) => {
               if (value !== schemaId) {
                 reference = resolve(value);
 
-                if (!reference) throw new Error(`unable to resolve URI reference: ${value}`);
+                if (!reference) {
+                  throw new Error(`unable to resolve URI reference: ${value}`);
+                }
 
                 resolution = merge(
                   resolution,
-                  walk(reference, resolve, `${path}/${key}`),
-                  true
+                  walk(reference, resolve, `${nodePath}/${key}`),
+                  true,
                 );
               } else {
                 reference = resolution;
-                circularRefs[path] = schema;
+                circularRefs[nodePath] = schema;
                 isCircular = true;
               }
-            }
+
             // de-reference a json pointer
-            else if (isPointer(value)) {
-              reference = get(schema, value)
+            } else if (isPointer(value)) {
+              reference = get(schema, value);
               resolution = merge(
                 resolution,
-                traverse(reference, `${path}/${key}`),
-                true
+                traverse(reference, `${nodePath}/${key}`),
+                true,
               );
-            }
-            else {
+            } else {
               throw new Error(
                 `could not dereference value as a json pointer or uri: ${value}`);
             }
@@ -160,23 +166,21 @@ const dereference: Jst.dereference = (root, resolver) => {
             if (!reference) {
               throw new ReferenceError(`could not find a reference to ${value}`);
             }
-          }
+
           // Otherwise the value is an array or object and we need to traverse it
           // and dereference it's properties.
-          else {
-            resolution[key] = traverse(value, `${path}/${key}`);
+          } else {
+            resolution[key] = traverse(value, `${nodePath}/${key}`);
           }
         });
 
         return resolution;
       };
 
-      const result = traverse(schema, path);
+      return traverse(schema, path);
 
-      return result;
-    }
     // if any other combination of arguments is provided we throw
-    else {
+    } else {
       throw new TypeError(`expected first parameter to be object or array: ${schema}`);
     }
   };
@@ -196,5 +200,3 @@ const dereference: Jst.dereference = (root, resolver) => {
 
   return result;
 };
-
-export default dereference;

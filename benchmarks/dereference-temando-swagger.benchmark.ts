@@ -1,13 +1,14 @@
 import * as derefSync from 'json-schema-deref-sync';
-import * as refParser from 'json-schema-ref-parser';
-import resolve from './../tests/mockResolve';
+import * as $RefParser from 'json-schema-ref-parser';
 import { dereference } from './../src/index';
+import resolve from './../tests/mockResolve';
 import benchmark from './benchmark';
 
 const title = 'jst/dereference comparision - temando.swagger.json';
 const description =
     'This benchmark tests the performance of the jst/dereference function using ' +
-    'the Temando Phoenix API swagger payload. This is a large json payload.'
+    'the Temando Phoenix API swagger payload. This is a large json payload.';
+const refParser = new $RefParser();
 const tests = [
     {
         id: 'jst/dereference',

@@ -1,8 +1,15 @@
-const isPointer = (input: string): boolean => {
-  if (typeof input !== 'string') return false;
-  else if (input === '') return true;
-  else if (input.match(/^#|^\//) !== null) return true;
-  else return false;
-}
+export const isPointer = (input: string): boolean => {
+  if (typeof input !== 'string') {
+    return false;
+  }
 
-export default isPointer;
+  if (input === '') {
+    return true;
+  }
+
+  if (input.match(/^#|^\//) !== null) {
+    return true;
+  }
+
+  return false;
+};
