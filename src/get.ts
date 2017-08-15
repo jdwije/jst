@@ -26,6 +26,7 @@
 // ## Dependencies
 
 import * as has from 'lodash.has';
+import { isPointer } from './isPointer';
 
 // #### Implementation
 
@@ -35,7 +36,7 @@ export const get: Jst.getPointer = (schema, pointer) => {
   // A JSON `pointer` must begin with the symbols '#', '/' or be an empty
   // string ''. So as a first step, we check that this assumption is true and
   // bail if not.
-  if (!(pointer.indexOf('#') === 0 || pointer.indexOf('/') === 0 || pointer === '')) {
+  if (!isPointer(pointer)) {
     throw new Error(`invalid JSON pointer specified: '${pointer}'`);
   }
 
