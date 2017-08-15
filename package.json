@@ -14,6 +14,9 @@
     "Brendan Abbott <brendan@bloodbone.ws>"
   ],
   "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "benchmark": "./scripts/benchmark",
     "build": "npm run build:source && npm run build:docs",
@@ -34,8 +37,8 @@
     "@types/chai": "^3.5.2",
     "@types/chalk": "^0.4.31",
     "@types/clone": "^0.1.30",
-    "@types/lodash": "^4.14.68",
     "@types/jest": "^20.0.6",
+    "@types/lodash": "^4.14.68",
     "@types/node": "^7.0.21",
     "ajv": "^4.9.0",
     "benchmark": "^2.1.4",
@@ -54,6 +57,9 @@
     "typescript": "^2.3.3"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash.forin": "^4.4.0",
+    "lodash.has": "^4.5.2",
+    "lodash.isobject": "^3.0.2",
+    "lodash.merge": "^4.6.0"
   }
 }
