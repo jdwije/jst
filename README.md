@@ -59,7 +59,7 @@ const data = {
     foo: 99
 };
 
-set(data, '#/foo', 77); 
+set(data, '#/foo', 77);
 
 console.log(data); // { foo: 77 }
 ```
@@ -146,7 +146,7 @@ development.
 
 ### Requirements
 
-- nodeJS >= 6
+- NodeJS >= 6
 
 ### Setup
 
@@ -157,9 +157,7 @@ you can find more in `package.json`.
 
 - `npm build`: build all source code and documentation
 - `npm test`: run all unit test.
-- `npm benchmark`: run the benchmark suite.
+- `npm benchmark`: run the benchmark suite (requires `npm build` to have been run)
 
 Make your changes and commit your code. When you are ready, send a pull request
 to this repository.
-
-

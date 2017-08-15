@@ -1,6 +1,6 @@
 import * as derefSync from 'json-schema-deref-sync';
 import * as $RefParser from 'json-schema-ref-parser';
-import { dereference } from './../src/index';
+import { dereference } from './../dist/index';
 import resolve from './../tests/mockResolve';
 import benchmark from './benchmark';
 
