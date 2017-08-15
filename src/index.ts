@@ -56,7 +56,6 @@ import isPointer from './isPointer';
 // var jst = require('@jdw/jst');                               // ES2015
 // ```
 
-// ````
 export {
   dereference,
   get,
