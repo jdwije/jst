@@ -1,8 +1,7 @@
 JST - JSON Schema Toolkit
 ===
 
-> A utility belt for working with [json schema](http://json-schema.org/).
-
+> A library for working with [json schema](http://json-schema.org/).
 [![Build Status](https://travis-ci.org/jdwije/jst.svg?branch=master)](https://travis-ci.org/jdwije/jst)
 
 JST is a robust and modular library for working with json schema and provides
