@@ -1,6 +1,6 @@
 import * as derefSync from 'json-schema-deref-sync';
-import resolve from './../tests/mockResolve';
 import { dereference } from './../src/index';
+import resolve from './../tests/mockResolve';
 import benchmark from './benchmark';
 
 const title = 'jst/dereference comparision: http://footown.com/generic/address#';
@@ -13,7 +13,7 @@ const tests = [
         id: 'jst/dereference',
         deferred: false,
         exec: () => {
-            dereference(resolve('http://footown.com/generic/address#'), resolve)
+            dereference(resolve('http://footown.com/generic/address#'), resolve);
         },
     },
     {

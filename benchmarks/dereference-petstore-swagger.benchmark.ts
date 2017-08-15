@@ -1,14 +1,15 @@
 import * as derefSync from 'json-schema-deref-sync';
-import * as refParser from 'json-schema-ref-parser';
-import resolve from './../tests/mockResolve';
+import * as $RefParser from 'json-schema-ref-parser';
 import { dereference } from './../src/index';
+import resolve from './../tests/mockResolve';
 import benchmark from './benchmark';
 
 const title = 'jst/dereference comparision - petstore.swagger.json';
 const description =
     'This benchmark tests the performance of the jst/dereference function using ' +
     'the demo Petstore API swagger from the open api homepage. This is a medium ' +
-    'sized json payload.'
+    'sized json payload.';
+const refParser = new $RefParser();
 const tests = [
     {
         id: 'jst/dereference',

@@ -15,7 +15,7 @@
 
 // * [documentation](dereference.html)
 
-import dereference from './dereference';
+import { dereference } from './dereference';
 
 // ### get(object: Object, pointer: String)
 
@@ -23,7 +23,7 @@ import dereference from './dereference';
 
 // * [documentation](get.html)
 
-import get from './get';
+import { get } from './get';
 
 // ### set(object: Object, pointer: String, value: any)
 
@@ -31,7 +31,7 @@ import get from './get';
 
 // * [documentation](set.html)
 
-import set from './set';
+import { set } from './set';
 
 // ### isPointer(string: string)
 
@@ -39,7 +39,7 @@ import set from './set';
 
 // * [documentation](isPointer.html)
 
-import isPointer from './isPointer';
+import { isPointer } from './isPointer';
 
 // ## Usage
 
@@ -62,4 +62,3 @@ export {
   isPointer,
   set,
 };
-

@@ -1,6 +1,6 @@
 import { has } from 'lodash';
 
-const set: Jst.setPointer = (obj, pointer, value) => {
+export const set: Jst.setPointer = (obj, pointer, value) => {
 
   // A JSON `pointer` must begin with the symbols '#', '/' or be an empty
   // string ''. So as a first step, we check that this assumption is true and
@@ -44,10 +44,9 @@ const set: Jst.setPointer = (obj, pointer, value) => {
       }
 
       ref = ref[i];
-    }
     // Otherwise if `object` *is not* an Array we expect `object` to be of
     // type Object and that `token` references a valid path in `object`.
-    else {
+    } else {
       if (!has(ref, token)) {
         throw new Error(
           `could not dereference pointer '${pointer}'. The fragment ${token}`
@@ -62,5 +61,3 @@ const set: Jst.setPointer = (obj, pointer, value) => {
     }
   });
 };
-
-export default set;
