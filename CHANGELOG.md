@@ -8,10 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.0.0] - 2017-08-14
 
 ### Change
-- Refactored code to typescript.
+- Re-factored code to typescript.
+- use `isPointer` internally now.
 
 ### Remove
-- Object manipulation functionality has been droped from JST (the `merge`,
+- Object manipulation functionality has been dropped from JST (the `merge`,
   `contains`, `iterate` functions). We now use `lodash` instead.
 - The `Validator` class has been removed, roll this out yourselves.
 
@@ -19,10 +20,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - A changelog!
 - Comprehensive benchmark suite for all internal functionality.
 - Json pointer `get` and `set` functions.
-- More documentation using the `docco` package, we now publish this to guthub pages as well.
+- More documentation using the `docco` package, we now publish this to Github
+  pages as well.
+- `lint` step to `travis-ci.yml`
+- `benchmark` step to `travis-ci.yml`
 
 ### Fix
 - `dereference` circular schema dereferencing.
+- fixed linting
+- `lodash` imports, build size reduced.
 
 ## [1.0.0] - 2017-06-25
 
