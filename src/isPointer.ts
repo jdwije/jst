@@ -1,3 +1,4 @@
+// A JSON `pointer` must begin with the symbols '#', '/' or be an empty string ''.
 export const isPointer = (input: string): boolean => {
   if (typeof input !== 'string') {
     return false;
@@ -7,7 +8,7 @@ export const isPointer = (input: string): boolean => {
     return true;
   }
 
-  if (input.match(/^#|^\//) !== null) {
+  if (/^#|^\//.test(input)) {
     return true;
   }
 
