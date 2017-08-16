@@ -102,7 +102,9 @@ dereference(schema); <span class="hljs-comment">// { foo: 123, definitions: { fo
 
         
           <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { forIn, merge, isObject } <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> forIn <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.forin'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> isObject <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.isobject'</span>;
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> merge <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.merge'</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;</pre></div>
         
       
@@ -126,7 +128,10 @@ performance for this.</li>
 
         
           <div class='highlight'><pre>
-<span class="hljs-keyword">const</span> dereference: Jst.dereference = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div>
+<span class="hljs-keyword">const</span> isHttp: <span class="hljs-built_in">RegExp</span> = <span class="hljs-regexp">/^http/</span>;
+<span class="hljs-keyword">const</span> isRemoteRef = (ref: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">boolean</span> =&gt;</span> isHttp.test(ref);
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dereference: Jst.dereference = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div>
         
       
         
@@ -171,8 +176,9 @@ right-to-left.</p>
 
         
           <div class='highlight'><pre>      schema.forEach(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> s !== <span class="hljs-string">'object'</span> &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(s))
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> s !== <span class="hljs-string">'object'</span> &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(s)) {
           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expect typeof object got: <span class="hljs-subst">${typeof s}</span>`</span>);
+        }
       });</pre></div>
         
       
@@ -183,8 +189,7 @@ from right to left using a reducer function.</p>
         
           <div class='highlight'><pre>      <span class="hljs-keyword">return</span> schema
         .map(<span class="hljs-function">(<span class="hljs-params">scm, index</span>) =&gt;</span> walk(scm, resolve, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${index}</span>`</span>))
-        .reduce(<span class="hljs-function">(<span class="hljs-params">acc, scm</span>) =&gt;</span> merge(acc, scm), {});
-    }</pre></div>
+        .reduce(<span class="hljs-function">(<span class="hljs-params">acc, scm</span>) =&gt;</span> merge(acc, scm), {});</pre></div>
         
       
         
@@ -192,21 +197,23 @@ from right to left using a reducer function.</p>
 be provided</p>
 
         
-          <div class='highlight'><pre>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isObject(schema)) {
+          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isObject(schema)) {
       <span class="hljs-keyword">const</span> schemaId = schema.id || <span class="hljs-literal">undefined</span>;
       <span class="hljs-keyword">let</span> isCircular = <span class="hljs-literal">false</span>;</pre></div>
         
       
         
         <p>traverse is an internal recursive function that we bind to this lexical
-scope in order to easily resolve to schema definitons whilst traversing
+scope in order to easily resolve to schema definitions whilst traversing
 an objects nested properties. This is primarily for efficiency concerns.</p>
 
         
-          <div class='highlight'><pre>      <span class="hljs-keyword">const</span> traverse = <span class="hljs-function">(<span class="hljs-params">node, path: <span class="hljs-built_in">string</span> = '#'</span>) =&gt;</span> {
+          <div class='highlight'><pre>      <span class="hljs-keyword">const</span> traverse = <span class="hljs-function">(<span class="hljs-params">node, nodePath: <span class="hljs-built_in">string</span> = '#'</span>) =&gt;</span> {
         <span class="hljs-keyword">let</span> resolution = {};
 
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> node !== <span class="hljs-string">'object'</span> || node === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> node;</pre></div>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> node !== <span class="hljs-string">'object'</span> || node === <span class="hljs-literal">null</span>) {
+          <span class="hljs-keyword">return</span> node;
+        }</pre></div>
         
       
         
@@ -215,7 +222,7 @@ dereference it’s individual values</p>
 
         
           <div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(node)) {
-          <span class="hljs-keyword">return</span> node.map(<span class="hljs-function">(<span class="hljs-params">v, index</span>) =&gt;</span> traverse(v, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${index}</span>`</span>));
+          <span class="hljs-keyword">return</span> node.map(<span class="hljs-function">(<span class="hljs-params">v, index</span>) =&gt;</span> traverse(v, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${index}</span>`</span>));
         }</pre></div>
         
       
@@ -231,7 +238,9 @@ it to be a json schema.</p>
         <p>Skip the following properties</p>
 
         
-          <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'definitions'</span>) <span class="hljs-keyword">return</span>;</pre></div>
+          <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'definitions'</span>) {
+            <span class="hljs-keyword">return</span>;
+          }</pre></div>
         
       
         
@@ -240,8 +249,7 @@ dereference it immediately. ‘typeof array’ equals ‘object’ in JS.</p>
 
         
           <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'object'</span> &amp;&amp; key !== <span class="hljs-string">'$ref'</span>) {
-            resolution[key] = value;
-          }</pre></div>
+            resolution[key] = value;</pre></div>
         
       
         
@@ -249,7 +257,7 @@ dereference it immediately. ‘typeof array’ equals ‘object’ in JS.</p>
 it into the base schema object.</p>
 
         
-          <div class='highlight'><pre>          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'$ref'</span>) {</pre></div>
+          <div class='highlight'><pre>          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'$ref'</span>) {</pre></div>
         
       
         
@@ -268,7 +276,7 @@ correctly we must make a distinction between external
 references and internal (circular) references.</p>
 
         
-          <div class='highlight'><pre>            <span class="hljs-keyword">if</span> (value.indexOf(<span class="hljs-string">'http'</span>) === <span class="hljs-number">0</span>) {
+          <div class='highlight'><pre>            <span class="hljs-keyword">if</span> (isRemoteRef(value)) {
               <span class="hljs-keyword">if</span> (!resolve) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(
                   <span class="hljs-string">'argument: resolver is required to dereference a json uri.'</span>);
@@ -277,42 +285,41 @@ references and internal (circular) references.</p>
               <span class="hljs-keyword">if</span> (value !== schemaId) {
                 reference = resolve(value);
 
-                <span class="hljs-keyword">if</span> (!reference) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`unable to resolve URI reference: <span class="hljs-subst">${value}</span>`</span>);
+                <span class="hljs-keyword">if</span> (!reference) {
+                  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`unable to resolve URI reference: <span class="hljs-subst">${value}</span>`</span>);
+                }
 
                 resolution = merge(
                   resolution,
-                  walk(reference, resolve, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${key}</span>`</span>),
-                  <span class="hljs-literal">true</span>
+                  walk(reference, resolve, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>),
+                  <span class="hljs-literal">true</span>,
                 );
               } <span class="hljs-keyword">else</span> {
                 reference = resolution;
-                circularRefs[path] = schema;
+                circularRefs[nodePath] = schema;
                 isCircular = <span class="hljs-literal">true</span>;
-              }
-            }</pre></div>
+              }</pre></div>
         
       
         
         <p>de-reference a json pointer</p>
 
         
-          <div class='highlight'><pre>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isPointer(value)) {
-              reference = <span class="hljs-keyword">get</span>(schema, value)
+          <div class='highlight'><pre>            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isPointer(value)) {
+              reference = <span class="hljs-keyword">get</span>(schema, value);
               resolution = merge(
                 resolution,
-                traverse(reference, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${key}</span>`</span>),
-                <span class="hljs-literal">true</span>
+                traverse(reference, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>),
+                <span class="hljs-literal">true</span>,
               );
-            }
-            <span class="hljs-keyword">else</span> {
+            } <span class="hljs-keyword">else</span> {
               <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
                 <span class="hljs-string">`could not dereference value as a json pointer or uri: <span class="hljs-subst">${value}</span>`</span>);
             }
 
             <span class="hljs-keyword">if</span> (!reference) {
               <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">ReferenceError</span>(<span class="hljs-string">`could not find a reference to <span class="hljs-subst">${value}</span>`</span>);
-            }
-          }</pre></div>
+            }</pre></div>
         
       
         
@@ -320,25 +327,22 @@ references and internal (circular) references.</p>
 and dereference it’s properties.</p>
 
         
-          <div class='highlight'><pre>          <span class="hljs-keyword">else</span> {
-            resolution[key] = traverse(value, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${key}</span>`</span>);
+          <div class='highlight'><pre>          } <span class="hljs-keyword">else</span> {
+            resolution[key] = traverse(value, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>);
           }
         });
 
         <span class="hljs-keyword">return</span> resolution;
       };
 
-      <span class="hljs-keyword">const</span> result = traverse(schema, path);
-
-      <span class="hljs-keyword">return</span> result;
-    }</pre></div>
+      <span class="hljs-keyword">return</span> traverse(schema, path);</pre></div>
         
       
         
         <p>if any other combination of arguments is provided we throw</p>
 
         
-          <div class='highlight'><pre>    <span class="hljs-keyword">else</span> {
+          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expected first parameter to be object or array: <span class="hljs-subst">${schema}</span>`</span>);
     }
   };
@@ -361,9 +365,7 @@ to get another level of nesting.</p>
   });
 
   <span class="hljs-keyword">return</span> result;
-};
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> dereference;</pre></div>
+};</pre></div>
         
       
       <div class="fleur">h</div>

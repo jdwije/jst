@@ -72,9 +72,10 @@
         
         
         
-          <div class='highlight'><pre><span class="hljs-keyword">import</span> { has } <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash'</span>;
+          <div class='highlight'><pre><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> has <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.has'</span>;
+<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span>: Jst.setPointer = <span class="hljs-function">(<span class="hljs-params">obj, pointer, value</span>) =&gt;</span> {</pre></div>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span>: Jst.setPointer = <span class="hljs-function">(<span class="hljs-params">obj, pointer, value</span>) =&gt;</span> {</pre></div>
         
       
         
@@ -83,7 +84,7 @@ string ‘’. So as a first step, we check that this assumption is true and
 bail if not.</p>
 
         
-          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!(pointer.indexOf(<span class="hljs-string">'#'</span>) === <span class="hljs-number">0</span> || pointer.indexOf(<span class="hljs-string">'/'</span>) === <span class="hljs-number">0</span> || pointer === <span class="hljs-string">''</span>)) {
+          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!isPointer(pointer)) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`invalid JSON pointer specified: '<span class="hljs-subst">${pointer}</span>'`</span>);
   }</pre></div>
         
@@ -138,8 +139,7 @@ this array and try to resolve it appropriately.</p>
         <span class="hljs-keyword">return</span>;
       }
 
-      ref = ref[i];
-    }</pre></div>
+      ref = ref[i];</pre></div>
         
       
         
@@ -147,7 +147,7 @@ this array and try to resolve it appropriately.</p>
 type Object and that <code>token</code> references a valid path in <code>object</code>.</p>
 
         
-          <div class='highlight'><pre>    <span class="hljs-keyword">else</span> {
+          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">if</span> (!has(ref, token)) {
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
           <span class="hljs-string">`could not dereference pointer '<span class="hljs-subst">${pointer}</span>'. The fragment <span class="hljs-subst">${token}</span>`</span>
@@ -161,9 +161,7 @@ type Object and that <code>token</code> references a valid path in <code>object<
       ref = ref[token];
     }
   });
-};
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">set</span>;</pre></div>
+};</pre></div>
         
       
       <div class="fleur">h</div>
