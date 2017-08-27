@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Change
 - Re-factored code to typescript.
 - use `isPointer` internally now.
+- Now exports an optimized `npm pack` with minimal file system foot-print.
 
 ### Remove
 - Object manipulation functionality has been dropped from JST (the `merge`,
