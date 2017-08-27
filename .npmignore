@@ -1,0 +1,14 @@
+.npmignore
+.gitignore
+benchmarks/
+docs/
+.travis.yml
+src/
+tsconfig.json
+tests/
+resources/
+jest.config.js
+yarn.lock
+scripts/
+tsfmt.json
+tslint.json

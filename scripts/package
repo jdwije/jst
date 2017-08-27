@@ -5,8 +5,8 @@ rm -rf dist
 mkdir dist
 
 # Copy latent files into ./dist
-cp * dist 2>&1 | grep -v 'omitting directory'
-cp .* dist 2>&1 | grep -v 'omitting directory'
+#cp * dist 2>&1 | grep -v 'omitting directory'
+#cp .* dist 2>&1 | grep -v 'omitting directory'
 
 # Build typescript
 yarn tsc

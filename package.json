@@ -14,9 +14,6 @@
     "Brendan Abbott <brendan@bloodbone.ws>"
   ],
   "main": "dist/index.js",
-  "files": [
-    "dist/"
-  ],
   "scripts": {
     "benchmark": "./scripts/benchmark",
     "build": "npm run build:source && npm run build:docs",
