@@ -2,10 +2,10 @@
 
 # This script builds the jst package.
 
-## Constants
+. ./scripts/constants
 
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+printf "${BLUE}@jdw/jst build script${NC}\n\n"
+sleep 1
 
 ## build the package
 

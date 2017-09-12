@@ -2,5 +2,10 @@
 
 # This script runs jst's internal benchmarks. 
 
+. ./constants
+
+printf "${BLUE}@jdw/jst benchmarks${NC}\n\n"
+sleep 1
+
 yarn ts-node benchmarks/index.benchmark.ts        # evaluate entry point
 
