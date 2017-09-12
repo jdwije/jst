@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { set } from './../src/index';
+import { set } from './../index';
 
 describe('@jdw/jst/set', () => {
   const fixture = {

@@ -1,5 +1,7 @@
+import { IsPointer } from './types';
+
 // A JSON `pointer` must begin with the symbols '#', '/' or be an empty string ''.
-export const isPointer = (input: string): boolean => {
+export const isPointer: IsPointer = (input) => {
   if (typeof input !== 'string') {
     return false;
   }

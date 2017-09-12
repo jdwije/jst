@@ -1,4 +1,6 @@
 #!/bin/bash
 
-node_modules/.bin/ts-node benchmarks/index.benchmark.ts
+# This script runs jst's internal benchmarks. 
+
+yarn ts-node benchmarks/index.benchmark.ts        # evaluate entry point
 

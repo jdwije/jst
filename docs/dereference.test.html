@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>dereference.test.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="MockValidator.html">
+                  MockValidator.ts
+                </a>
+              
+                
+                <a class="source" href="dereference.test.html">
+                  dereference.test.ts
+                </a>
+              
+                
+                <a class="source" href="get.test.html">
+                  get.test.ts
+                </a>
+              
+                
+                <a class="source" href="isPointer.test.html">
+                  isPointer.test.ts
+                </a>
+              
+                
+                <a class="source" href="mockResolve.html">
+                  mockResolve.ts
+                </a>
+              
+                
+                <a class="source" href="set.test.html">
+                  set.test.ts
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.ts
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>dereference.test.ts</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
+<span class="hljs-keyword">import</span> { dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'./../index'</span>;
+<span class="hljs-keyword">import</span> resolve <span class="hljs-keyword">from</span> <span class="hljs-string">'./mockResolve'</span>;
+
+describe(<span class="hljs-string">'dereference schema utility function'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  it(<span class="hljs-string">'dereferences referenced schema correctly'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(resolve(<span class="hljs-string">'http://footown.com/generic/address#'</span>), resolve);
+    expect(ast.properties).to.have.property(<span class="hljs-string">'addressLines'</span>);
+    expect(ast.properties).to.have.property(<span class="hljs-string">'contact'</span>);
+    expect(ast.properties.contact).to.have.property(<span class="hljs-string">'properties'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'firstname'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'lastname'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'title'</span>);
+  });
+
+  it(<span class="hljs-string">'dereferences schema correctly with multiple arguments'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = [
+      resolve(<span class="hljs-string">'http://footown.com/generic/address#'</span>),
+      resolve(<span class="hljs-string">'http://footown.com/generic/address-override#'</span>),
+    ];
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+
+    expect(ast.properties).to.have.property(<span class="hljs-string">'addressLines'</span>);
+    expect(ast.properties).to.have.property(<span class="hljs-string">'country'</span>);
+    expect(ast.properties.country).to.have.property(<span class="hljs-string">'enum'</span>);
+    expect(ast.properties.country.enum).to.deep.eq([<span class="hljs-string">'AU'</span>, <span class="hljs-string">'GB'</span>, <span class="hljs-string">'VN'</span>, <span class="hljs-string">'DE'</span>, <span class="hljs-string">'CH'</span>]);
+    expect(ast.properties).to.have.property(<span class="hljs-string">'contact'</span>);
+    expect(ast.properties.contact).to.have.property(<span class="hljs-string">'properties'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'firstname'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'lastname'</span>);
+    expect(ast.properties.contact.properties).to.have.property(<span class="hljs-string">'title'</span>);
+  });
+
+  it(<span class="hljs-string">'can dereference circular schema references'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = resolve(<span class="hljs-string">'http://footown.com/generic/edit-person+v1#'</span>);
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+
+    expect(ast).to.have.property(<span class="hljs-string">'allOf'</span>);
+    expect(ast.allOf.length).to.eq(<span class="hljs-number">1</span>);
+    expect(ast.allOf[<span class="hljs-number">0</span>]).to.have.property(<span class="hljs-string">'properties'</span>);
+  });
+
+  it(<span class="hljs-string">'dereferences null values correctly'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = resolve(<span class="hljs-string">'http://footown.com/generic/edit-person+v1#'</span>);
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+    expect(ast.foo).to.eq(<span class="hljs-literal">null</span>);
+  });
+
+  it(<span class="hljs-string">'dereferences circular references correctly'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = resolve(<span class="hljs-string">'http://footown.com/generic/circular#'</span>);
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+    expect(ast).to.be.an(<span class="hljs-string">'object'</span>);
+  });
+
+  it(<span class="hljs-string">'dereferences conditional allOf references correctly'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = resolve(<span class="hljs-string">'http://footown.com/generic/conditional#'</span>);
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+    expect(ast).to.be.an(<span class="hljs-string">'object'</span>);
+    expect(ast.allOf[<span class="hljs-number">0</span>]).deep.eq({
+      <span class="hljs-keyword">type</span>: <span class="hljs-string">'object'</span>,
+      properties: {
+        foobar: {
+          <span class="hljs-keyword">type</span>: <span class="hljs-string">'string'</span>,
+          minLength: <span class="hljs-number">1</span>
+        }
+      }
+    });
+    expect(ast.allOf[<span class="hljs-number">1</span>]).deep.eq({
+      <span class="hljs-keyword">type</span>: <span class="hljs-string">'object'</span>,
+      properties: {
+        barfoo: {
+          <span class="hljs-keyword">type</span>: <span class="hljs-string">'number'</span>,
+        }
+      }
+    });
+  });
+
+  it(<span class="hljs-string">'can dereference referenced circular schema correctly'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> schema = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./fixture/circular-referenced.schema.json'</span>);
+
+    <span class="hljs-keyword">const</span> ast: <span class="hljs-built_in">any</span> = dereference(schema, resolve);
+
+    expect(ast).to.be.an(<span class="hljs-string">'object'</span>);
+    expect(ast.properties.circular.properties.circle.id).to.eq(<span class="hljs-string">'http://footown.com/generic/circular#'</span>);
+  });
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

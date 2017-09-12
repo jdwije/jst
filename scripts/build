@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# This script builds the jst package.
+
+## Constants
+
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+## build the package
+
+printf "\n${CYAN}COMPILE${NC}\n"
+
+yarn trash                                   # remove build artifacts
+yarn tsc --verbose                           # compile source code
+cp -rv src/__tests__/fixture dist/__tests__  # copy test fixture
+yarn docco --layout linear src/**/*.ts       # compile documentation
+
+## copy copy distributable material
+printf "\n${CYAN}COPY ARTIFACTS${NC}\n"
+
+declare -a filemap
+
+filemap=( "./README.md"
+          "./LICENSE.md"
+          "./CHANGELOG.md"
+          "./docs"
+          "./package.json" )
+
+for file in "${!filemap[@]}"; do
+    cp -rv "${filemap[$file]}" ./dist
+done
+
+
+
+
+
+
+
+
+

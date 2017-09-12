@@ -16,13 +16,13 @@
   "main": "dist/index.js",
   "scripts": {
     "benchmark": "./scripts/benchmark",
-    "build": "npm run build:source && npm run build:docs",
-    "build:source": "./scripts/package",
-    "build:docs": "docco --layout linear src/*.ts",
-    "clean": "rm -rf dist",
+    "build": "./scripts/build",
     "lint": "tslint -p tsconfig.json --type-check",
-    "test": "jest --verbose",
-    "test:watch": "yarn run test -- -o --watch"
+    "release": "./scripts/release",
+    "test": "jest src  --verbose --coverage",
+    "test:dist": "jest dist --verbose",
+    "test:watch": "yarn run test -- -o --watch",
+    "trash": "rm -rf dist docs"
   },
   "repository": {
     "type": "git",

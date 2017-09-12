@@ -1,13 +1,13 @@
 import * as Ajv from 'ajv';
 
-const address = require('./../resources/address+v1.schema.json');
-const addressOverride = require('./../resources/address-override+v1.schema.json');
-const circular = require('./../resources/circular.schema.json');
-const conditional = require('./../resources/conditional.schema.json');
-const credentials = require('./../resources/credentials+v1.schema.json');
-const editPerson = require('./../resources/edit-person+v1.schema.json');
-const person = require('./../resources/person+v1.schema.json');
-const profile = require('./../resources/profile+v1.schema.json');
+const address = require('./fixture/address+v1.schema.json');
+const addressOverride = require('./fixture/address-override+v1.schema.json');
+const circular = require('./fixture/circular.schema.json');
+const conditional = require('./fixture/conditional.schema.json');
+const credentials = require('./fixture/credentials+v1.schema.json');
+const editPerson = require('./fixture/edit-person+v1.schema.json');
+const person = require('./fixture/person+v1.schema.json');
+const profile = require('./fixture/profile+v1.schema.json');
 
 /**
  * A validation helper for our test schema.
