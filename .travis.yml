@@ -28,6 +28,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - npm publish
+          - yarn release
         on:
           tags: true
