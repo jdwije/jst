@@ -2,7 +2,7 @@
 
 # This script runs jst's internal benchmarks. 
 
-. ./constants
+. ./scripts/constants
 
 printf "${BLUE}@jdw/jst benchmarks${NC}\n\n"
 sleep 1

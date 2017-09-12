@@ -1,7 +1,7 @@
 import * as forIn from 'lodash.forin';
 import benchmark from './benchmark';
 
-const schema = require('./../resources/temando.swagger.json');
+const schema = require('./../src/__tests__/fixture/temando.swagger.json');
 const title = 'jst/experimental: Basic object traversal';
 const description =
   'This benchmark tests various methods for iterating and walking an objects top level properties.';
