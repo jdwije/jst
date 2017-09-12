@@ -11,10 +11,12 @@ sleep 1
 
 printf "\n${CYAN}COMPILE${NC}\n"
 
-yarn trash                                   # remove build artifacts
-yarn tsc --verbose                           # compile source code
-cp -rv src/__tests__/fixture dist/__tests__  # copy test fixture
-yarn docco --layout linear src/**/*.ts       # compile documentation
+
+mkdir -p ./dist/__tests__/fixture                    # create directory structure
+yarn trash                                           # remove build artifacts
+yarn tsc                                             # compile source code
+cp -rv ./src/__tests__/fixture ./dist/__tests__      # copy test fixture
+yarn docco --layout linear src/**/*.ts               # compile documentation
 
 ## copy copy distributable material
 printf "\n${CYAN}COPY ARTIFACTS${NC}\n"
@@ -28,7 +30,7 @@ filemap=( "./README.md"
           "./package.json" )
 
 for file in "${!filemap[@]}"; do
-    cp -rv "${filemap[$file]}" ./dist
+    cp -rv "${filemap[$file]}" ./dist/
 done
 
 

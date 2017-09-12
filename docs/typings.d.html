@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>isPointer.test.ts</title>
+  <title>typings.d.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -13,7 +13,7 @@
 
       <div class="header">
         
-          <h1>isPointer.test.ts</h1>
+          <h1>typings.d.ts</h1>
         
 
         
@@ -86,27 +86,10 @@
         
         
         
-          <div class='highlight'><pre><span class="hljs-keyword">import</span> { expect } <span class="hljs-keyword">from</span> <span class="hljs-string">'chai'</span>;
-<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./../index'</span>;
-
-describe(<span class="hljs-string">'@jdw/jst/isPointer'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-  <span class="hljs-keyword">const</span> cases = {
-    success: [<span class="hljs-string">'#'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-string">''</span>, <span class="hljs-string">'#/foo/bar/baz'</span>, <span class="hljs-string">'/bar/baz'</span>],
-    failure: [<span class="hljs-string">'yolo'</span>, <span class="hljs-number">123</span>, {}, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">undefined</span>], <span class="hljs-comment">//  '#adasd']</span>
-  };
-
-  cases.success.forEach(<span class="hljs-function">(<span class="hljs-params">testCase</span>) =&gt;</span> {
-    it(<span class="hljs-string">`can recognize <span class="hljs-subst">${JSON.stringify(testCase)}</span> as a pointer`</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      expect(isPointer(testCase)).to.eq(<span class="hljs-literal">true</span>);
-    });
-  });
-
-  cases.failure.forEach(<span class="hljs-function">(<span class="hljs-params">testCase</span>) =&gt;</span> {
-    it(<span class="hljs-string">`can recognize <span class="hljs-subst">${JSON.stringify(testCase)}</span> is NOT a pointer`</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
-      expect(isPointer(testCase)).to.eq(<span class="hljs-literal">false</span>);
-    });
-  });
-});</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">declare</span> <span class="hljs-keyword">module</span> "*.json" {
+  <span class="hljs-keyword">const</span> value: <span class="hljs-built_in">any</span>;
+  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> value;
+}</pre></div>
         
       
       <div class="fleur">h</div>
