@@ -28,6 +28,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - yarn release
+          - ./scripts/release
         on:
           tags: true
