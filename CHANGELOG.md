@@ -13,12 +13,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now exports an optimized `npm pack` with minimal file system foot-print.
 - Refactor `typings.d.ts` to `./types/index.ts`, we now compile and package our types.
 - Improved package scripts, now cleaner and more verbose.
+- Simplify package scripts without losing any functionality.
 
 ### Remove
 - Object manipulation functionality has been dropped from JST (the `merge`,
   `contains`, `iterate` functions). We now use `lodash` instead.
 - The `Validator` class has been removed, roll this out yourselves.
-- Simplify package scripts without losing any functionality.
 
 ### Add
 - A changelog!

@@ -13,6 +13,7 @@ jobs:
       script:
         - yarn lint
         - yarn test
+        - yarn test:dist
     - stage: benchmark
       node_js:
         - "6"
@@ -27,7 +28,6 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - yarn test:dist
           - yarn release
         on:
           tags: true
