@@ -29,7 +29,7 @@ const tests = [
     deferred: true,
     exec: (defer) => {
       refParser.dereference(
-        require('./../src/__tests__/fixturetemando.swagger.json'),
+        require('./../src/__tests__/fixture/temando.swagger.json'),
         (err, x) => {
           defer.resolve();
         }
