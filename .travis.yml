@@ -2,8 +2,7 @@ language: node_js
 
 install:
   - yarn
-  - yarn build:source
-  - yarn build:docs
+  - yarn build
 
 jobs:
   include:
@@ -28,6 +27,7 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
+          - yarn test:dist
           - yarn release
         on:
           tags: true
