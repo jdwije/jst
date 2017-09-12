@@ -13,7 +13,7 @@
   "contributors": [
     "Brendan Abbott <brendan@bloodbone.ws>"
   ],
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "benchmark": "./scripts/benchmark",
     "build": "./scripts/build",
