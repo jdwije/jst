@@ -7,5 +7,6 @@
 printf "${BLUE}@jdw/jst benchmarks${NC}\n\n"
 sleep 1
 
-yarn ts-node src/__benchmarks__/index.benchmark.ts        # evaluate entry point
-
+for file in src/__benchmarks__/*benchmark.ts; do 
+    yarn ts-node "${file}"        # evaluate entry point
+done

@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `dereference` circular schema dereferencing.
 - fixed linting
 - `lodash` imports, build size reduced.
+- benchmark messages returning out of sync with test run.
 
 ## [1.0.0] - 2017-06-25
 
