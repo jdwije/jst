@@ -6,7 +6,7 @@ describe('@jdw/jst/set', () => {
     array: [1, 2, null],
     object: {
       foo: null,
-      array: [{ foo: null }, null]
+      array: [{ foo: null }, null],
     },
     foo: null,
   };

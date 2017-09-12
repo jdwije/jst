@@ -3,20 +3,20 @@ import { get } from './../index';
 
 describe('@jdw/jst/get', () => {
   const fixture = {
-    foo: {
+    'foo': {
       bar: 20,
     },
     '/': {
       '~': 400,
-      bar: {
-        '~': 10
-      }
+      'bar': {
+        '~': 10,
+      },
     },
-    arr: [{
+    'arr': [{
       arr: [{
         foo: 100,
-      }]
-    }, 30]
+      }],
+    }, 30],
   };
 
   it('should resolve valid JSON pointers', () => {

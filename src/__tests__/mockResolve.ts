@@ -1,4 +1,4 @@
-import Validator from './MockValidator';
+import { MockValidator as Validator } from './MockValidator';
 
 const validator = new Validator();
 
@@ -7,11 +7,13 @@ const validator = new Validator();
  * that schema as an object literal or throw an error if it can't find it.
  */
 const mockResolve = (id) => {
-    const result = validator.getSchema(id);
+  const result = validator.getSchema(id);
 
-    if (!result) throw new Error(`could not resolve schema with id: ${id}`);
+  if (!result) {
+    throw new Error(`could not resolve schema with id: ${id}`);
+  }
 
-    return result;
+  return result;
 };
 
-export default mockResolve;
+export { mockResolve };

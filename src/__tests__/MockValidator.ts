@@ -1,22 +1,22 @@
 import * as Ajv from 'ajv';
 
-const address = require('./fixture/address+v1.schema.json');
-const addressOverride = require('./fixture/address-override+v1.schema.json');
-const circular = require('./fixture/circular.schema.json');
-const conditional = require('./fixture/conditional.schema.json');
-const credentials = require('./fixture/credentials+v1.schema.json');
-const editPerson = require('./fixture/edit-person+v1.schema.json');
-const person = require('./fixture/person+v1.schema.json');
-const profile = require('./fixture/profile+v1.schema.json');
+import * as address from './fixture/address+v1.schema.json';
+import * as addressOverride from './fixture/address-override+v1.schema.json';
+import * as circular from './fixture/circular.schema.json';
+import * as conditional from './fixture/conditional.schema.json';
+import * as credentials from './fixture/credentials+v1.schema.json';
+import * as editPerson from './fixture/edit-person+v1.schema.json';
+import * as person from './fixture/person+v1.schema.json';
+import * as profile from './fixture/profile+v1.schema.json';
 
 /**
  * A validation helper for our test schema.
  */
-export default class MockValidator {
-  public schema: Array<Object> = [];
+export class MockValidator {
+  public schema: object[] = [];
   private ajv;
 
-  constructor(config: Object = {}) {
+  constructor(config: object = {}) {
     const schema = [
       address,
       addressOverride,
@@ -30,22 +30,22 @@ export default class MockValidator {
     const cnf = {
       extendRefs: true,
       allErrors: true,
-      ...config
+      ...config,
     };
     this.ajv = new Ajv(cnf);
     this.load(schema);
   }
 
-  load(schema: Array<Object>) {
+  load(schema: object[]) {
     schema.map((scm) => {
-      this.ajv.addSchema(scm)
+      this.ajv.addSchema(scm);
       this.schema.push(scm);
     });
 
     return this;
   }
 
-  getSchema(id: string): Object | undefined {
+  getSchema(id: string): object | undefined {
     const lookup = this.ajv.getSchema(id);
 
     return !lookup ? undefined : lookup.schema;

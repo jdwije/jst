@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { dereference } from './../index';
-import resolve from './mockResolve';
+import { mockResolve as resolve } from './mockResolve';
 
 describe('dereference schema utility function', () => {
   it('dereferences referenced schema correctly', () => {
@@ -61,17 +61,17 @@ describe('dereference schema utility function', () => {
       properties: {
         foobar: {
           type: 'string',
-          minLength: 1
-        }
-      }
+          minLength: 1,
+        },
+      },
     });
     expect(ast.allOf[1]).deep.eq({
       type: 'object',
       properties: {
         barfoo: {
           type: 'number',
-        }
-      }
+        },
+      },
     });
   });
 

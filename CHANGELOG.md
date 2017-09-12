@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - use `isPointer` internally now.
 - Now exports an optimized `npm pack` with minimal file system foot-print.
 - Refactor `typings.d.ts` to `./types/index.ts`, we now compile and package our types.
+- Improved package scripts, now cleaner and more verbose.
 
 ### Remove
 - Object manipulation functionality has been dropped from JST (the `merge`,
