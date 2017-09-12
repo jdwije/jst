@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>isPointer.ts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>isPointer.ts</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="dereference.html">
+                    dereference.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="get.html">
+                    get.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="isPointer.html">
+                    isPointer.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="set.html">
+                    set.ts
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
+
+      
+        
+        <p>The <code>isPointer</code> function determines if its argument is a valid json pointer
+or not returning a boolean indicating the result of the operation.</p>
+
+        
+      
+        
+        <h2 id="usage">Usage</h2>
+
+        
+      
+        
+        <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>;
+
+isPointer(<span class="hljs-string">'#/foo'</span>);   <span class="hljs-comment">// true</span>
+isPointer({})         <span class="hljs-comment">// false</span>
+</code></pre>
+
+        
+      
+        
+        <h2 id="dependencies">Dependencies</h2>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { IsPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
+        
+      
+        
+        <h2 id="implementation">Implementation</h2>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isPointer: IsPointer = <span class="hljs-function">(<span class="hljs-params">input</span>) =&gt;</span> {</pre></div>
+        
+      
+        
+        <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty string
+‘’.</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> input !== <span class="hljs-string">'string'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+
+  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">''</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^#|^\//</span>.test(input)) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }</pre></div>
+        
+      
+        
+        <p>If it is not one of these values then <code>input</code> is not a json pointer.</p>
+
+        
+          <div class='highlight'><pre>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+};</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

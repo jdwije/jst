@@ -7,5 +7,5 @@
 printf "${BLUE}@jdw/jst benchmarks${NC}\n\n"
 sleep 1
 
-yarn ts-node benchmarks/index.benchmark.ts        # evaluate entry point
+yarn ts-node src/__benchmarks__/index.benchmark.ts        # evaluate entry point
 

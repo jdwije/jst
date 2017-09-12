@@ -1,6 +1,6 @@
 import * as derefSync from 'json-schema-deref-sync';
-import { dereference } from './../dist/index';
-import { mockResolve as resolve } from './../src/__tests__/mockResolve';
+import { dereference } from './../index';
+import { resolve } from './../__tests__/lib/';
 import benchmark from './benchmark';
 
 const title = 'jst/dereference comparision: http://footown.com/generic/address#';

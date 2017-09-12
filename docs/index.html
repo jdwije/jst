@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>index.ts</title>
+  <title>JST - JSON Schema Toolkit [![Build Status](https://travis-ci.org/jdwije/jst.svg?branch=master)](https://travis-ci.org/jdwije/jst)</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -13,7 +13,10 @@
 
       <div class="header">
         
-          <h1>index.ts</h1>
+          
+          <h1 id="jst-json-schema-toolkit-build-status-https-travis-ci-org-jdwije-jst-svg-branch-master-https-travis-ci-org-jdwije-jst-">JST - JSON Schema Toolkit <a href="https://travis-ci.org/jdwije/jst"><img src="https://travis-ci.org/jdwije/jst.svg?branch=master" alt="Build Status"></a></h1>
+
+          
         
 
         
@@ -23,43 +26,15 @@
               
                 
                 <li>
-                  <a class="source" href="MockValidator.html">
-                    MockValidator.ts
+                  <a class="source" href="dereference.html">
+                    dereference.ts
                   </a>
                 </li>
               
                 
                 <li>
-                  <a class="source" href="dereference.test.html">
-                    dereference.test.ts
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="get.test.html">
-                    get.test.ts
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="isPointer.test.html">
-                    isPointer.test.ts
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="mockResolve.html">
-                    mockResolve.ts
-                  </a>
-                </li>
-              
-                
-                <li>
-                  <a class="source" href="set.test.html">
-                    set.test.ts
+                  <a class="source" href="get.html">
+                    get.ts
                   </a>
                 </li>
               
@@ -72,8 +47,15 @@
               
                 
                 <li>
-                  <a class="source" href="json.d.html">
-                    json.d.ts
+                  <a class="source" href="isPointer.html">
+                    isPointer.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="set.html">
+                    set.ts
                   </a>
                 </li>
               
@@ -84,50 +66,139 @@
 
       
         
-        <h2 id="jst-type-definitions">JST Type Definitions</h2>
+        
+        
+      
+        
+        <blockquote>
+<p>A library for working with <a href="http://json-schema.org/">json schema</a>.</p>
+</blockquote>
 
         
       
         
-        <p>JST is a library for working with JSON Schema. It aims to be both simple and
-performant. We begin by covering JST internal data-structures and interfaces.</p>
+        <p>JST is a utility library for working with json schema. It provides functions
+for json pointers and json references.</p>
 
         
       
         
-        <h3 id="interfaces">Interfaces</h3>
+        <h2 id="interface">Interface</h2>
 
         
       
         
-        <p>A <strong>Resolver</strong> function takes a schema ID as its argument and looks it
-up, returning them schema as an <code>Object</code> if found or <code>undefined</code> if not.</p>
+        <h3 id="dereference-schema-object-resolve-id-object-">dereference(schema: Object, resolve: (id) =&gt; Object)</h3>
 
-        
-          <div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> Resolver = <span class="hljs-function">(<span class="hljs-params">schemaId: <span class="hljs-built_in">string</span></span>) =&gt;</span> object | <span class="hljs-literal">undefined</span>;</pre></div>
         
       
         
-        <p>A <strong>Dereferencer</strong> function takes a <code>schema</code> and a <code>resolver</code> function
-and then dereferences <code>schema</code> in accordance with the <a href="https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">IETF JSON
-Reference Draft v3
-Specification</a>.</p>
+        <p>A generic dereferencer function to resolve all <code>$ref</code> tags in a schema and
+inline the results.</p>
 
-        
-          <div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> Dereferencer =
-  <span class="hljs-function">(<span class="hljs-params">schema: object | <span class="hljs-built_in">any</span>[], resolve: Resolver</span>) =&gt;</span> object | <span class="hljs-built_in">any</span>[];</pre></div>
         
       
         
-        <p>A <strong>Getter</strong> function dereferences a JSON pointer in accordance with the
-<a href="https://tools.ietf.org/html/rfc6901">IETF RFC6901 specification</a>
-returning its value if <code>path</code> is found in <code>schema</code> or throw an error
-otherwise.</p>
+        <ul>
+<li><a href="dereference.html">documentation</a></li>
+</ul>
 
         
-          <div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> GetPointer = <span class="hljs-function">(<span class="hljs-params">schema: object, path: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> SetPointer = <span class="hljs-function">(<span class="hljs-params">schema: object, path: <span class="hljs-built_in">string</span>, value: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> IsPointer = <span class="hljs-function">(<span class="hljs-params">input: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">boolean</span>;</pre></div>
+          <div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'./dereference'</span>;</pre></div>
+        
+      
+        
+        <h3 id="get-object-object-pointer-string-">get(object: Object, pointer: String)</h3>
+
+        
+      
+        
+        <p>Retrieve a value from an object using a json pointer.</p>
+
+        
+      
+        
+        <ul>
+<li><a href="get.html">documentation</a></li>
+</ul>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./get'</span>;</pre></div>
+        
+      
+        
+        <h3 id="set-object-object-pointer-string-value-any-">set(object: Object, pointer: String, value: any)</h3>
+
+        
+      
+        
+        <p>Set a value on an object using a json pointer.</p>
+
+        
+      
+        
+        <ul>
+<li><a href="set.html">documentation</a></li>
+</ul>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./set'</span>;</pre></div>
+        
+      
+        
+        <h3 id="ispointer-string-string-">isPointer(string: string)</h3>
+
+        
+      
+        
+        <p>Checks of a string is a valid json pointer.</p>
+
+        
+      
+        
+        <ul>
+<li><a href="isPointer.html">documentation</a></li>
+</ul>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;</pre></div>
+        
+      
+        
+        <h2 id="usage">Usage</h2>
+
+        
+      
+        
+        <p>Install JST via npm.</p>
+<pre><code class="lang-bash">npm i --save @jdw/jst
+</code></pre>
+
+        
+      
+        
+        <p>Then use it.</p>
+
+        
+      
+        
+        <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { get, set, isPointer, dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>; <span class="hljs-comment">// ES6</span>
+
+<span class="hljs-keyword">var</span> jst = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@jdw/jst'</span>);                               <span class="hljs-comment">// ES2015</span>
+</code></pre>
+
+        
+          <div class='highlight'><pre>
+<span class="hljs-keyword">export</span> {
+  dereference,
+  <span class="hljs-keyword">get</span>,
+  isPointer,
+  <span class="hljs-keyword">set</span>,
+};</pre></div>
         
       
       <div class="fleur">h</div>

@@ -1,27 +1,28 @@
 import * as derefSync from 'json-schema-deref-sync';
 import * as $RefParser from 'json-schema-ref-parser';
-import { dereference } from './../dist/index';
-import { mockResolve as resolve } from './../src/__tests__/mockResolve';
+import { dereference } from './../index';
+import { resolve } from './../__tests__/lib/';
 import benchmark from './benchmark';
 
-const title = 'jst/dereference comparision - temando.swagger.json';
+const title = 'jst/dereference comparision - petstore.swagger.json';
 const description =
   'This benchmark tests the performance of the jst/dereference function using ' +
-  'the Temando Phoenix API swagger payload. This is a large json payload.';
+  'the demo Petstore API swagger from the open api homepage. This is a medium ' +
+  'sized json payload.';
 const refParser = new $RefParser();
 const tests = [
   {
     id: 'jst/dereference',
     deferred: false,
     exec: () => {
-      dereference(require('./../src/__tests__/fixture/temando.swagger.json'), resolve)
+      dereference(require('./../__tests__/fixture/petstore.swagger.json'), resolve)
     },
   },
   {
     id: 'json-schema-deref-sync',
     deferred: false,
     exec: () => {
-      derefSync(require('./../src/__tests__/fixture/temando.swagger.json'));
+      derefSync(require('./../__tests__/fixture/petstore.swagger.json'));
     }
   },
   {
@@ -29,7 +30,7 @@ const tests = [
     deferred: true,
     exec: (defer) => {
       refParser.dereference(
-        require('./../src/__tests__/fixture/temando.swagger.json'),
+        require('./../__tests__/fixture/petstore.swagger.json'),
         (err, x) => {
           defer.resolve();
         }

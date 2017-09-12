@@ -16,7 +16,7 @@ mkdir -p ./dist/__tests__/fixture                    # create directory structur
 yarn trash                                           # remove build artifacts
 yarn tsc                                             # compile source code
 cp -rv ./src/__tests__/fixture ./dist/__tests__      # copy test fixture
-yarn docco --layout linear src/**/*.ts               # compile documentation
+yarn docco --layout linear src/*.ts                  # compile documentation
 touch ./docs/CNAME \
     && echo www.jwije.com > ./docs/CNAME             # add CNAME to docs output
 ## copy copy distributable material
