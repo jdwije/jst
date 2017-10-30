@@ -1,0 +1,4 @@
+## Constants
+export BLUE='\033[0;34m'
+export CYAN='\033[0;36m'
+export NC='\033[0m' # No Color

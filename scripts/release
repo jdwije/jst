@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This script is used to release the package
+
+. ./scripts/constants
+
+printf "${BLUE}@jdw/jst release script${NC}\n"
+sleep 1
+
+printf "\n${CYAN}PUBLISHING${NC}\n"
+cd dist
+npm publish
+
+
+
+
+

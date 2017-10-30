@@ -56,13 +56,6 @@
                   </a>
                 </li>
               
-                
-                <li>
-                  <a class="source" href="typings.d.html">
-                    typings.d.ts
-                  </a>
-                </li>
-              
             </ol>
           </div>
         
@@ -98,7 +91,8 @@ if the path described by the <code>pointer</code> was not found in the <code>sch
         
           <div class='highlight'><pre>
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> has <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.has'</span>;
-<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;</pre></div>
+<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;
+<span class="hljs-keyword">import</span> { GetPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
         
       
         
@@ -111,7 +105,7 @@ if the path described by the <code>pointer</code> was not found in the <code>sch
 <a href="typings.d.html">typings.d.ts</a>.</p>
 
         
-          <div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">get</span>: Jst.getPointer = <span class="hljs-function">(<span class="hljs-params">schema, pointer</span>) =&gt;</span> {</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">get</span>: GetPointer = <span class="hljs-function">(<span class="hljs-params">schema, pointer</span>) =&gt;</span> {</pre></div>
         
       
         

@@ -1,22 +1,22 @@
 import { expect } from 'chai';
-import { get } from './../src/index';
+import { get } from './../index';
 
 describe('@jdw/jst/get', () => {
   const fixture = {
-    foo: {
+    'foo': {
       bar: 20,
     },
     '/': {
       '~': 400,
-      bar: {
-        '~': 10
-      }
+      'bar': {
+        '~': 10,
+      },
     },
-    arr: [{
+    'arr': [{
       arr: [{
         foo: 100,
-      }]
-    }, 30]
+      }],
+    }, 30],
   };
 
   it('should resolve valid JSON pointers', () => {
@@ -26,7 +26,7 @@ describe('@jdw/jst/get', () => {
       ['', fixture],
     ];
     cases.forEach((t) => {
-      expect(get(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0].toString())).to.eq(t[1]);
     });
   });
 
@@ -36,7 +36,7 @@ describe('@jdw/jst/get', () => {
       ['#/~1/bar/~0', 10],
     ];
     cases.forEach((t) => {
-      expect(get(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0].toString())).to.eq(t[1]);
     });
   });
 
@@ -46,7 +46,7 @@ describe('@jdw/jst/get', () => {
       ['#/arr/1', 30],
     ];
     cases.forEach((t) => {
-      expect(get(fixture, t[0])).to.eq(t[1]);
+      expect(get(fixture, t[0].toString())).to.eq(t[1]);
     });
   });
 

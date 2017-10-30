@@ -6,6 +6,7 @@
     "outDir": "./dist",
     "declaration": true,
     "sourceMap": true,
+    "listFiles": true,
     "allowSyntheticDefaultImports": false,
     "noUnusedLocals": true,
     "lib": [

@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { set } from './../src/index';
+import { set } from './../index';
 
 describe('@jdw/jst/set', () => {
   const fixture = {
     array: [1, 2, null],
     object: {
       foo: null,
-      array: [{ foo: null }, null]
+      array: [{ foo: null }, null],
     },
     foo: null,
   };

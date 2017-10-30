@@ -19,7 +19,7 @@
 //
 // **Arguments**
 // - `subject: Object|number|string|boolean|null` A json value.
-// - `resolve: Jst.Resolver` A function to resolve a schema by its id.
+// - `resolve: `Resolver` A function to resolve a schema by its id.
 //
 // **Returns**
 // - `any`: The dereferenced object.
@@ -33,7 +33,7 @@ import * as forIn from 'lodash.forin';
 import * as isObject from 'lodash.isobject';
 import * as merge from 'lodash.merge';
 import { get, isPointer, set } from './index';
-
+import { Dereferencer, Resolver } from './types';
 // ## Implementation
 
 // Here begins the implementation of the `dereference` function. This being
@@ -51,7 +51,7 @@ import { get, isPointer, set } from './index';
 const isHttp: RegExp = /^http/;
 const isRemoteRef = (ref: string): boolean => isHttp.test(ref);
 
-export const dereference: Jst.dereference = (root, resolver) => {
+export const dereference: Dereferencer = (root, resolver) => {
   // ### JSON In, JSON Out
   //
   // The [json specification](http://www.ietf.org/rfc/rfc4627.txt) section 2.1
@@ -68,7 +68,7 @@ export const dereference: Jst.dereference = (root, resolver) => {
   }
   const circularRefs = {};
 
-  const walk = (schema: any, resolve: Jst.resolve = null, path: string = '#'): any => {
+  const walk = (schema: any, resolve: Resolver = null, path: string = '#'): any => {
     // If schema is an array we dereference each schema and then merge them from
     // right-to-left.
     if (Array.isArray(schema)) {
@@ -85,11 +85,12 @@ export const dereference: Jst.dereference = (root, resolver) => {
         .map((scm, index) => walk(scm, resolve, `${path}/${index}`))
         .reduce((acc, scm) => merge(acc, scm), {});
 
-    // If schema is not an array of json objects we expect a singlular json schema
-    // be provided
+      // If schema is not an array of json objects we expect a singlular json schema
+      // be provided
     } else if (isObject(schema)) {
       const schemaId = schema.id || undefined;
       let isCircular = false;
+
       // traverse is an internal recursive function that we bind to this lexical
       // scope in order to easily resolve to schema definitions whilst traversing
       // an objects nested properties. This is primarily for efficiency concerns.
@@ -119,8 +120,8 @@ export const dereference: Jst.dereference = (root, resolver) => {
           if (typeof value !== 'object' && key !== '$ref') {
             resolution[key] = value;
 
-          // If we have a schema reference we must fetch it, dereference it, then merge
-          // it into the base schema object.
+            // If we have a schema reference we must fetch it, dereference it, then merge
+            // it into the base schema object.
           } else if (key === '$ref') {
             // We have two types of references - definitions which are defined
             // within the current schema and external schema references which we
@@ -155,7 +156,7 @@ export const dereference: Jst.dereference = (root, resolver) => {
                 isCircular = true;
               }
 
-            // de-reference a json pointer
+              // de-reference a json pointer
             } else if (isPointer(value)) {
               reference = get(schema, value);
               resolution = merge(
@@ -172,8 +173,8 @@ export const dereference: Jst.dereference = (root, resolver) => {
               throw new ReferenceError(`could not find a reference to ${value}`);
             }
 
-          // Otherwise the value is an array or object and we need to traverse it
-          // and dereference it's properties.
+            // Otherwise the value is an array or object and we need to traverse it
+            // and dereference it's properties.
           } else {
             resolution[key] = traverse(value, `${nodePath}/${key}`);
           }
@@ -184,7 +185,7 @@ export const dereference: Jst.dereference = (root, resolver) => {
 
       return traverse(schema, path);
 
-    // if any other combination of arguments is provided we throw
+      // if any other combination of arguments is provided we throw
     } else {
       throw new TypeError(`expected first parameter to be object or array: ${schema}`);
     }

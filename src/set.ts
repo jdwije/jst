@@ -1,7 +1,8 @@
 import * as has from 'lodash.has';
 import { isPointer } from './isPointer';
+import { SetPointer } from './types';
 
-export const set: Jst.setPointer = (obj, pointer, value) => {
+export const set: SetPointer = (obj, pointer, value) => {
 
   // A JSON `pointer` must begin with the symbols '#', '/' or be an empty
   // string ''. So as a first step, we check that this assumption is true and
@@ -45,8 +46,8 @@ export const set: Jst.setPointer = (obj, pointer, value) => {
       }
 
       ref = ref[i];
-    // Otherwise if `object` *is not* an Array we expect `object` to be of
-    // type Object and that `token` references a valid path in `object`.
+      // Otherwise if `object` *is not* an Array we expect `object` to be of
+      // type Object and that `token` references a valid path in `object`.
     } else {
       if (!has(ref, token)) {
         throw new Error(

@@ -1,4 +1,12 @@
 #!/bin/bash
 
-node_modules/.bin/ts-node benchmarks/index.benchmark.ts
+# This script runs jst's internal benchmarks. 
 
+. ./scripts/constants
+
+printf "${BLUE}@jdw/jst benchmarks${NC}\n\n"
+sleep 1
+
+for file in src/__benchmarks__/*benchmark.ts; do 
+    yarn ts-node "${file}"        # evaluate entry point
+done

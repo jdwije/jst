@@ -56,13 +56,6 @@
                   </a>
                 </li>
               
-                
-                <li>
-                  <a class="source" href="typings.d.html">
-                    typings.d.ts
-                  </a>
-                </li>
-              
             </ol>
           </div>
         
@@ -88,7 +81,7 @@ dereference(schema); <span class="hljs-comment">// { foo: 123, definitions: { fo
 <p><strong>Arguments</strong></p>
 <ul>
 <li><code>subject: Object|number|string|boolean|null</code> A json value.</li>
-<li><code>resolve: Jst.Resolver</code> A function to resolve a schema by its id.</li>
+<li><code>resolve:</code>Resolver` A function to resolve a schema by its id.</li>
 </ul>
 <p><strong>Returns</strong></p>
 <ul>
@@ -105,7 +98,8 @@ dereference(schema); <span class="hljs-comment">// { foo: 123, definitions: { fo
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> forIn <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.forin'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> isObject <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.isobject'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> merge <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.merge'</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;</pre></div>
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
+<span class="hljs-keyword">import</span> { Dereferencer, Resolver } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
         
       
         
@@ -131,7 +125,7 @@ performance for this.</li>
 <span class="hljs-keyword">const</span> isHttp: <span class="hljs-built_in">RegExp</span> = <span class="hljs-regexp">/^http/</span>;
 <span class="hljs-keyword">const</span> isRemoteRef = (ref: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">boolean</span> =&gt;</span> isHttp.test(ref);
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dereference: Jst.dereference = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dereference: Dereferencer = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div>
         
       
         
@@ -160,7 +154,7 @@ states:</p>
   }
   <span class="hljs-keyword">const</span> circularRefs = {};
 
-  <span class="hljs-keyword">const</span> walk = (schema: <span class="hljs-built_in">any</span>, resolve: Jst.resolve = <span class="hljs-literal">null</span>, path: <span class="hljs-built_in">string</span> = <span class="hljs-string">'#'</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {</pre></div>
+  <span class="hljs-keyword">const</span> walk = (schema: <span class="hljs-built_in">any</span>, resolve: Resolver = <span class="hljs-literal">null</span>, path: <span class="hljs-built_in">string</span> = <span class="hljs-string">'#'</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {</pre></div>
         
       
         

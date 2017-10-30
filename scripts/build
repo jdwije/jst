@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# This script builds the jst package.
+
+. ./scripts/constants
+
+printf "${BLUE}@jdw/jst build script${NC}\n\n"
+sleep 1
+
+## build the package
+
+printf "\n${CYAN}COMPILE${NC}\n"
+
+
+mkdir -p ./dist/__tests__/fixture                    # create directory structure
+yarn trash                                           # remove build artifacts
+yarn tsc                                             # compile source code
+cp -rv ./src/__tests__/fixture ./dist/__tests__      # copy test fixture
+yarn docco --layout linear src/*.ts                  # compile documentation
+touch ./docs/CNAME \
+    && echo www.jwije.com > ./docs/CNAME             # add CNAME to docs output
+## copy copy distributable material
+printf "\n${CYAN}COPY ARTIFACTS${NC}\n"
+
+declare -a filemap
+
+filemap=( "./README.md"
+          "./LICENSE.md"
+          "./CHANGELOG.md"
+          "./docs"
+          "./package.json" )
+
+for file in "${!filemap[@]}"; do
+    cp -rv "${filemap[$file]}" ./dist/
+done
+
+
+
+
+
+
+
+
+
