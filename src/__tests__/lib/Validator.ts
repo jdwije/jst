@@ -13,41 +13,41 @@ import * as profile from './../fixture/profile+v1.schema.json';
  * A validation helper for our test schema.
  */
 export class Validator {
-    public schema: object[] = [];
-    private ajv;
+  public schema: object[] = [];
+  private ajv;
 
-    constructor(config: object = {}) {
-        const schema = [
-            address,
-            addressOverride,
-            circular,
-            conditional,
-            credentials,
-            editPerson,
-            person,
-            profile,
-        ];
-        const cnf = {
-            extendRefs: true,
-            allErrors: true,
-            ...config,
-        };
-        this.ajv = new Ajv(cnf);
-        this.load(schema);
-    }
+  constructor(config: object = {}) {
+    const schema = [
+      address,
+      addressOverride,
+      circular,
+      conditional,
+      credentials,
+      editPerson,
+      person,
+      profile,
+    ];
+    const cnf = {
+      extendRefs: true,
+      allErrors: true,
+      ...config,
+    };
+    this.ajv = new Ajv(cnf);
+    this.load(schema);
+  }
 
-    load(schema: object[]) {
-        schema.map((scm) => {
-            this.ajv.addSchema(scm);
-            this.schema.push(scm);
-        });
+  load(schema: object[]) {
+    schema.map((scm) => {
+      this.ajv.addSchema(scm);
+      this.schema.push(scm);
+    });
 
-        return this;
-    }
+    return this;
+  }
 
-    getSchema(id: string): object | undefined {
-        const lookup = this.ajv.getSchema(id);
+  getSchema(id: string): object | undefined {
+    const lookup = this.ajv.getSchema(id);
 
-        return !lookup ? undefined : lookup.schema;
-    }
+    return !lookup ? undefined : lookup.schema;
+  }
 }

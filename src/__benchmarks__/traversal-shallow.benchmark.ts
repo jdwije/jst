@@ -1,5 +1,5 @@
 import * as forIn from 'lodash.forin';
-import benchmark from './benchmark';
+import { benchmark } from './benchmark';
 
 const schema = require('./../__tests__/fixture/temando.swagger.json');
 const title = 'jst/experimental: Basic object traversal';

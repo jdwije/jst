@@ -9,6 +9,8 @@
     "space-before-function-paren": false,
     "no-console": [false],
     "strict-type-predicates": false,
-    "no-uninitialized": true
+    "no-uninitialized": true,
+    "no-var-requires": false,
+    "ordered-imports": false
   }
 }

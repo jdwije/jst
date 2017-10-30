@@ -2500,6 +2500,10 @@ tslint-eslint-rules@^4.0.0, tslint-eslint-rules@^4.1.1:
     tslib "^1.0.0"
     tsutils "^1.4.0"
 
+tslint-strict-null-checks@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tslint-strict-null-checks/-/tslint-strict-null-checks-1.0.0.tgz#6563ba646abe76236ad4266657de48aa49ff8842"
+
 tslint@^5.4.3:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.6.0.tgz#088aa6c6026623338650b2900828ab3edf59f6cf"

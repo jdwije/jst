@@ -19,7 +19,6 @@ describe('dereference schema utility function', () => {
       resolve('http://footown.com/generic/address-override#'),
     ];
     const ast: any = dereference(schema, resolve);
-
     expect(ast.properties).to.have.property('addressLines');
     expect(ast.properties).to.have.property('country');
     expect(ast.properties.country).to.have.property('enum');

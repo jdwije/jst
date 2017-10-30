@@ -90,6 +90,7 @@ export const dereference: Dereferencer = (root, resolver) => {
     } else if (isObject(schema)) {
       const schemaId = schema.id || undefined;
       let isCircular = false;
+
       // traverse is an internal recursive function that we bind to this lexical
       // scope in order to easily resolve to schema definitions whilst traversing
       // an objects nested properties. This is primarily for efficiency concerns.

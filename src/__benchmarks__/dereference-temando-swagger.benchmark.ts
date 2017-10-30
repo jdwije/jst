@@ -1,8 +1,8 @@
-import * as derefSync from 'json-schema-deref-sync';
 import * as $RefParser from 'json-schema-ref-parser';
+import * as derefSync from 'json-schema-deref-sync';
+import { benchmark } from './benchmark';
 import { dereference } from './../index';
 import { resolve } from './../__tests__/lib/';
-import benchmark from './benchmark';
 
 const title = 'jst/dereference comparision - temando.swagger.json';
 const description =
@@ -14,7 +14,7 @@ const tests = [
     id: 'jst/dereference',
     deferred: false,
     exec: () => {
-      dereference(require('./../__tests__/fixture/temando.swagger.json'), resolve)
+      dereference(require('./../__tests__/fixture/temando.swagger.json'), resolve);
     },
   },
   {
@@ -22,7 +22,7 @@ const tests = [
     deferred: false,
     exec: () => {
       derefSync(require('./../__tests__/fixture/temando.swagger.json'));
-    }
+    },
   },
   {
     id: 'json-schmea-ref-parser',
@@ -31,8 +31,11 @@ const tests = [
       refParser.dereference(
         require('./../__tests__/fixture/temando.swagger.json'),
         (err, x) => {
+          if (err) {
+            throw err;
+          }
           defer.resolve();
-        }
+        },
       );
     },
   },
