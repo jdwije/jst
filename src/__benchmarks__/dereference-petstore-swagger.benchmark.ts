@@ -37,7 +37,9 @@ const tests = [
           }
           defer.resolve();
         },
-      );
+      ).catch((reason) => {
+        defer.reject(reason);
+      });
     },
   },
 ];
