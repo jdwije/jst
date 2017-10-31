@@ -82,4 +82,36 @@ describe('dereference schema utility function', () => {
     expect(ast).to.be.an('object');
     expect(ast.properties.circular.properties.circle.id).to.eq('http://footown.com/generic/circular#');
   });
+
+  it('dereferences without a resolver', () => {
+    const schema = require('./fixture/profile+v1.schema.json');
+
+    const ast: any = dereference(schema);
+    expect(ast).to.be.an('object');
+    expect(ast.properties.profile).deep.eq({
+      type: 'object',
+      properties: {
+        avatarUrl: {
+          description: 'The url that the users avatar can be found on',
+          type: 'string',
+          format: 'uri',
+        },
+        pictures: {
+          type: 'array',
+          items: [
+            {
+              type: 'string',
+              format: 'uri',
+            },
+          ],
+        },
+      },
+    });
+  });
+
+  it('fails when attempting to dereference remote references without a resolver', () => {
+    const schema = require('./fixture/address+v1.schema.json');
+
+    expect(() => dereference(schema)).to.throw('argument: resolver is required to dereference a json uri.');
+  });
 });

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.0.0] - 2017-08-14
 
-### Change
+### Changed
 - Re-factored code to typescript.
 - use `isPointer` internally now.
 - Now exports an optimized `npm pack` with minimal file system foot-print.
@@ -15,12 +15,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Improved package scripts, now cleaner and more verbose.
 - Simplify package scripts without losing any functionality.
 
-### Remove
+### Removed
 - Object manipulation functionality has been dropped from JST (the `merge`,
   `contains`, `iterate` functions). We now use `lodash` instead.
 - The `Validator` class has been removed, roll this out yourselves.
 
-### Add
+### Added
 - A changelog!
 - Comprehensive benchmark suite for all internal functionality.
 - Json pointer `get` and `set` functions.
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `lint` step to `travis-ci.yml`
 - `benchmark` step to `travis-ci.yml`
 
-### Fix
+### Fixed
 - `dereference` circular schema dereferencing.
 - fixed linting
 - `lodash` imports, build size reduced.
