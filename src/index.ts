@@ -41,6 +41,8 @@ import { set } from './set';
 
 import { isPointer } from './isPointer';
 
+import { encodePointer } from './encodePointer';
+import { decodePointer } from './decodePointer';
 // ## Usage
 
 // Install JST via npm.
@@ -60,5 +62,7 @@ export {
   dereference,
   get,
   isPointer,
+  encodePointer,
+  decodePointer,
   set,
 };

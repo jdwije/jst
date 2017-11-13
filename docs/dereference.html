@@ -4,68 +4,66 @@
 <head>
   <title>dereference.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
   <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-  <div id="container">
-    <div id="background"></div>
-    
-      <ul id="jump_to">
-        <li>
-          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
-          <a class="small" href="javascript:void(0);">+</a>
-          <div id="jump_wrapper">
-          <div id="jump_page_wrapper">
-            <div id="jump_page">
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>dereference.ts</h1>
+        
+
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
               
                 
-                <a class="source" href="dereference.html">
-                  dereference.ts
-                </a>
+                <li>
+                  <a class="source" href="dereference.html">
+                    dereference.ts
+                  </a>
+                </li>
               
                 
-                <a class="source" href="get.html">
-                  get.ts
-                </a>
+                <li>
+                  <a class="source" href="get.html">
+                    get.ts
+                  </a>
+                </li>
               
                 
-                <a class="source" href="index.html">
-                  index.ts
-                </a>
+                <li>
+                  <a class="source" href="index.html">
+                    index.ts
+                  </a>
+                </li>
               
                 
-                <a class="source" href="isPointer.html">
-                  isPointer.ts
-                </a>
+                <li>
+                  <a class="source" href="isPointer.html">
+                    isPointer.ts
+                  </a>
+                </li>
               
                 
-                <a class="source" href="set.html">
-                  set.ts
-                </a>
+                <li>
+                  <a class="source" href="set.html">
+                    set.ts
+                  </a>
+                </li>
               
-            </div>
+            </ol>
           </div>
-        </li>
-      </ul>
-    
-    <ul class="sections">
         
-          <li id="title">
-              <div class="annotation">
-                  <h1>dereference.ts</h1>
-              </div>
-          </li>
+      </div>
+
+      
         
-        
-        
-        <li id="section-1">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-1">&#182;</a>
-              </div>
-              <p>The <code>dereference</code> function <em>dereferences</em> schema, that is it resolves all
+        <p>The <code>dereference</code> function <em>dereferences</em> schema, that is it resolves all
 <code>$ref</code> declarations in a schema and inlines those references into one logical
 schema in accordance with the IETF <a href="https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03">json reference
 draft-03</a>
@@ -95,38 +93,22 @@ dereference(schema); <span class="hljs-comment">// { foo: 123, definitions: { fo
 </ul>
 <h2 id="dependencies">Dependencies</h2>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> forIn <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.forin'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> isObject <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.isobject'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> merge <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.merge'</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
-<span class="hljs-keyword">import</span> { Dereferencer, Resolver } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div></div>
-            
-        </li>
+<span class="hljs-keyword">import</span> { Dereferencer, Resolver } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
         
+      
         
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <h2 id="implementation">Implementation</h2>
+        <h2 id="implementation">Implementation</h2>
 
-            </div>
-            
-        </li>
         
+      
         
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>Here begins the implementation of the <code>dereference</code> function. This being
+        <p>Here begins the implementation of the <code>dereference</code> function. This being
 version 2 there are some specific goals being targeted.</p>
 <p><strong>Design Goals:</strong></p>
 <ul>
@@ -138,278 +120,157 @@ is paramount.</li>
 performance for this.</li>
 </ul>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
 <span class="hljs-keyword">const</span> isHttp: <span class="hljs-built_in">RegExp</span> = <span class="hljs-regexp">/^http/</span>;
 <span class="hljs-keyword">const</span> isRemoteRef = (ref: <span class="hljs-built_in">string</span>): <span class="hljs-function"><span class="hljs-params">boolean</span> =&gt;</span> isHttp.test(ref);
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dereference: Dereferencer = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div></div>
-            
-        </li>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dereference: Dereferencer = <span class="hljs-function">(<span class="hljs-params">root, resolver</span>) =&gt;</span> {</pre></div>
         
+      
         
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <h3 id="json-in-json-out">JSON In, JSON Out</h3>
+        <h3 id="json-in-json-out">JSON In, JSON Out</h3>
 <p>The <a href="http://www.ietf.org/rfc/rfc4627.txt">json specification</a> section 2.1
 states:</p>
 
-            </div>
-            
-        </li>
         
+      
         
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <blockquote>
+        <blockquote>
 <p> A JSON value MUST be an object, array, number, or string, or one of
  the following three literal names: false null true</p>
 </blockquote>
 
-            </div>
-            
-        </li>
         
+      
         
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>Any other value should result in an <code>TypeError</code> being thrown.</p>
+        <p>Any other value should result in an <code>TypeError</code> being thrown.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
+        
+          <div class='highlight'><pre>
   <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">typeof</span> root).match(<span class="hljs-regexp">/object|string|number|boolean/</span>)) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(
       <span class="hljs-string">`@jst/dereference: argument not a valid json value: <span class="hljs-subst">${typeof root}</span> | <span class="hljs-subst">${root}</span>`</span>);
   }
   <span class="hljs-keyword">const</span> circularRefs = {};
 
-  <span class="hljs-keyword">const</span> walk = (schema: <span class="hljs-built_in">any</span>, resolve: Resolver = <span class="hljs-literal">null</span>, path: <span class="hljs-built_in">string</span> = <span class="hljs-string">'#'</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {</pre></div></div>
-            
-        </li>
+  <span class="hljs-keyword">const</span> walk = (schema: <span class="hljs-built_in">any</span>, resolve: Resolver = <span class="hljs-literal">null</span>, path: <span class="hljs-built_in">string</span> = <span class="hljs-string">'#'</span>): <span class="hljs-function"><span class="hljs-params">any</span> =&gt;</span> {</pre></div>
         
+      
         
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>If schema is an array we dereference each schema and then merge them from
+        <p>If schema is an array we dereference each schema and then merge them from
 right-to-left.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(schema)) {</pre></div></div>
-            
-        </li>
         
+          <div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(schema)) {</pre></div>
         
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>first validate our arguments assumption!</p>
+      
+        
+        <p>first validate our arguments assumption!</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      schema.forEach(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
+        
+          <div class='highlight'><pre>      schema.forEach(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> s !== <span class="hljs-string">'object'</span> &amp;&amp; !<span class="hljs-built_in">Array</span>.isArray(s)) {
           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expect typeof object got: <span class="hljs-subst">${typeof s}</span>`</span>);
         }
-      });</pre></div></div>
-            
-        </li>
+      });</pre></div>
         
+      
         
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>then dereference each schema in the array before eventually merging them
+        <p>then dereference each schema in the array before eventually merging them
 from right to left using a reducer function.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> schema
+        
+          <div class='highlight'><pre>      <span class="hljs-keyword">return</span> schema
         .map(<span class="hljs-function">(<span class="hljs-params">scm, index</span>) =&gt;</span> walk(scm, resolve, <span class="hljs-string">`<span class="hljs-subst">${path}</span>/<span class="hljs-subst">${index}</span>`</span>))
-        .reduce(<span class="hljs-function">(<span class="hljs-params">acc, scm</span>) =&gt;</span> merge(acc, scm), {});</pre></div></div>
-            
-        </li>
+        .reduce(<span class="hljs-function">(<span class="hljs-params">acc, scm</span>) =&gt;</span> merge(acc, scm), {});</pre></div>
         
+      
         
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>If schema is not an array of json objects we expect a singlular json schema
+        <p>If schema is not an array of json objects we expect a singlular json schema
 be provided</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isObject(schema)) {
+        
+          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isObject(schema)) {
       <span class="hljs-keyword">const</span> schemaId = schema.id || <span class="hljs-literal">undefined</span>;
-      <span class="hljs-keyword">let</span> isCircular = <span class="hljs-literal">false</span>;</pre></div></div>
-            
-        </li>
+      <span class="hljs-keyword">let</span> isCircular = <span class="hljs-literal">false</span>;</pre></div>
         
+      
         
-        <li id="section-11">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
-              </div>
-              <p>traverse is an internal recursive function that we bind to this lexical
+        <p>traverse is an internal recursive function that we bind to this lexical
 scope in order to easily resolve to schema definitions whilst traversing
 an objects nested properties. This is primarily for efficiency concerns.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">const</span> traverse = <span class="hljs-function">(<span class="hljs-params">node, nodePath: <span class="hljs-built_in">string</span> = '#'</span>) =&gt;</span> {
+        
+          <div class='highlight'><pre>      <span class="hljs-keyword">const</span> traverse = <span class="hljs-function">(<span class="hljs-params">node, nodePath: <span class="hljs-built_in">string</span> = '#'</span>) =&gt;</span> {
         <span class="hljs-keyword">let</span> resolution = {};
 
         <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> node !== <span class="hljs-string">'object'</span> || node === <span class="hljs-literal">null</span>) {
           <span class="hljs-keyword">return</span> node;
-        }</pre></div></div>
-            
-        </li>
+        }</pre></div>
         
+      
         
-        <li id="section-12">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
-              </div>
-              <p>if only one argument is provided and it is an array we must recursively
+        <p>if only one argument is provided and it is an array we must recursively
 dereference it’s individual values</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(node)) {
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(node)) {
           <span class="hljs-keyword">return</span> node.map(<span class="hljs-function">(<span class="hljs-params">v, index</span>) =&gt;</span> traverse(v, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${index}</span>`</span>));
-        }</pre></div></div>
-            
-        </li>
+        }</pre></div>
         
+      
         
-        <li id="section-13">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
-              </div>
-              <p>if we are here, the first argument is not an array or value and we expect
+        <p>if we are here, the first argument is not an array or value and we expect
 it to be a json schema.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        forIn(node, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {</pre></div></div>
-            
-        </li>
         
+          <div class='highlight'><pre>        forIn(node, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {</pre></div>
         
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <p>Skip the following properties</p>
+      
+        
+        <p>Skip the following properties</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'definitions'</span>) {
+        
+          <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'definitions'</span>) {
             <span class="hljs-keyword">return</span>;
-          }</pre></div></div>
-            
-        </li>
+          }</pre></div>
         
+      
         
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
-              <p>If value is not an array, object, or JSON schema reference we can
+        <p>If value is not an array, object, or JSON schema reference we can
 dereference it immediately. ‘typeof array’ equals ‘object’ in JS.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'object'</span> &amp;&amp; key !== <span class="hljs-string">'$ref'</span>) {
-            resolution[key] = value;</pre></div></div>
-            
-        </li>
         
+          <div class='highlight'><pre>          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'object'</span> &amp;&amp; key !== <span class="hljs-string">'$ref'</span>) {
+            resolution[key] = value;</pre></div>
         
-        <li id="section-16">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
-              </div>
-              <p>If we have a schema reference we must fetch it, dereference it, then merge
+      
+        
+        <p>If we have a schema reference we must fetch it, dereference it, then merge
 it into the base schema object.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'$ref'</span>) {</pre></div></div>
-            
-        </li>
         
+          <div class='highlight'><pre>          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'$ref'</span>) {</pre></div>
         
-        <li id="section-17">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
-              </div>
-              <p>We have two types of references - definitions which are defined
+      
+        
+        <p>We have two types of references - definitions which are defined
 within the current schema and external schema references which we
 have to query AJV for as such we must fetch the schema for the
 reference appropriately.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">let</span> reference = <span class="hljs-literal">null</span>;</pre></div></div>
-            
-        </li>
         
+          <div class='highlight'><pre>            <span class="hljs-keyword">let</span> reference = <span class="hljs-literal">null</span>;</pre></div>
         
-        <li id="section-18">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
-              </div>
-              <p>Here we resolve a JSON reference (uri). In order to do so
+      
+        
+        <p>Here we resolve a JSON reference (uri). In order to do so
 correctly we must make a distinction between external
 references and internal (circular) references.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> (isRemoteRef(value)) {
+        
+          <div class='highlight'><pre>            <span class="hljs-keyword">if</span> (isRemoteRef(value)) {
               <span class="hljs-keyword">if</span> (!resolve) {
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(
                   <span class="hljs-string">'argument: resolver is required to dereference a json uri.'</span>);
@@ -431,22 +292,14 @@ references and internal (circular) references.</p>
                 reference = resolution;
                 circularRefs[nodePath] = schema;
                 isCircular = <span class="hljs-literal">true</span>;
-              }</pre></div></div>
-            
-        </li>
+              }</pre></div>
         
+      
         
-        <li id="section-19">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
-              </div>
-              <p>de-reference a json pointer</p>
+        <p>de-reference a json pointer</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isPointer(value)) {
+        
+          <div class='highlight'><pre>            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (isPointer(value)) {
               reference = <span class="hljs-keyword">get</span>(schema, value);
               resolution = merge(
                 resolution,
@@ -460,23 +313,15 @@ references and internal (circular) references.</p>
 
             <span class="hljs-keyword">if</span> (!reference) {
               <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">ReferenceError</span>(<span class="hljs-string">`could not find a reference to <span class="hljs-subst">${value}</span>`</span>);
-            }</pre></div></div>
-            
-        </li>
+            }</pre></div>
         
+      
         
-        <li id="section-20">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
-              </div>
-              <p>Otherwise the value is an array or object and we need to traverse it
+        <p>Otherwise the value is an array or object and we need to traverse it
 and dereference it’s properties.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          } <span class="hljs-keyword">else</span> {
+        
+          <div class='highlight'><pre>          } <span class="hljs-keyword">else</span> {
             resolution[key] = traverse(value, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>);
           }
         });
@@ -484,38 +329,23 @@ and dereference it’s properties.</p>
         <span class="hljs-keyword">return</span> resolution;
       };
 
-      <span class="hljs-keyword">return</span> traverse(schema, path);</pre></div></div>
-            
-        </li>
+      <span class="hljs-keyword">return</span> traverse(schema, path);</pre></div>
         
+      
         
-        <li id="section-21">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
-              </div>
-              <p>if any other combination of arguments is provided we throw</p>
+        <p>if any other combination of arguments is provided we throw</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
+        
+          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">TypeError</span>(<span class="hljs-string">`expected first parameter to be object or array: <span class="hljs-subst">${schema}</span>`</span>);
     }
   };
 
-  <span class="hljs-keyword">const</span> result = walk(root, resolver);</pre></div></div>
-            
-        </li>
+  <span class="hljs-keyword">const</span> result = walk(root, resolver);</pre></div>
         
+      
         
-        <li id="section-22">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
-              </div>
-              <p>We can now handle any circular references in the schema by iterating our
+        <p>We can now handle any circular references in the schema by iterating our
 store of circular references encountered whilst processing the schema. We will
 only dereference a circular schema once, I could write a monologue about
 this topic but let it suffice to say JST does not make the decision what is
@@ -523,18 +353,17 @@ the correct amount of <em>circular depth</em> to dereference, we only do so
 once. Users can simply call <code>dereference</code> again with the resultant schema
 to get another level of nesting.</p>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  forIn(circularRefs, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {
-    <span class="hljs-keyword">set</span>(result, key.split(<span class="hljs-string">'$ref/'</span>).join(<span class="hljs-string">''</span>), value);
+        
+          <div class='highlight'><pre>  forIn(circularRefs, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {
+    <span class="hljs-keyword">set</span>(result, key.split(<span class="hljs-string">'$ref/'</span>).join(<span class="hljs-string">''</span>), value.replace(<span class="hljs-string">'/'</span>, <span class="hljs-string">'~1'</span>).replace(<span class="hljs-string">'~'</span>, <span class="hljs-string">'~0'</span>));
   });
 
   <span class="hljs-keyword">return</span> result;
-};</pre></div></div>
-            
-        </li>
+};</pre></div>
         
-    </ul>
+      
+      <div class="fleur">h</div>
+    </div>
   </div>
 </body>
 </html>

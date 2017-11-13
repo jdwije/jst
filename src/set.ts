@@ -1,5 +1,5 @@
 import * as has from 'lodash.has';
-import { isPointer } from './isPointer';
+import { isPointer, decodePointer } from './index';
 import { SetPointer } from './types';
 
 export const set: SetPointer = (obj, pointer, value) => {
@@ -27,7 +27,7 @@ export const set: SetPointer = (obj, pointer, value) => {
     // Here we decode `fragment` according to the JSON pointer
     // specification, replacing the character codes '~1' and '~0' with the
     // symbols '/' and '~' respectively.
-    const token = fragment.replace('~1', '/').replace('~0', '~');
+    const token = decodePointer(fragment);
 
     // If the 'object' is array assume that `token` indicates an index in
     // this array and try to resolve it appropriately.
@@ -36,7 +36,7 @@ export const set: SetPointer = (obj, pointer, value) => {
 
       if (!ref.indexOf(i)) {
         throw new Error(
-          `could not dereference JSON pointer: ${pointer}. Array does not have`
+          `could not set JSON pointer: ${pointer}. Array does not have`
           + ` index: ${index}::${JSON.stringify(obj)}`);
       }
 
@@ -51,7 +51,7 @@ export const set: SetPointer = (obj, pointer, value) => {
     } else {
       if (!has(ref, token)) {
         throw new Error(
-          `could not dereference pointer '${pointer}'. The fragment ${token}`
+          `could not set pointer: '${pointer}'. The fragment ${token}`
           + ` is not a valid property of object: ${JSON.stringify(obj, null, 2)}`);
       }
 

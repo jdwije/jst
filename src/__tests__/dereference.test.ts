@@ -115,29 +115,45 @@ describe('dereference schema utility function', () => {
     expect(() => dereference(schema)).to.throw('argument: resolver is required to dereference a json uri.');
   });
 
-  it('can dereference schema uses reserved chars', () => {
-    const fixture = {
-      '/foo': {
-        $ref: '#/bar'
-      },
+  it('can dereference a circular schema referenced in a json object with special characters as keys', () => {
+    const payload = {
       bar: {
         '/nomo': {
-          nog: 10
-        }
+          'char/foo': {
+            $ref: 'http://schema.foo.com/spec',
+          },
+        },
       },
     };
-
-    expect(dereference(fixture)).to.deep.eq({
-      '/foo': {
-        '/nomo': {
-          nog: 10
+    const schema = {
+      id: 'http://schema.foo.com/spec',
+      properties: {
+        circularFoo: {
+          $ref: 'http://schema.foo.com/spec'
         }
-      },
-      bar: {
-        '/nomo': {
-          nog: 10
+      }
+    };
+    const resolve = (id) => schema;
+    const result = dereference(payload, resolve);
+    expect(result).to.deep.eq(
+      {
+        bar: {
+          '/nomo': {
+            'char/foo': {
+              id: 'http://schema.foo.com/spec',
+              properties: {
+                circularFoo: {
+                  id: 'http://schema.foo.com/spec',
+                  properties: {
+                    circularFoo: {
+                      $ref: 'http://schema.foo.com/spec'
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-      },
-    });
+      });
   });
 });
