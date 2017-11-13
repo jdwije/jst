@@ -4,106 +4,149 @@
 <head>
   <title>isPointer.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="page">
-
-      <div class="header">
-        
-          <h1>isPointer.ts</h1>
-        
-
-        
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
                 
-                <li>
-                  <a class="source" href="dereference.html">
-                    dereference.ts
-                  </a>
-                </li>
+                <a class="source" href="dereference.html">
+                  dereference.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="get.html">
-                    get.ts
-                  </a>
-                </li>
+                <a class="source" href="get.html">
+                  get.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="index.html">
-                    index.ts
-                  </a>
-                </li>
+                <a class="source" href="index.html">
+                  index.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="isPointer.html">
-                    isPointer.ts
-                  </a>
-                </li>
+                <a class="source" href="isPointer.html">
+                  isPointer.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="set.html">
-                    set.ts
-                  </a>
-                </li>
+                <a class="source" href="set.html">
+                  set.ts
+                </a>
               
-            </ol>
+            </div>
           </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
         
-      </div>
-
-      
+          <li id="title">
+              <div class="annotation">
+                  <h1>isPointer.ts</h1>
+              </div>
+          </li>
         
-        <p>The <code>isPointer</code> function determines if its argument is a valid json pointer
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>The <code>isPointer</code> function determines if its argument is a valid json pointer
 or not returning a boolean indicating the result of the operation.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <h2 id="usage">Usage</h2>
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="usage">Usage</h2>
 
+            </div>
+            
+        </li>
         
-      
         
-        <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>;
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>;
 
 isPointer(<span class="hljs-string">'#/foo'</span>);   <span class="hljs-comment">// true</span>
 isPointer({})         <span class="hljs-comment">// false</span>
 </code></pre>
 
+            </div>
+            
+        </li>
         
-      
         
-        <h2 id="dependencies">Dependencies</h2>
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="dependencies">Dependencies</h2>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { IsPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { IsPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
         
-      
-        
-        <h2 id="implementation">Implementation</h2>
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="implementation">Implementation</h2>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isPointer: IsPointer = <span class="hljs-function">(<span class="hljs-params">input</span>) =&gt;</span> {</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isPointer: IsPointer = <span class="hljs-function">(<span class="hljs-params">input</span>) =&gt;</span> {</pre></div>
         
-      
-        
-        <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty string
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty string
 ‘’.</p>
 
-        
-          <div class='highlight'><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> input !== <span class="hljs-string">'string'</span>) {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   }
@@ -114,19 +157,27 @@ isPointer({})         <span class="hljs-comment">// false</span>
 
   <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^#|^\//</span>.test(input)) {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-  }</pre></div>
+  }</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>If it is not one of these values then <code>input</code> is not a json pointer.</p>
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If it is not one of these values then <code>input</code> is not a json pointer.</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+};</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-};</pre></div>
-        
-      
-      <div class="fleur">h</div>
-    </div>
+    </ul>
   </div>
 </body>
 </html>

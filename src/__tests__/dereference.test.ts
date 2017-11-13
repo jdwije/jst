@@ -114,4 +114,30 @@ describe('dereference schema utility function', () => {
 
     expect(() => dereference(schema)).to.throw('argument: resolver is required to dereference a json uri.');
   });
+
+  it('can dereference schema uses reserved chars', () => {
+    const fixture = {
+      '/foo': {
+        $ref: '#/bar'
+      },
+      bar: {
+        '/nomo': {
+          nog: 10
+        }
+      },
+    };
+
+    expect(dereference(fixture)).to.deep.eq({
+      '/foo': {
+        '/nomo': {
+          nog: 10
+        }
+      },
+      bar: {
+        '/nomo': {
+          nog: 10
+        }
+      },
+    });
+  });
 });

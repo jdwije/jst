@@ -22,7 +22,7 @@
     "test": "jest src  --verbose --coverage",
     "test:dist": "jest dist --verbose",
     "test:watch": "yarn run test -- -o --watch",
-    "trash": "rm -rf dist docs coverage"
+    "trash": "rm -rf dist coverage"
   },
   "repository": {
     "type": "git",

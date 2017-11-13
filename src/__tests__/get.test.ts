@@ -11,6 +11,9 @@ describe('@jdw/jst/get', () => {
       'bar': {
         '~': 10,
       },
+      '/foo': {
+        $ref: '#/foo',
+      },
     },
     'arr': [{
       arr: [{
