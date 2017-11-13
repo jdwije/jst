@@ -1,4 +1,8 @@
-const encodePointer = (pointer: string) => pointer.replace('~', '~0').replace('/', '~1');
+const encodePointer = (pointer: string) => {
+  return pointer
+    .replace(new RegExp('~', 'g'), '~0')
+    .replace(new RegExp('/', 'g'), '~1');
+};
 
 export {
   encodePointer,

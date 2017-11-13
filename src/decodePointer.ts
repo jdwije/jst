@@ -1,4 +1,8 @@
-const decodePointer = (pointer: string) => pointer.replace('~1', '/').replace('~0', '~');
+const decodePointer = (pointer: string) => {
+  return pointer
+    .replace(new RegExp('~1', 'g'), '/')
+    .replace(new RegExp('~0', 'g'), '~');
+};
 
 export {
   decodePointer,
