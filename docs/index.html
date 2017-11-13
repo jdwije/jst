@@ -26,8 +26,22 @@
               
                 
                 <li>
+                  <a class="source" href="decodePointer.html">
+                    decodePointer.ts
+                  </a>
+                </li>
+              
+                
+                <li>
                   <a class="source" href="dereference.html">
                     dereference.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="encodePointer.html">
+                    encodePointer.ts
                   </a>
                 </li>
               
@@ -165,7 +179,10 @@ inline the results.</p>
 
         
           <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;</pre></div>
+<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;
+
+<span class="hljs-keyword">import</span> { encodePointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./encodePointer'</span>;
+<span class="hljs-keyword">import</span> { decodePointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./decodePointer'</span>;</pre></div>
         
       
         
@@ -197,6 +214,8 @@ inline the results.</p>
   dereference,
   <span class="hljs-keyword">get</span>,
   isPointer,
+  encodePointer,
+  decodePointer,
   <span class="hljs-keyword">set</span>,
 };</pre></div>
         

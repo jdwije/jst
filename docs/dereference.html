@@ -23,8 +23,22 @@
               
                 
                 <li>
+                  <a class="source" href="decodePointer.html">
+                    decodePointer.ts
+                  </a>
+                </li>
+              
+                
+                <li>
                   <a class="source" href="dereference.html">
                     dereference.ts
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="encodePointer.html">
+                    encodePointer.ts
                   </a>
                 </li>
               
@@ -98,7 +112,7 @@ dereference(schema); <span class="hljs-comment">// { foo: 123, definitions: { fo
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> forIn <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.forin'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> isObject <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.isobject'</span>;
 <span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> merge <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.merge'</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span>, isPointer, <span class="hljs-keyword">set</span>, encodePointer, decodePointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
 <span class="hljs-keyword">import</span> { Dereferencer, Resolver } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;</pre></div>
         
       
@@ -285,7 +299,7 @@ references and internal (circular) references.</p>
 
                 resolution = merge(
                   resolution,
-                  walk(reference, resolve, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>),
+                  walk(reference, resolve, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${encodePointer(key)}</span>`</span>),
                   <span class="hljs-literal">true</span>,
                 );
               } <span class="hljs-keyword">else</span> {
@@ -303,7 +317,7 @@ references and internal (circular) references.</p>
               reference = <span class="hljs-keyword">get</span>(schema, value);
               resolution = merge(
                 resolution,
-                traverse(reference, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>),
+                traverse(reference, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${encodePointer(key)}</span>`</span>),
                 <span class="hljs-literal">true</span>,
               );
             } <span class="hljs-keyword">else</span> {
@@ -322,7 +336,7 @@ and dereference it’s properties.</p>
 
         
           <div class='highlight'><pre>          } <span class="hljs-keyword">else</span> {
-            resolution[key] = traverse(value, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${key}</span>`</span>);
+            resolution[key] = traverse(value, <span class="hljs-string">`<span class="hljs-subst">${nodePath}</span>/<span class="hljs-subst">${encodePointer(key)}</span>`</span>);
           }
         });
 
@@ -355,7 +369,7 @@ to get another level of nesting.</p>
 
         
           <div class='highlight'><pre>  forIn(circularRefs, <span class="hljs-function">(<span class="hljs-params">value, key</span>) =&gt;</span> {
-    <span class="hljs-keyword">set</span>(result, key.split(<span class="hljs-string">'$ref/'</span>).join(<span class="hljs-string">''</span>), value.replace(<span class="hljs-string">'/'</span>, <span class="hljs-string">'~1'</span>).replace(<span class="hljs-string">'~'</span>, <span class="hljs-string">'~0'</span>));
+    <span class="hljs-keyword">set</span>(result, key.split(<span class="hljs-string">'$ref/'</span>).join(<span class="hljs-string">''</span>), value);
   });
 
   <span class="hljs-keyword">return</span> result;
