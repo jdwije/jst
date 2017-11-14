@@ -1,5 +1,5 @@
 import * as has from 'lodash.has';
-import { isPointer, decodePointer } from './index';
+import { isPointer, decodeToken } from './index';
 import { SetPointer } from './types';
 
 export const set: SetPointer = (obj, pointer, value) => {
@@ -27,7 +27,7 @@ export const set: SetPointer = (obj, pointer, value) => {
     // Here we decode `fragment` according to the JSON pointer
     // specification, replacing the character codes '~1' and '~0' with the
     // symbols '/' and '~' respectively.
-    const token = decodePointer(fragment);
+    const token = decodeToken(fragment);
 
     // If the 'object' is array assume that `token` indicates an index in
     // this array and try to resolve it appropriately.

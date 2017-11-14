@@ -41,8 +41,23 @@ import { set } from './set';
 
 import { isPointer } from './isPointer';
 
-import { encodePointer } from './encodePointer';
-import { decodePointer } from './decodePointer';
+
+// ### encodeToken(string: string) -> string
+
+// encodes a string for safe use as a json pointer token.
+
+// * [documentation](encodeToken.html)
+
+import { encodeToken } from './encodeToken';
+
+// ### decodeToken(string: string) -> string
+
+// decodes a json token unsecaping special character.
+
+// * [documentation](decodeToken.html)
+
+import { decodeToken } from './decodeToken';
+
 // ## Usage
 
 // Install JST via npm.
@@ -62,7 +77,7 @@ export {
   dereference,
   get,
   isPointer,
-  encodePointer,
-  decodePointer,
+  encodeToken,
+  decodeToken,
   set,
 };
