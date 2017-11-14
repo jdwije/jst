@@ -4,136 +4,175 @@
 <head>
   <title>set.ts</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="page">
-
-      <div class="header">
-        
-          <h1>set.ts</h1>
-        
-
-        
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
                 
-                <li>
-                  <a class="source" href="decodePointer.html">
-                    decodePointer.ts
-                  </a>
-                </li>
+                <a class="source" href="decodeToken.html">
+                  decodeToken.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="dereference.html">
-                    dereference.ts
-                  </a>
-                </li>
+                <a class="source" href="dereference.html">
+                  dereference.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="encodePointer.html">
-                    encodePointer.ts
-                  </a>
-                </li>
+                <a class="source" href="encodeToken.html">
+                  encodeToken.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="get.html">
-                    get.ts
-                  </a>
-                </li>
+                <a class="source" href="get.html">
+                  get.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="index.html">
-                    index.ts
-                  </a>
-                </li>
+                <a class="source" href="index.html">
+                  index.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="isPointer.html">
-                    isPointer.ts
-                  </a>
-                </li>
+                <a class="source" href="isPointer.html">
+                  isPointer.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="set.html">
-                    set.ts
-                  </a>
-                </li>
+                <a class="source" href="set.html">
+                  set.ts
+                </a>
               
-            </ol>
+            </div>
           </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
         
-      </div>
-
-      
+          <li id="title">
+              <div class="annotation">
+                  <h1>set.ts</h1>
+              </div>
+          </li>
         
         
         
-          <div class='highlight'><pre><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> has <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.has'</span>;
-<span class="hljs-keyword">import</span> { isPointer, decodePointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> has <span class="hljs-keyword">from</span> <span class="hljs-string">'lodash.has'</span>;
+<span class="hljs-keyword">import</span> { isPointer, decodeToken } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>;
 <span class="hljs-keyword">import</span> { SetPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./types'</span>;
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span>: SetPointer = <span class="hljs-function">(<span class="hljs-params">obj, pointer, value</span>) =&gt;</span> {</pre></div>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">set</span>: SetPointer = <span class="hljs-function">(<span class="hljs-params">obj, pointer, value</span>) =&gt;</span> {</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>A JSON <code>pointer</code> must begin with the symbols ‘#’, ‘/‘ or be an empty
 string ‘’. So as a first step, we check that this assumption is true and
 bail if not.</p>
 
-        
-          <div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!isPointer(pointer)) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (!isPointer(pointer)) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`invalid JSON pointer specified: '<span class="hljs-subst">${pointer}</span>'`</span>);
-  }</pre></div>
+  }</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>If this check passes we have a valid <code>pointer</code>. In order to dereference
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>If this check passes we have a valid <code>pointer</code>. In order to dereference
 its value, we will split the pointer into its orthogonal pieces and then
 iterate <code>schema</code> checking from left to right that each piece of <code>pointer</code>
 references a valid path in <code>schema</code>.</p>
 
-        
-          <div class='highlight'><pre>  <span class="hljs-keyword">const</span> fragments = pointer.split(<span class="hljs-string">'/'</span>);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">const</span> fragments = pointer.split(<span class="hljs-string">'/'</span>);
   <span class="hljs-keyword">let</span> ref = obj;
-  <span class="hljs-keyword">return</span> fragments.forEach(<span class="hljs-function">(<span class="hljs-params">fragment, index</span>) =&gt;</span> {</pre></div>
+  <span class="hljs-keyword">return</span> fragments.forEach(<span class="hljs-function">(<span class="hljs-params">fragment, index</span>) =&gt;</span> {</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>If <code>fragment</code> points to the root path of <code>object</code> we can just return
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>If <code>fragment</code> points to the root path of <code>object</code> we can just return
 the <code>object</code> itself.</p>
 
-        
-          <div class='highlight'><pre>    <span class="hljs-keyword">if</span> (fragment === <span class="hljs-string">'#'</span> || fragment === <span class="hljs-string">'/'</span> || fragment === <span class="hljs-string">''</span>) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (fragment === <span class="hljs-string">'#'</span> || fragment === <span class="hljs-string">'/'</span> || fragment === <span class="hljs-string">''</span>) {
       <span class="hljs-keyword">return</span>;
-    }</pre></div>
+    }</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>Here we decode <code>fragment</code> according to the JSON pointer
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Here we decode <code>fragment</code> according to the JSON pointer
 specification, replacing the character codes ‘~1’ and ‘~0’ with the
 symbols ‘/‘ and ‘~’ respectively.</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">const</span> token = decodeToken(fragment);</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>    <span class="hljs-keyword">const</span> token = decodePointer(fragment);</pre></div>
         
-      
-        
-        <p>If the ‘object’ is array assume that <code>token</code> indicates an index in
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>If the ‘object’ is array assume that <code>token</code> indicates an index in
 this array and try to resolve it appropriately.</p>
 
-        
-          <div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(ref)) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(ref)) {
       <span class="hljs-keyword">const</span> i = <span class="hljs-built_in">parseInt</span>(token, <span class="hljs-number">10</span>);
 
       <span class="hljs-keyword">if</span> (!ref.indexOf(i)) {
@@ -147,15 +186,23 @@ this array and try to resolve it appropriately.</p>
         <span class="hljs-keyword">return</span>;
       }
 
-      ref = ref[i];</pre></div>
+      ref = ref[i];</pre></div></div>
+            
+        </li>
         
-      
         
-        <p>Otherwise if <code>object</code> <em>is not</em> an Array we expect <code>object</code> to be of
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Otherwise if <code>object</code> <em>is not</em> an Array we expect <code>object</code> to be of
 type Object and that <code>token</code> references a valid path in <code>object</code>.</p>
 
-        
-          <div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">if</span> (!has(ref, token)) {
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
           <span class="hljs-string">`could not set pointer: '<span class="hljs-subst">${pointer}</span>'. The fragment <span class="hljs-subst">${token}</span>`</span>
@@ -169,11 +216,11 @@ type Object and that <code>token</code> references a valid path in <code>object<
       ref = ref[token];
     }
   });
-};</pre></div>
+};</pre></div></div>
+            
+        </li>
         
-      
-      <div class="fleur">h</div>
-    </div>
+    </ul>
   </div>
 </body>
 </html>
