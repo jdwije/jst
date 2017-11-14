@@ -129,12 +129,12 @@ describe('dereference schema utility function', () => {
       id: 'http://schema.foo.com/spec',
       properties: {
         circularFoo: {
-          $ref: 'http://schema.foo.com/spec'
-        }
-      }
+          $ref: 'http://schema.foo.com/spec',
+        },
+      },
     };
-    const resolve = (id) => schema;
-    const result = dereference(payload, resolve);
+    const mresolve = (id) => schema;
+    const result = dereference(payload, mresolve);
     expect(result).to.deep.eq(
       {
         bar: {
@@ -146,14 +146,14 @@ describe('dereference schema utility function', () => {
                   id: 'http://schema.foo.com/spec',
                   properties: {
                     circularFoo: {
-                      $ref: 'http://schema.foo.com/spec'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                      $ref: 'http://schema.foo.com/spec',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
   });
 });

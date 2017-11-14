@@ -41,7 +41,6 @@ import { set } from './set';
 
 import { isPointer } from './isPointer';
 
-
 // ### encodeToken(string: string) -> string
 
 // encodes a string for safe use as a json pointer token.

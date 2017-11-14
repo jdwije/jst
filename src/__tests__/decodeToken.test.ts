@@ -8,11 +8,11 @@ describe('@jdw/jst/decodeToken', () => {
   });
 
   it('can decode an encoded ~ character', () => {
-    expect(decodeToken('~0home')).to.eq('~home')
-    expect(decodeToken('~0hello~0goodbye')).to.eq('~hello~goodbye')
+    expect(decodeToken('~0home')).to.eq('~home');
+    expect(decodeToken('~0hello~0goodbye')).to.eq('~hello~goodbye');
   });
 
   it('can decode a mixed ~ and / character string', () => {
-    expect(decodeToken('~0~1home')).to.eq('~/home')
+    expect(decodeToken('~0~1home')).to.eq('~/home');
   });
 });
