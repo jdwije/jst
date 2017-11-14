@@ -1,6 +1,6 @@
 {
   "name": "@jdw/jst",
-  "version": "2.0.0-beta.14",
+  "version": "2.0.0-beta.15",
   "engines": {
     "node": ">=4"
   },
@@ -22,7 +22,7 @@
     "test": "jest src  --verbose --coverage",
     "test:dist": "jest dist --verbose",
     "test:watch": "yarn run test -- -o --watch",
-    "trash": "rm -rf dist docs coverage"
+    "trash": "rm -rf dist coverage"
   },
   "repository": {
     "type": "git",

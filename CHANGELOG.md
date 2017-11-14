@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   pages as well.
 - `lint` step to `travis-ci.yml`
 - `benchmark` step to `travis-ci.yml`
+- `encodePointer` function for encoding a string for use as a JSON Pointer
+- `decodePointer` function for decoding a json pointer string
 
 ### Fixed
 - `dereference` circular schema dereferencing.

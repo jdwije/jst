@@ -4,205 +4,464 @@
 <head>
   <title>JST - JSON Schema Toolkit [![Build Status](https://travis-ci.org/jdwije/jst.svg?branch=master)](https://travis-ci.org/jdwije/jst)</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-  <div class="container">
-    <div class="page">
-
-      <div class="header">
-        
-          
-          <h1 id="jst-json-schema-toolkit-build-status-https-travis-ci-org-jdwije-jst-svg-branch-master-https-travis-ci-org-jdwije-jst-">JST - JSON Schema Toolkit <a href="https://travis-ci.org/jdwije/jst"><img src="https://travis-ci.org/jdwije/jst.svg?branch=master" alt="Build Status"></a></h1>
-
-          
-        
-
-        
-          <div class="toc">
-            <h3>Table of Contents</h3>
-            <ol>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
                 
-                <li>
-                  <a class="source" href="dereference.html">
-                    dereference.ts
-                  </a>
-                </li>
+                <a class="source" href="decodeToken.html">
+                  decodeToken.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="get.html">
-                    get.ts
-                  </a>
-                </li>
+                <a class="source" href="dereference.html">
+                  dereference.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="index.html">
-                    index.ts
-                  </a>
-                </li>
+                <a class="source" href="encodeToken.html">
+                  encodeToken.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="isPointer.html">
-                    isPointer.ts
-                  </a>
-                </li>
+                <a class="source" href="get.html">
+                  get.ts
+                </a>
               
                 
-                <li>
-                  <a class="source" href="set.html">
-                    set.ts
-                  </a>
-                </li>
+                <a class="source" href="index.html">
+                  index.ts
+                </a>
               
-            </ol>
+                
+                <a class="source" href="isPointer.html">
+                  isPointer.ts
+                </a>
+              
+                
+                <a class="source" href="set.html">
+                  set.ts
+                </a>
+              
+            </div>
           </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
         
-      </div>
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="jst-json-schema-toolkit-build-status-https-travis-ci-org-jdwije-jst-svg-branch-master-https-travis-ci-org-jdwije-jst-">JST - JSON Schema Toolkit <a href="https://travis-ci.org/jdwije/jst"><img src="https://travis-ci.org/jdwije/jst.svg?branch=master" alt="Build Status"></a></h1>
 
-      
+            </div>
+            
+        </li>
         
         
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
         
-      
         
-        <blockquote>
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <blockquote>
 <p>A library for working with <a href="http://json-schema.org/">json schema</a>.</p>
 </blockquote>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>JST is a utility library for working with json schema. It provides functions
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>JST is a utility library for working with json schema. It provides functions
 for json pointers and json references.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <h2 id="interface">Interface</h2>
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="interface">Interface</h2>
 
+            </div>
+            
+        </li>
         
-      
         
-        <h3 id="dereference-schema-object-resolve-id-object-">dereference(schema: Object, resolve: (id) =&gt; Object)</h3>
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h3 id="dereference-schema-object-resolve-id-object-">dereference(schema: Object, resolve: (id) =&gt; Object)</h3>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>A generic dereferencer function to resolve all <code>$ref</code> tags in a schema and
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>A generic dereferencer function to resolve all <code>$ref</code> tags in a schema and
 inline the results.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <ul>
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <ul>
 <li><a href="dereference.html">documentation</a></li>
 </ul>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'./dereference'</span>;</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'./dereference'</span>;</pre></div>
         
-      
-        
-        <h3 id="get-object-object-pointer-string-">get(object: Object, pointer: String)</h3>
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <h3 id="get-object-object-pointer-string-">get(object: Object, pointer: String)</h3>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>Retrieve a value from an object using a json pointer.</p>
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Retrieve a value from an object using a json pointer.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <ul>
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <ul>
 <li><a href="get.html">documentation</a></li>
 </ul>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./get'</span>;</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { <span class="hljs-keyword">get</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./get'</span>;</pre></div>
         
-      
-        
-        <h3 id="set-object-object-pointer-string-value-any-">set(object: Object, pointer: String, value: any)</h3>
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h3 id="set-object-object-pointer-string-value-any-">set(object: Object, pointer: String, value: any)</h3>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>Set a value on an object using a json pointer.</p>
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Set a value on an object using a json pointer.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <ul>
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <ul>
 <li><a href="set.html">documentation</a></li>
 </ul>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./set'</span>;</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { <span class="hljs-keyword">set</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'./set'</span>;</pre></div>
         
-      
-        
-        <h3 id="ispointer-string-string-">isPointer(string: string)</h3>
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h3 id="ispointer-string-string-">isPointer(string: string)</h3>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>Checks of a string is a valid json pointer.</p>
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Checks of a string is a valid json pointer.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <ul>
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <ul>
 <li><a href="isPointer.html">documentation</a></li>
 </ul>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;</pre></div></div>
+            
+        </li>
         
-          <div class='highlight'><pre>
-<span class="hljs-keyword">import</span> { isPointer } <span class="hljs-keyword">from</span> <span class="hljs-string">'./isPointer'</span>;</pre></div>
         
-      
-        
-        <h2 id="usage">Usage</h2>
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h3 id="encodetoken-string-string-string">encodeToken(string: string) -&gt; string</h3>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>Install JST via npm.</p>
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>encodes a string for safe use as a json pointer token.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <ul>
+<li><a href="encodeToken.html">documentation</a></li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { encodeToken } <span class="hljs-keyword">from</span> <span class="hljs-string">'./encodeToken'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h3 id="decodetoken-string-string-string">decodeToken(string: string) -&gt; string</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>decodes a json token unsecaping special character.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <ul>
+<li><a href="decodeToken.html">documentation</a></li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">import</span> { decodeToken } <span class="hljs-keyword">from</span> <span class="hljs-string">'./decodeToken'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <h2 id="usage">Usage</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Install JST via npm.</p>
 <pre><code class="lang-bash">npm i --save @jdw/jst
 </code></pre>
 
+            </div>
+            
+        </li>
         
-      
         
-        <p>Then use it.</p>
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Then use it.</p>
 
+            </div>
+            
+        </li>
         
-      
         
-        <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { get, set, isPointer, dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>; <span class="hljs-comment">// ES6</span>
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { get, set, isPointer, dereference } <span class="hljs-keyword">from</span> <span class="hljs-string">'@jdw/jst'</span>; <span class="hljs-comment">// ES6</span>
 
 <span class="hljs-keyword">var</span> jst = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@jdw/jst'</span>);                               <span class="hljs-comment">// ES2015</span>
 </code></pre>
 
-        
-          <div class='highlight'><pre>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
 <span class="hljs-keyword">export</span> {
   dereference,
   <span class="hljs-keyword">get</span>,
   isPointer,
+  encodeToken,
+  decodeToken,
   <span class="hljs-keyword">set</span>,
-};</pre></div>
+};</pre></div></div>
+            
+        </li>
         
-      
-      <div class="fleur">h</div>
-    </div>
+    </ul>
   </div>
 </body>
 </html>

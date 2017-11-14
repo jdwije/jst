@@ -32,7 +32,7 @@
 import * as forIn from 'lodash.forin';
 import * as isObject from 'lodash.isobject';
 import * as merge from 'lodash.merge';
-import { get, isPointer, set } from './index';
+import { get, isPointer, set, encodeToken } from './index';
 import { Dereferencer, Resolver } from './types';
 // ## Implementation
 
@@ -147,7 +147,7 @@ export const dereference: Dereferencer = (root, resolver) => {
 
                 resolution = merge(
                   resolution,
-                  walk(reference, resolve, `${nodePath}/${key}`),
+                  walk(reference, resolve, `${nodePath}/${encodeToken(key)}`),
                   true,
                 );
               } else {
@@ -161,7 +161,7 @@ export const dereference: Dereferencer = (root, resolver) => {
               reference = get(schema, value);
               resolution = merge(
                 resolution,
-                traverse(reference, `${nodePath}/${key}`),
+                traverse(reference, `${nodePath}/${encodeToken(key)}`),
                 true,
               );
             } else {
@@ -176,7 +176,7 @@ export const dereference: Dereferencer = (root, resolver) => {
             // Otherwise the value is an array or object and we need to traverse it
             // and dereference it's properties.
           } else {
-            resolution[key] = traverse(value, `${nodePath}/${key}`);
+            resolution[key] = traverse(value, `${nodePath}/${encodeToken(key)}`);
           }
         });
 
